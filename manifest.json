@@ -5,7 +5,7 @@
   "description": "Enregistre et rejoue des actions dans une page (tests fonctionnels, Moodle), format compatible Selenium IDE (.side).",
   "browser_specific_settings": {
     "gecko": {
-      "id": "firefox-test-ide@local",
+      "id": "replay@local",
       "strict_min_version": "115.0"
     }
   },
