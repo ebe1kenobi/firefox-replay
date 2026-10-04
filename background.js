@@ -111,7 +111,7 @@ const PAGE_MENUS = [
   ['pause', 'Pause 1 s']
 ];
 
-browser.menus.create({ id: MENU_ROOT, title: 'Test IDE', contexts: ['all'], visible: false });
+browser.menus.create({ id: MENU_ROOT, title: 'Replay', contexts: ['all'], visible: false });
 for (const [id, title] of ELEMENT_MENUS) {
   browser.menus.create({ id: 'el:' + id, parentId: MENU_ROOT, title, contexts: ['all'] });
 }

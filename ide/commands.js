@@ -23,7 +23,7 @@ const FT_COMMANDS = (function () {
   def('storeUniqueId', 'engine', 'préfixe (optionnel)', 'nom de variable', 'Stocke un identifiant unique, ex. etu-20260925-215930-k3f9 (date, heure et 4 caractères aléatoires).');
   def('createFile', 'engine', 'contenu du fichier (plusieurs lignes et ${variables} permises ; base64:... pour un fichier binaire)', 'nom du fichier, ex. inscrits-${id}.csv', 'Crée un fichier en mémoire pour ce test, à envoyer ensuite avec uploadFile.');
   def('screenshot', 'engine', 'libellé ajouté au nom du fichier (optionnel)', 'vide = page entière ; visible = partie affichée seulement',
-    'Enregistre une capture PNG dans Téléchargements/TestIDE/<scénario ou projet>/<date-heure du lancement>/, nommée : numéro d\'ordre - test - ligne - commande précédente - libellé.');
+    'Enregistre une capture PNG dans Téléchargements/Replay/<scénario ou projet>/<date-heure du lancement>/, nommée : numéro d\'ordre - test - ligne - commande précédente - libellé.');
   def('log', 'engine', 'expression ou ${variable}', '', 'Alias de echo.');
 
   def('executeScript', 'script', 'code JavaScript (corps de fonction, utiliser return ; await possible)', 'variable où stocker le résultat (optionnel)', 'Exécute du JS dans la page. Les variables sont accessibles par ${nom} ou vars.nom ; modifier vars.x crée/modifie la variable x.');

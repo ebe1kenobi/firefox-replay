@@ -17,7 +17,7 @@ l'exécution `${id}` (ex. `20260926-143012-k3f9`) et d'un numéro : `testeric_cr
    `categorieParente` (par défaut `SAS / ERIC`) et, si besoin, les libellés des rôles `roleApprenant` et `roleTuteur`.
 4. Se placer sur un onglet quelconque de Firefox (il sera piloté), puis **▶ Lancer** sur le scénario.
 
-Les captures sont dans `Téléchargements/TestIDE/testeric - recette Moodle 4.5/<date-heure>/`.
+Les captures sont dans `Téléchargements/Replay/testeric - recette Moodle 4.5/<date-heure>/`.
 Le scénario s'arrête au premier projet en échec (case cochée) ; les variables (`${id}`, identifiants des objets
 créés) passent d'un projet au suivant. Après un échec, on peut corriger puis relancer **le projet concerné seul**
 (▶▶ Tous les tests) : il reprend les variables de l'exécution précédente. Attention : lancé seul, un projet utilise

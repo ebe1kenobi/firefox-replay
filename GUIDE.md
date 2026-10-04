@@ -319,7 +319,7 @@ quand l'information arrive plus tard, par exemple après une mise à jour qui se
 | waitForCondition | M.util.pending_js.length === 0 | 20000 | l'expression JavaScript soit vraie (20 s au plus) |
 | pause | 2000 | | 2 secondes, sans condition (à éviter si une attente précise est possible) |
 
-Le plus simple : pendant l'enregistrement, **clic droit sur l'élément > Test IDE > Attendre : texte de l'élément**.
+Le plus simple : pendant l'enregistrement, **clic droit sur l'élément > Replay > Attendre : texte de l'élément**.
 
 ## 9. Aide-mémoire : où mettre quoi
 

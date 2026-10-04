@@ -1,4 +1,4 @@
-# Firefox Test IDE
+# Replay
 
 Extension Firefox inspirée de Selenium IDE : elle enregistre les actions faites dans une page, puis les rejoue.
 Elle est pensée pour les tests fonctionnels d'un Moodle (attente des chargements AJAX, éditeur TinyMCE en iframe,
@@ -39,7 +39,7 @@ Pour changer de cible, cliquer dans une autre fenêtre Firefox. Avec deux écran
 
 1. Ouvrir la page Moodle de départ, puis cliquer sur **● Enregistrer**.
 2. Agir normalement : clics, saisies, listes, cases à cocher, touches Entrée/Échap/flèches, éditeur de texte.
-3. **Clic droit dans la page > Test IDE** : ajouter une attente ou une vérification sur l'élément visé
+3. **Clic droit dans la page > Replay** : ajouter une attente ou une vérification sur l'élément visé
    (« attendre que ce texte apparaisse », « vérifier le texte », « stocker le texte dans une variable »,
    « attendre la fin des chargements AJAX », « pause 1 s »).
 4. Arrêter l'enregistrement, puis **▶ Test** pour rejouer.
@@ -192,7 +192,7 @@ Les fichiers n'existent que pendant l'exécution du test ; ils ne sont pas enreg
 de la partie affichée avec `visible`) dans le dossier Téléchargements :
 
 ```
-TestIDE/<nom du scénario ou du projet>/<date-heure du lancement>/<n°> - [<projet> -] <test> - ligne <n> - <commande précédente> - <libellé>.png
+Replay/<nom du scénario ou du projet>/<date-heure du lancement>/<n°> - [<projet> -] <test> - ligne <n> - <commande précédente> - <libellé>.png
 ```
 
 Le numéro d'ordre suit l'exécution, les fichiers sont donc triés chronologiquement. Sur Moodle 4, où la page défile

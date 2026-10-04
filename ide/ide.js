@@ -150,7 +150,7 @@ function renderTests() {
   $('projTitle').textContent = project.name;
   $('projTitle').title = project.name;
   $('baseUrl').value = project.url || '';
-  document.title = 'Test IDE — ' + project.name;
+  document.title = 'Replay — ' + project.name;
   renderUrlOverride();
   renderNav();
 }
@@ -650,7 +650,7 @@ function engineSettings(url) {
 
 // ---------- Captures d'écran ----------
 
-// Dossier des captures d'une exécution : Téléchargements/TestIDE/<scénario ou projet>/<date-heure>/.
+// Dossier des captures d'une exécution : Téléchargements/Replay/<scénario ou projet>/<date-heure>/.
 let shotRun = null;
 
 const safeName = s => String(s).replace(/[\\/:*?"<>|\u0000-\u001f]+/g, '_').replace(/\s+/g, ' ')
@@ -661,7 +661,7 @@ function newShotRun(name, withProject) {
   const p = n => String(n).padStart(2, '0');
   const stamp = d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' +
     p(d.getHours()) + 'h' + p(d.getMinutes()) + 'm' + p(d.getSeconds()) + 's';
-  return { folder: 'TestIDE/' + safeName(name) + '/' + stamp, seq: 0, withProject };
+  return { folder: 'Replay/' + safeName(name) + '/' + stamp, seq: 0, withProject };
 }
 
 async function captureScreenshot(info) {

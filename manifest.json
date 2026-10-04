@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Firefox Test IDE",
+  "name": "Replay",
   "version": "0.1.0",
   "description": "Enregistre et rejoue des actions dans une page (tests fonctionnels, Moodle), format compatible Selenium IDE (.side).",
   "browser_specific_settings": {
@@ -28,13 +28,13 @@
     "persistent": true
   },
   "browser_action": {
-    "default_title": "Ouvrir Test IDE",
+    "default_title": "Ouvrir Replay",
     "default_icon": "icons/icon.svg"
   },
   "commands": {
     "_execute_browser_action": {
       "suggested_key": { "default": "Ctrl+Shift+Y" },
-      "description": "Ouvrir la fenêtre Test IDE"
+      "description": "Ouvrir la fenêtre Replay"
     }
   },
   "content_scripts": [

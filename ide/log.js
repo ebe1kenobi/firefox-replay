@@ -30,7 +30,7 @@ browser.runtime.onMessage.addListener(msg => {
 
 browser.runtime.sendMessage({ type: 'logHello', src }).then(r => {
   if (!r) {
-    box.textContent = 'Le panneau Test IDE qui a ouvert cette fenêtre est fermé.';
+    box.textContent = 'La fenêtre Replay qui a ouvert ce journal est fermée.';
     return;
   }
   document.title = 'Journal — ' + r.title;
