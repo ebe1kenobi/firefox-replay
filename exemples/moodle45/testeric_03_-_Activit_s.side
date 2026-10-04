@@ -1,0 +1,1659 @@
+{
+  "id": "32bcf6ce-0b5c-4c62-be7d-a76300b02907",
+  "version": "2.0",
+  "name": "testeric 03 - Activités",
+  "url": "https://moodle.exemple.fr",
+  "tests": [
+    {
+      "id": "db29b85e-c6b9-46fd-a32c-60779674b0fd",
+      "name": "Devoir (assign)",
+      "commands": [
+        {
+          "id": "f95210a8-e95a-4737-b3f0-a874312f2dc9",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=assign&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "05a2f9bb-5dd7-4763-934f-799bc367c9ad",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createassign_${id}_1"
+        },
+        {
+          "id": "442c41c8-8a8f-476e-bc0f-2dc8cc1c641a",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createassign_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8a933d92-6291-4e5a-a753-9bd94ee005fb",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "14973574-ccc1-44f7-bea4-264a1107b7e3",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ce494f25-4993-4997-bb12-26589d08b2ad",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createassign_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f2570bd6-7247-452a-9f82-fba6d4e18704",
+          "comment": "",
+          "command": "screenshot",
+          "target": "assign",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "a1740935-0ac1-4d9a-a7c5-54c219bfff6a",
+      "name": "Livre (book)",
+      "commands": [
+        {
+          "id": "396be6ba-6e8b-474f-891c-007facd2357f",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=book&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f62de89f-0cc9-40e6-a55d-64102537702b",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createbook_${id}_1"
+        },
+        {
+          "id": "4824971c-2e97-4b04-9cf8-b3ccb7e2d75b",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createbook_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ce40593a-b668-480b-9d1b-a781824a049a",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6f3ebd82-5c16-4968-b7c6-5e4772904a2d",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a650854d-783e-403a-9e1b-95280d07b1fd",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createbook_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "535c91c1-654b-4872-b107-6a35797f6561",
+          "comment": "",
+          "command": "screenshot",
+          "target": "book",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "7d8f7f26-ace0-4973-95f3-0bf4f13a03a2",
+      "name": "Sondage (choix) (choice)",
+      "commands": [
+        {
+          "id": "5adb81b6-8a5c-4f5c-a356-5c88488b770a",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=choice&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "755fe22b-6fcb-43b5-afd0-80012c5b195d",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createchoice_${id}_1"
+        },
+        {
+          "id": "a957d302-1e45-47f0-a803-ebe94378fccb",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createchoice_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "606daeee-f74d-4f29-8dd3-a72a03482e09",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_option_0",
+          "targets": [],
+          "value": "Option A"
+        },
+        {
+          "id": "6131a419-975b-458f-9b30-38d128015620",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_option_1",
+          "targets": [],
+          "value": "Option B"
+        },
+        {
+          "id": "bf4a1a74-cf50-465e-8a6b-c5de52a7f262",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c3ca4c7e-fff4-4330-8ec5-7cf0cd9660f5",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b99b7d21-4f4b-4827-b260-7c816e0480e2",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createchoice_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d809181b-fdb8-47ec-83ae-e332589f199f",
+          "comment": "",
+          "command": "screenshot",
+          "target": "choice",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "928582e1-d6dc-4d32-bd77-66e8a49cc69f",
+      "name": "Base de données (data)",
+      "commands": [
+        {
+          "id": "d0681aef-526f-41ca-8e48-080e829368d2",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=data&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8be01b19-706d-437d-8b7e-06b0a05b5906",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createdata_${id}_1"
+        },
+        {
+          "id": "4c032b6a-e0ac-4df9-8079-1209f01fb2c0",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createdata_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ed3eae08-c7bb-49ed-aeb6-424bd780d3c5",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "68ea591b-3d19-4f99-9855-8b1d26ac0e3c",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "66789e00-e2f7-4d3e-ab27-0e6dac74f412",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createdata_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c3890051-9bf2-4e13-ab80-97bdca25f572",
+          "comment": "",
+          "command": "screenshot",
+          "target": "data",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "02238a41-2691-4c02-a1eb-1ab6e0cd4399",
+      "name": "Feedback (feedback)",
+      "commands": [
+        {
+          "id": "63677fb9-4b97-4b52-82b4-087951f4283d",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=feedback&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "026817fe-1aeb-48fe-9dbb-099588a0e0e3",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createfeedback_${id}_1"
+        },
+        {
+          "id": "c92affc0-1295-4854-9b97-ae217d336a1a",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createfeedback_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "07b6e6ab-837d-4945-9ebc-3179d00d2d64",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6725c87b-c851-4c9b-baa7-b3344cdbdec3",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d575dae2-5d50-491c-95ea-b9860201d41f",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createfeedback_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e8374a5e-c801-412f-b383-08b0db548988",
+          "comment": "",
+          "command": "screenshot",
+          "target": "feedback",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "7ae3e7a5-9037-4aef-96fc-61c24ad42517",
+      "name": "Dossier (folder)",
+      "commands": [
+        {
+          "id": "468f880c-b55d-4144-bc2f-5dbf2dee058b",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=folder&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "5f022563-ae8c-485e-9e9f-f05ba3305e78",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createfolder_${id}_1"
+        },
+        {
+          "id": "2610cafa-63e5-4fc4-92f1-03bfeff7ab55",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createfolder_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "02f5bc88-dde4-40ec-a0e3-ab34a00028fa",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ac7b7a03-800f-4cbe-8906-13263e57ec11",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "00976fbd-e8dc-4b62-b520-7747b4a7ff84",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createfolder_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c5e399ec-a312-4d8a-a0fe-ccfbc083498c",
+          "comment": "",
+          "command": "screenshot",
+          "target": "folder",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "70ec36f9-8134-4b0a-a3cf-be79c70b72cf",
+      "name": "Forum (forum)",
+      "commands": [
+        {
+          "id": "d9484493-be79-4247-9ebe-9cb52e67a484",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=forum&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c5e8847a-9ab3-4815-95ce-e1b06402aad8",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createforum_${id}_1"
+        },
+        {
+          "id": "64f051b3-002e-4664-a68c-1e2bae71921f",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createforum_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d04c00be-f833-4c81-8731-3cc4b3eb5844",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "905cff90-71dc-43bc-b249-ddf8f97914cb",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "07d54828-0054-433c-9bb6-c4b21dd1f76e",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createforum_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e0be3efa-38d6-4c70-b169-667d8e90b94c",
+          "comment": "",
+          "command": "screenshot",
+          "target": "forum",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "1fb5a464-c78a-404a-a50b-ef26666f6b42",
+      "name": "Glossaire (glossary)",
+      "commands": [
+        {
+          "id": "92621d80-9490-4c20-b3ce-90719414255a",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=glossary&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "77f1497c-ded3-4eab-928d-1034bf00ca3d",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createglossary_${id}_1"
+        },
+        {
+          "id": "83708c04-d2a0-4701-8a4d-6b9ac0d7fd5b",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createglossary_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9a94ef6c-c273-4718-8445-cdc330153210",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e5740628-2aa4-4022-90d8-22a85c415634",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "788b390d-b466-43c3-b75f-5e4bc59a903a",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createglossary_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8bf44401-27ca-4c83-9f0f-ca04417d2409",
+          "comment": "",
+          "command": "screenshot",
+          "target": "glossary",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "7982e8f5-d001-441a-8aba-af6759701c6b",
+      "name": "Paquetage IMS (imscp)",
+      "commands": [
+        {
+          "id": "1a8f8563-6791-4e41-8086-82c5c2725d72",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=imscp&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "08219aac-dd9a-471b-a16e-06ded117584e",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createimscp_${id}_1"
+        },
+        {
+          "id": "33d36bea-bc00-4d35-9dc5-fbdc5b549fcf",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createimscp_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "875a4630-24ae-41e4-816f-80c7027673e3",
+          "comment": "paquet IMS minimal",
+          "command": "createFile",
+          "target": "base64:UEsDBBQAAAAIAMJ1Ol13IUsLIwEAABwCAAAPAAAAaW1zbWFuaWZlc3QueG1sZZFBb8IwDIXv/Ioodxq6XSbUlBObkIY2AZN2QyF1W0tpWiWBdvv18zo6KJySPNvfe1aSRVcZdgLnsbaSx9GMM7C6ztAWkn/snqdPfJFOkkpZzMEHhhnYgDmCkzyQAA71HiuvG36DIbD1kpchNHMh2raNqK0w9UGZqHaF6Hwm+sH9KW7ic/+88ziaaR/75ofZLBaf69etLqFSU7Q+KKuBpxPGEmqgeN8qkLlnGeTqaILkb5uXmKej6ij+uR4wGEiHXdhqvU3En0ZsomOAajS32i3XlPciOcgl3yy3F9q7KoANyAGXiF8UHdeJbp6+X8iBr49Og0//r6MEvRcLXw1I3sJB1zZQkbOyT4I2gy4qQ2UoT44G7nVBtgP56kruiRi+Ov0BUEsDBBQAAAAIAMJ1Ol1FlL+WZQAAAIQAAAAKAAAAaW5kZXguaHRtbLNRdPF3DokMcFXIKMnNsbOBkqmJKXY2uakliQrJGYlFxakltkqlJWm6Fkp2NiWZJTmpdiWpxSWpRZnJNvoQvo0+RE9SfkolUL+hnXN+XklqXqlCSqoCSK0CQgNQ0kYfok4fbB0AUEsBAhQAFAAAAAgAwnU6XXchSwsjAQAAHAIAAA8AAAAAAAAAAAAAAIABAAAAAGltc21hbmlmZXN0LnhtbFBLAQIUABQAAAAIAMJ1Ol1FlL+WZQAAAIQAAAAKAAAAAAAAAAAAAACAAVABAABpbmRleC5odG1sUEsFBgAAAAACAAIAdQAAAN0BAAAAAA==",
+          "targets": [],
+          "value": "testeric_imscp_${id}.zip"
+        },
+        {
+          "id": "41e2ab42-0c0f-4eab-8138-f616f5960a64",
+          "comment": "bouton « Choisir un fichier… »",
+          "command": "click",
+          "target": "css=#fitem_id_package .fp-btn-choose",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d88ad8a1-d2c4-462e-8119-49cfc2e1c301",
+          "comment": "dépôt « Déposer un fichier » du sélecteur",
+          "command": "click",
+          "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "45d44d44-f932-47f8-8b64-9db72e546c82",
+          "comment": "",
+          "command": "uploadFile",
+          "target": "css=input[name=repo_upload_file]",
+          "targets": [],
+          "value": "testeric_imscp_${id}.zip"
+        },
+        {
+          "id": "1e130adc-c468-4177-92ae-5c3da91ffca4",
+          "comment": "bouton « Déposer ce fichier »",
+          "command": "click",
+          "target": "css=.fp-upload-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9f93d77b-1bd9-4d72-93a5-6f2583142f0c",
+          "comment": "le fichier apparaît dans le formulaire",
+          "command": "waitForTextPresent",
+          "target": "testeric_imscp_${id}.zip",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "5973a20a-92a0-4e55-ade8-7f90298f8d03",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7ab8104d-c269-4821-9dda-efbfa29a851c",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "fd8d72f0-a236-40be-8562-d90d48cbc8fd",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createimscp_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1f3a60e3-70af-4c60-b42d-4e4f881260b7",
+          "comment": "",
+          "command": "screenshot",
+          "target": "imscp",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "fffd4b16-0b7a-4d20-9330-76cd6026da46",
+      "name": "Zone texte et média (label)",
+      "commands": [
+        {
+          "id": "23ef2a53-29b6-4644-b735-cbdfb07ff87c",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=label&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4996c508-f048-43a2-994a-182eb5a6a78f",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createlabel_${id}_1"
+        },
+        {
+          "id": "ca7c3ab4-4141-4a75-88ce-819b5cfb2a46",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createlabel_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8d1bb185-a8fa-4658-b01f-3ede3fc919c2",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "89ad03da-fb52-4561-a6ac-5301af754b3c",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1367cf76-f420-4a8e-aa40-6064b4db71db",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createlabel_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a5b6cf1f-b494-4158-97e8-20800fb4cf60",
+          "comment": "",
+          "command": "screenshot",
+          "target": "label",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "c21a25d1-884b-4b1c-a13c-d26df8f5135b",
+      "name": "Leçon (lesson)",
+      "commands": [
+        {
+          "id": "a2555f10-5c48-4ce6-8f66-0eeceffaa44a",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=lesson&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c962c61b-27b3-4b2e-9878-a165769d3b13",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createlesson_${id}_1"
+        },
+        {
+          "id": "c87a50db-cc06-41ab-9634-81091aa41f85",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createlesson_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f68acd6c-fb5b-457d-b51f-e4e0fc066e63",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "aedd1de5-5b23-435b-b7ed-52e72bffcf3e",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e5fff6a9-a71a-4792-ab30-1c5b3f231cf3",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createlesson_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4f24ec3e-661b-4606-8cfb-5ca5b01a578a",
+          "comment": "",
+          "command": "screenshot",
+          "target": "lesson",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "3ff18586-1223-4bfd-ae2a-6102be0e97fe",
+      "name": "Page (page)",
+      "commands": [
+        {
+          "id": "ecbde550-0881-403c-b999-346f0ad4c119",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=page&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a3ea1114-6d71-48d3-92f0-c31c750939a4",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createpage_${id}_1"
+        },
+        {
+          "id": "3c1b9d48-0482-4302-a908-1b6286bc4cfa",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createpage_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a3e449c1-7fa2-43bb-bf5b-01ee2a255017",
+          "comment": "contenu de la page (obligatoire)",
+          "command": "executeScript",
+          "target": "const fid = 'id_page';\nconst html = '<p>Contenu de la page ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "decdb8fa-b9b9-42be-9d65-bfba43a6a8c4",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1afdb542-f87f-4d19-b441-6513ec8c3052",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9e3a356b-34f7-4922-9c15-8d059e15ce40",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createpage_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0ff7f33e-f08d-43c3-8a70-8b6781c7aa57",
+          "comment": "",
+          "command": "screenshot",
+          "target": "page",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "371d4912-96d0-418f-b2d4-280b1a12a4cd",
+      "name": "Test (quiz)",
+      "commands": [
+        {
+          "id": "42db9166-4f3c-4cbc-af20-4c646114246f",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=quiz&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3de6fd58-8a4f-4099-b3c3-322f851e90d9",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createquiz_${id}_1"
+        },
+        {
+          "id": "1a8dd2db-ace1-43ac-b604-8a3bc18ef4d1",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createquiz_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "dbe312e4-e1ec-4449-816f-f0a405e11a63",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ac4d25ab-ba89-4a05-b0e1-d5cb3cd2d5e4",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ae2f1b02-0503-43b6-bef1-e1a7127e80cc",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createquiz_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "41b96313-7c31-4d89-b3c7-a654f32a0c48",
+          "comment": "",
+          "command": "screenshot",
+          "target": "quiz",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "cc3f9e7e-6eca-465b-a9a8-840ff17efe87",
+      "name": "Fichier (resource)",
+      "commands": [
+        {
+          "id": "62c418cf-4143-4001-82f6-d8f4b6c1cbfb",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=resource&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e166467c-c655-4515-8ca7-7f38c32b20f0",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createresource_${id}_1"
+        },
+        {
+          "id": "e40518f1-5912-4519-92e9-5965e513d7df",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createresource_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "55bfbd23-8107-464a-ba6c-33bfd387b4c6",
+          "comment": "",
+          "command": "createFile",
+          "target": "Fichier de test testeric ${id}",
+          "targets": [],
+          "value": "testeric_fichier_${id}.txt"
+        },
+        {
+          "id": "ce835891-208b-445c-bffc-70a356ef4226",
+          "comment": "bouton « Ajouter… » du gestionnaire de fichiers",
+          "command": "click",
+          "target": "css=#fitem_id_files .fp-btn-add a",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "81cf7f75-9a99-48e6-84d0-bfe39ddd3b1b",
+          "comment": "dépôt « Déposer un fichier » du sélecteur",
+          "command": "click",
+          "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "24061f30-371a-4297-b66c-307ce3c0e596",
+          "comment": "",
+          "command": "uploadFile",
+          "target": "css=input[name=repo_upload_file]",
+          "targets": [],
+          "value": "testeric_fichier_${id}.txt"
+        },
+        {
+          "id": "134e9e18-56bb-4fd8-a493-c4a55c0531a5",
+          "comment": "bouton « Déposer ce fichier »",
+          "command": "click",
+          "target": "css=.fp-upload-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6c1dcc9a-f1ad-4028-8521-4a7ada211de2",
+          "comment": "le fichier apparaît dans le formulaire",
+          "command": "waitForTextPresent",
+          "target": "testeric_fichier_${id}.txt",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "07c520f1-d79c-471b-90af-2ea049247369",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a24b6292-3626-4762-9dcc-2caaa730f7f0",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "759638f6-cdfa-49be-b9a9-812249885ade",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createresource_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a2134916-dad3-4653-af32-f8a8e3041f80",
+          "comment": "",
+          "command": "screenshot",
+          "target": "resource",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "4e6899cc-efee-429c-817b-165da9c58308",
+      "name": "Paquetage SCORM (scorm)",
+      "commands": [
+        {
+          "id": "f0d1e435-8bfc-43fa-a664-aac19855ac8e",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=scorm&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7807dad8-97f4-4294-be81-e8cc861ee171",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createscorm_${id}_1"
+        },
+        {
+          "id": "57a4f052-b112-4d59-84fc-644c382690f2",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createscorm_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f360e400-85f9-4b09-9b11-1ea3b95d6c2b",
+          "comment": "paquet SCORM 1.2 minimal",
+          "command": "createFile",
+          "target": "base64:UEsDBBQAAAAIAMJ1Ol1Vg3btYwEAAMYCAAAPAAAAaW1zbWFuaWZlc3QueG1sZVLRbsIgFH33KwjvFuteFtNils0tSzQu6pK9GUZvLUsLDVyt29cPu6LWPXE5h3Pu4UIyPVYlOYB1yuiUxtGIEtDSZErvUvq+eR7e0ykfJJXQKgeHRGWgUeUKbErRA2CV3DppbEVvbLyxdiktEOsJY03TRKpytTVfIDEydseOLmMekvXWGoOHuI7rcSebiKyUdU/sEQ0XYXsgCM+yo1M9UXPXCsajUcw+FvO1LKASQ6UdCi2B8gEhSQUoMoGCJ66l+cPTnKwfl6tFwjqkY7r78TgaBypACTvbnDx9Uz+wH4GecySDXOxLTOly9RJT3mN7A+14VFgCD9MNWf5Q7+79FULVU75uZouYXkEW8pSuZuuL35vYAQmmwS5hJyu/XGe62br2Shac2VsJjp/LXoK2F8HvGlLawKc0Gj1JSftQk/aH/JG+pKRo8ymdwTEqsCp9ylyV8B9nPkzod1X6TH7k3afkv1BLAwQUAAAACADCdTpdRZS/lmUAAACEAAAACgAAAGluZGV4Lmh0bWyzUXTxdw6JDHBVyCjJzbGzgZKpiSl2NrmpJYkKyRmJRcWpJbZKpSVpuhZKdjYlmSU5qXYlqcUlqUWZyTb6EL6NPkRPUn5KJVC/oZ1zfl5Jal6pQkqqAkitAkIDUNJGH6JOH2wdAFBLAQIUABQAAAAIAMJ1Ol1Vg3btYwEAAMYCAAAPAAAAAAAAAAAAAACAAQAAAABpbXNtYW5pZmVzdC54bWxQSwECFAAUAAAACADCdTpdRZS/lmUAAACEAAAACgAAAAAAAAAAAAAAgAGQAQAAaW5kZXguaHRtbFBLBQYAAAAAAgACAHUAAAAdAgAAAAA=",
+          "targets": [],
+          "value": "testeric_scorm_${id}.zip"
+        },
+        {
+          "id": "ff34efe7-6a8d-453b-8bf6-4cc7b70d3537",
+          "comment": "bouton « Ajouter… »",
+          "command": "click",
+          "target": "css=#fitem_id_packagefile .fp-btn-add a",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "500afe43-e41b-4b61-8047-03e511aa10b7",
+          "comment": "dépôt « Déposer un fichier » du sélecteur",
+          "command": "click",
+          "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e1f788ad-79af-4e58-aa22-35e63a6794dc",
+          "comment": "",
+          "command": "uploadFile",
+          "target": "css=input[name=repo_upload_file]",
+          "targets": [],
+          "value": "testeric_scorm_${id}.zip"
+        },
+        {
+          "id": "28759f54-828d-4ae1-85a1-e5ef31445931",
+          "comment": "bouton « Déposer ce fichier »",
+          "command": "click",
+          "target": "css=.fp-upload-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1d38d15a-8089-402e-a89e-e94c3c4a066a",
+          "comment": "le fichier apparaît dans le formulaire",
+          "command": "waitForTextPresent",
+          "target": "testeric_scorm_${id}.zip",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e58c5898-a895-4094-968b-d4972644f064",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3b100573-c5ae-4e3b-ab54-706661ca172d",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1e90642c-0919-4284-9bc2-25c8d80ff6e6",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createscorm_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6ef71c96-8e40-45d2-b0fe-b97d9859cb27",
+          "comment": "",
+          "command": "screenshot",
+          "target": "scorm",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "1e7a5c9b-e86c-41ab-82a0-275a525bfeb1",
+      "name": "URL (url)",
+      "commands": [
+        {
+          "id": "170c926a-18f5-4609-9f5b-82b3591a744e",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=url&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "820ff959-073f-450a-bc9e-afdc57adb7fa",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createurl_${id}_1"
+        },
+        {
+          "id": "a5899a57-7deb-4761-a164-d9a8b635191b",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createurl_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "46753185-59f7-4f3f-944e-9e549c76f5d1",
+          "comment": "adresse (obligatoire)",
+          "command": "type",
+          "target": "id=id_externalurl",
+          "targets": [],
+          "value": "https://moodle.org"
+        },
+        {
+          "id": "594de449-2ff6-4678-a5cd-e625999848ed",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d7622c1c-72d0-4853-b0bf-3a5af56fb036",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "2a976b4e-ffb7-443d-9286-4cf4705c7f0c",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createurl_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "80ed2d15-3a49-42af-be9c-3339ccdb42df",
+          "comment": "",
+          "command": "screenshot",
+          "target": "url",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "16128f53-8064-4146-9a9a-506bcf83cfd0",
+      "name": "Wiki (wiki)",
+      "commands": [
+        {
+          "id": "0d197c80-b4b6-4335-8d2e-569f41ab1f47",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=wiki&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a461fb0a-2334-4271-b90d-d025a014524d",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createwiki_${id}_1"
+        },
+        {
+          "id": "1d504865-1247-4c58-a406-5c22d6bb3039",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createwiki_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0ffccef1-fe11-45a0-b4a0-d5d4112388fd",
+          "comment": "titre de la première page (obligatoire)",
+          "command": "type",
+          "target": "id=id_firstpagetitle",
+          "targets": [],
+          "value": "Accueil testeric_createwiki_${id}_1"
+        },
+        {
+          "id": "3dda2e66-c96c-46e6-a85a-8316de9ea6fa",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "98ee2cde-0344-42b7-af94-35ad446eac0f",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4972762b-bb4f-4b25-8136-e145cf39bdcc",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createwiki_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "27305a34-b660-496b-9066-d4c179cb5118",
+          "comment": "",
+          "command": "screenshot",
+          "target": "wiki",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "c0fcdd65-5bc2-411a-ad5e-b90d5e97a708",
+      "name": "Atelier (workshop)",
+      "commands": [
+        {
+          "id": "cb4698d8-e2c4-49c5-958a-b4c6605f64e3",
+          "comment": "",
+          "command": "open",
+          "target": "/course/modedit.php?add=workshop&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "966aae3f-59ba-492e-a6be-6acaa7ee4159",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createworkshop_${id}_1"
+        },
+        {
+          "id": "676ea583-83b5-4a44-ae81-1c26cb1770e0",
+          "comment": "remplit l'éditeur id_introeditor",
+          "command": "executeScript",
+          "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createworkshop_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "38bf68f1-5826-40bc-94ed-19c74537d654",
+          "comment": "« Enregistrer et revenir au cours »",
+          "command": "click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "81e00cb8-4dd6-426a-b7ed-286a1c7969ad",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e7090aa9-6924-471a-9b5a-8c3c964bb0ef",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "testeric_createworkshop_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "538abbbd-5e44-4c32-b8d5-f7facbf7ebcc",
+          "comment": "",
+          "command": "screenshot",
+          "target": "workshop",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "9e6fd454-6fff-4e05-9fb2-da75bda840de",
+      "name": "Activités désactivées par défaut (à activer avant de décommenter)",
+      "commands": [
+        {
+          "id": "cfa10ff8-c07e-49c2-81e8-f5f53ca22373",
+          "comment": "",
+          "command": "echo",
+          "target": "Chat, Consultation, Sous-section et BigBlueButton sont désactivés à l'installation de Moodle 4.5 ; H5P et Outil externe demandent un fichier .h5p ou un outil configuré.",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e2dfc54d-f0e6-4dbd-a7b1-63ae8c620574",
+          "comment": "Chat",
+          "command": "//open",
+          "target": "/course/modedit.php?add=chat&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "130cd938-3d6d-4a8e-b05a-bba6645d57b8",
+          "comment": "",
+          "command": "//type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createchat_${id}_1"
+        },
+        {
+          "id": "e06c4080-cb75-4599-9aa7-1f6cdcdc9e77",
+          "comment": "",
+          "command": "//click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a2113f63-82d2-4f95-9a41-d76a721ec09c",
+          "comment": "",
+          "command": "//waitForTextPresent",
+          "target": "testeric_createchat_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c7e1be5e-f607-421c-942b-d2820fa134ae",
+          "comment": "Consultation",
+          "command": "//open",
+          "target": "/course/modedit.php?add=survey&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "5a296ee3-c8eb-4682-9034-91f001754208",
+          "comment": "",
+          "command": "//type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createsurvey_${id}_1"
+        },
+        {
+          "id": "1e3a591f-ff87-4615-9a36-23eff3bb0305",
+          "comment": "type de consultation (obligatoire)",
+          "command": "//select",
+          "target": "id=id_template",
+          "targets": [],
+          "value": "index=1"
+        },
+        {
+          "id": "6c0ebb36-11a0-4349-a5bd-5b2a52aff2ae",
+          "comment": "",
+          "command": "//click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b9978d89-2c9d-427f-a1bd-0b76d73fed04",
+          "comment": "",
+          "command": "//waitForTextPresent",
+          "target": "testeric_createsurvey_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7a69e329-6156-4cce-a46c-3ba72fa357ff",
+          "comment": "Sous-section",
+          "command": "//open",
+          "target": "/course/modedit.php?add=subsection&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "257b25b8-1a8d-41ce-ba38-0abf70224c4c",
+          "comment": "",
+          "command": "//type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createsubsection_${id}_1"
+        },
+        {
+          "id": "626f3316-158c-40a3-ab2a-420c7685e4b9",
+          "comment": "",
+          "command": "//click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d9b1c747-5b1c-4356-b61a-8429681a23cb",
+          "comment": "",
+          "command": "//waitForTextPresent",
+          "target": "testeric_createsubsection_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "733e43b6-9a80-45a8-89f5-ab6dd09c7bda",
+          "comment": "BigBlueButton",
+          "command": "//open",
+          "target": "/course/modedit.php?add=bigbluebuttonbn&type=&course=${courseid}&section=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1a67856f-b074-4772-b837-38c14658adfd",
+          "comment": "",
+          "command": "//type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createbigbluebuttonbn_${id}_1"
+        },
+        {
+          "id": "c605f1d5-f76d-4da6-8eab-718521c449a4",
+          "comment": "",
+          "command": "//click",
+          "target": "id=id_submitbutton2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "33372ca7-a82d-42ae-a0cf-efe46bbccd1e",
+          "comment": "",
+          "command": "//waitForTextPresent",
+          "target": "testeric_createbigbluebuttonbn_${id}_1",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "cd7048ba-2eac-446a-b9bf-de5f6b683530",
+      "name": "Vérifier toutes les activités du cours",
+      "commands": [
+        {
+          "id": "80985c23-11cd-47d6-b87f-aebc930c672c",
+          "comment": "",
+          "command": "open",
+          "target": "/course/view.php?id=${courseid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e1422f6b-eb89-4a4b-a8e8-da3341382ed8",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createassign_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "fd74bbce-657b-4394-9a15-c720325199f8",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createbook_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f75922ba-71d3-428a-9c50-0179a5251549",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createchoice_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "043d9cd1-8c67-4a1b-8dba-da5d755a5d4f",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createdata_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e41114a7-a2c6-46b8-b6d3-940831f70eef",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createfeedback_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "64d519b7-8223-4b77-a406-6f6733136665",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createfolder_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "cf0febc1-23ae-42eb-8437-cbe2414b6f43",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createforum_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6486b6ad-5377-4fe6-8b21-adb89ca9bd37",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createglossary_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9d8641a7-3076-4aed-9413-acd2b40a6c9a",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createimscp_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d9c2a4fa-5c8b-41a3-95c5-2c90bd2207f5",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createlabel_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "2340e00e-ce9d-4bb8-ab3b-8d61ebf00ac8",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createlesson_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d828e7a0-b393-46c0-ab5a-87829629968b",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createpage_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "34cb17fa-b0a4-4960-ba78-ae22d2992e02",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createquiz_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "bf9a20f5-899c-4094-a57f-8ed2840d44ca",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createresource_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "5e7649fb-d398-4651-a59b-4595f31ce70f",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createscorm_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f35721d0-be9c-4d06-bcd2-f4d90aadefbc",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createurl_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e98d272d-f5c5-4ad3-a001-16e57913435f",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createwiki_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "705cd12c-d648-4498-923a-a92016fd8d78",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testeric_createworkshop_${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9e065759-b08e-4ec5-929c-60b7b3e90a01",
+          "comment": "",
+          "command": "screenshot",
+          "target": "toutes les activites",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "792a3b91-f563-4b7b-9a34-7bc428357f3d",
+      "name": "Tous les tests",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "db29b85e-c6b9-46fd-a32c-60779674b0fd",
+        "a1740935-0ac1-4d9a-a7c5-54c219bfff6a",
+        "7d8f7f26-ace0-4973-95f3-0bf4f13a03a2",
+        "928582e1-d6dc-4d32-bd77-66e8a49cc69f",
+        "02238a41-2691-4c02-a1eb-1ab6e0cd4399",
+        "7ae3e7a5-9037-4aef-96fc-61c24ad42517",
+        "70ec36f9-8134-4b0a-a3cf-be79c70b72cf",
+        "1fb5a464-c78a-404a-a50b-ef26666f6b42",
+        "7982e8f5-d001-441a-8aba-af6759701c6b",
+        "fffd4b16-0b7a-4d20-9330-76cd6026da46",
+        "c21a25d1-884b-4b1c-a13c-d26df8f5135b",
+        "3ff18586-1223-4bfd-ae2a-6102be0e97fe",
+        "371d4912-96d0-418f-b2d4-280b1a12a4cd",
+        "cc3f9e7e-6eca-465b-a9a8-840ff17efe87",
+        "4e6899cc-efee-429c-817b-165da9c58308",
+        "1e7a5c9b-e86c-41ab-82a0-275a525bfeb1",
+        "16128f53-8064-4146-9a9a-506bcf83cfd0",
+        "c0fcdd65-5bc2-411a-ad5e-b90d5e97a708",
+        "9e6fd454-6fff-4e05-9fb2-da75bda840de",
+        "cd7048ba-2eac-446a-b9bf-de5f6b683530"
+      ]
+    }
+  ],
+  "urls": [
+    "https://moodle.exemple.fr"
+  ],
+  "plugins": []
+}

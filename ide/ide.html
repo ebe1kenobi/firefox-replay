@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Test IDE</title>
+  <link rel="stylesheet" href="ide.css">
+</head>
+<body>
+  <header class="topbar">
+    <strong class="brand">Test IDE</strong>
+    <div id="targetInfo" class="target" title="Les tests s'exécutent dans cet onglet"></div>
+    <button id="btnSettings" title="Réglages">Réglages</button>
+  </header>
+
+  <div id="app">
+    <!-- Navigation : projets ou scénarios -->
+    <nav id="nav">
+      <div class="modes" role="tablist">
+        <button id="modeProjects" role="tab">Projets</button>
+        <button id="modeScenarios" role="tab">Scénarios</button>
+      </div>
+      <div class="bar navtools">
+        <button id="btnNavNew" class="grow"></button>
+        <button id="btnOpen" title="Ajouter un projet (.side) ou un scénario exporté (.scenario.json)">Ouvrir un fichier…</button>
+        <input type="file" id="fileInput" accept=".side,.json,application/json" hidden>
+      </div>
+      <ul id="projectList" class="tree"></ul>
+      <ul id="scenarioList" class="tree" hidden></ul>
+    </nav>
+
+    <!-- Projet chargé -->
+    <main id="main">
+      <div class="bar projhead">
+        <h1 id="projTitle" class="grow"></h1>
+        <button id="btnRenameProject" title="Renommer le projet">Renommer</button>
+        <button id="btnImport" title="Ajouter à ce projet les tests d'un fichier .side">Importer des tests…</button>
+        <button id="btnExport" title="Enregistrer ce projet en .side">Exporter</button>
+        <button id="btnDelProject" title="Supprimer ce projet">Supprimer</button>
+      </div>
+
+      <div class="bar">
+        <label class="inline grow">URL de base
+          <input id="baseUrl" class="grow" placeholder="https://moodle.exemple.fr" spellcheck="false">
+        </label>
+      </div>
+      <div id="urlOverride" class="status warn" hidden></div>
+
+      <div class="bar">
+        <label class="inline grow">Test
+          <select id="testSelect" class="grow" title="Test courant"></select>
+        </label>
+        <button id="btnAddTest" title="Nouveau test">+ Test</button>
+        <button id="btnRenameTest" title="Renommer le test">Renommer</button>
+        <button id="btnDupTest" title="Dupliquer le test">Dupliquer</button>
+        <button id="btnDelTest" title="Supprimer le test">Suppr.</button>
+      </div>
+
+      <div class="bar controls">
+        <button id="btnRecord" class="rec" title="Enregistrer les actions dans l'onglet cible">● Enregistrer</button>
+        <button id="btnRun" title="Lancer le test courant">▶ Test</button>
+        <button id="btnRunFrom" title="Lancer à partir de la ligne sélectionnée">▶ D'ici</button>
+        <button id="btnRunAll" title="Lancer tous les tests du projet">▶▶ Tous les tests</button>
+        <button id="btnPause" title="Pause / reprise" disabled>❚❚ Pause</button>
+        <button id="btnStep" title="Exécuter la commande suivante" disabled>Pas à pas</button>
+        <button id="btnStop" title="Arrêter" disabled>■ Stop</button>
+        <label class="inline" title="Délai entre deux commandes">Lent
+          <input type="range" id="speed" min="0" max="2000" step="100">
+        </label>
+      </div>
+
+      <div id="status" class="status">Prêt.</div>
+
+      <div id="workspace">
+        <div id="mainCol">
+          <div class="table-wrap" id="tableWrap">
+            <table id="cmdTable" tabindex="0">
+              <thead>
+                <tr><th class="bp" title="Point d'arrêt"></th><th class="num">#</th><th>Commande</th><th>Cible</th><th>Valeur</th></tr>
+              </thead>
+              <tbody id="cmdBody"></tbody>
+            </table>
+            <div id="emptyHint" class="empty">Aucune commande. Cliquez sur « Enregistrer » puis agissez dans la page, ou ajoutez une commande.</div>
+          </div>
+
+          <div class="bar rowtools">
+            <button id="btnAddCmd" title="Insérer une commande après la sélection (Inser)">+ Ligne</button>
+            <button id="btnDelCmd" title="Supprimer la sélection (Suppr)">Suppr.</button>
+            <button id="btnUp" title="Monter (Alt+Haut)">↑</button>
+            <button id="btnDown" title="Descendre (Alt+Bas)">↓</button>
+            <button id="btnToggle" title="Désactiver / réactiver (préfixe //)">// Désactiver</button>
+            <button id="btnBreak" title="Point d'arrêt (ou clic dans la marge)">Point d'arrêt</button>
+            <button id="btnExecOne" title="Exécuter uniquement cette ligne">Exécuter la ligne</button>
+            <button id="btnUndo" title="Annuler (Ctrl+Z)">Annuler</button>
+          </div>
+        </div>
+
+        <div id="sideCol">
+          <section class="editor" id="editor">
+            <div class="field">
+              <label for="edCommand">Commande</label>
+              <input id="edCommand" list="cmdList" spellcheck="false" autocomplete="off">
+              <datalist id="cmdList"></datalist>
+            </div>
+            <div id="edHelp" class="help"></div>
+            <div class="field">
+              <label for="edTarget">Cible</label>
+              <div class="row">
+                <textarea id="edTarget" rows="1" spellcheck="false"></textarea>
+                <button id="btnPick" title="Désigner l'élément dans la page (Échap pour annuler)">Désigner</button>
+                <button id="btnFind" title="Montrer l'élément dans la page">Voir</button>
+              </div>
+              <select id="edTargets" title="Autres localisateurs enregistrés"></select>
+              <div id="edTargetHelp" class="hint"></div>
+            </div>
+            <div class="field">
+              <label for="edValue">Valeur</label>
+              <textarea id="edValue" rows="1" spellcheck="false"></textarea>
+              <div id="edValueHelp" class="hint"></div>
+            </div>
+            <div class="field">
+              <label for="edComment">Commentaire</label>
+              <input id="edComment">
+            </div>
+          </section>
+
+          <section class="logbox" id="logbox">
+            <div class="bar loghead">
+              <strong class="grow" id="logTitle">Journal</strong>
+              <button id="btnDetach" title="Afficher le journal dans une fenêtre séparée">Détacher</button>
+              <button id="btnVars" title="Afficher les variables">Variables</button>
+              <button id="btnForgetVars" title="Vider les variables gardées de l'exécution précédente">Vider les variables</button>
+              <button id="btnCopyLog" title="Copier le journal">Copier</button>
+              <button id="btnClearLog">Effacer</button>
+            </div>
+            <div id="log" class="log"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="settingsDlg">
+    <form method="dialog" class="settings">
+      <h3>Réglages</h3>
+      <label>Délai maximal d'attente d'un élément (ms)
+        <input type="number" id="setTimeout" min="100" step="500"></label>
+      <label><input type="checkbox" id="setAutoWait"> Après chaque action, attendre la fin des chargements (page, AJAX, jQuery, M.util.pending_js)</label>
+      <label>Délai avant de vérifier les chargements (ms)
+        <input type="number" id="setPostDelay" min="0" step="50"></label>
+      <label>Attente maximale des chargements après une action (ms)
+        <input type="number" id="setAjaxTimeout" min="100" step="500"></label>
+      <label>URL à ignorer pour l'attente AJAX (expressions régulières, une par ligne)
+        <textarea id="setAjaxIgnore" rows="3" spellcheck="false" placeholder="service-nologin\.php\?.*core_message"></textarea></label>
+      <label><input type="checkbox" id="setHighlight"> Surligner les éléments pendant le rejeu</label>
+      <label><input type="checkbox" id="setShotOnFailure"> Enregistrer une capture de la page quand une commande échoue (dans Téléchargements/TestIDE)</label>
+      <label>Nombre maximal de tours d'une boucle while
+        <input type="number" id="setMaxLoops" min="1"></label>
+      <div class="actions">
+        <button value="ok" id="settingsOk" class="primary">Enregistrer</button>
+        <button value="cancel" formnovalidate>Annuler</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="askDlg">
+    <form method="dialog" class="settings">
+      <p id="askText"></p>
+      <input id="askInput">
+      <div class="actions">
+        <button value="ok" class="primary">OK</button>
+        <button value="cancel" formnovalidate>Annuler</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="commands.js"></script>
+  <script src="project.js"></script>
+  <script src="engine.js"></script>
+  <script src="logview.js"></script>
+  <script src="ide.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+{
+  "id": "efc0cb50-1ed5-4f55-a33c-1fb437b094fa",
+  "version": "2.0",
+  "name": "testeric 02 - Catégorie et cours",
+  "url": "https://moodle.exemple.fr",
+  "tests": [
+    {
+      "id": "73fd1447-e920-4602-b688-52891d9951f7",
+      "name": "Créer la catégorie dans SAS / ERIC",
+      "commands": [
+        {
+          "id": "c4639741-baa2-4ee8-a473-a51d7c059d61",
+          "comment": "",
+          "command": "open",
+          "target": "/course/editcategory.php?parent=0",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "22c6652c-f8f2-4ca6-a3b1-b3bd44943b21",
+          "comment": "catégorie parente",
+          "command": "select",
+          "target": "id=id_parent",
+          "targets": [],
+          "value": "label=${categorieParente}"
+        },
+        {
+          "id": "643fb588-39f7-4f14-9b76-d9dc8f7a7374",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createcategorie_${id}_1"
+        },
+        {
+          "id": "2cb8c4c2-4958-485b-8ca6-74820c77aa48",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_idnumber",
+          "targets": [],
+          "value": "testeric_createcategorie_${id}_1"
+        },
+        {
+          "id": "4f329f70-3c72-49a2-9184-53e93f34dc21",
+          "comment": "remplit l'éditeur id_description_editor",
+          "command": "executeScript",
+          "target": "const fid = 'id_description_editor';\nconst html = '<p>Catégorie de test testeric ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a69527c9-1d01-43f3-9d08-97a4052ce562",
+          "comment": "« Créer la catégorie »",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "fc8db9a0-8eeb-43c1-b75c-62880fbb39a6",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/editcategory.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "05aec796-6d4b-4c5d-a0b7-dd869256b458",
+          "comment": "la page de gestion affiche la nouvelle catégorie",
+          "command": "executeScript",
+          "target": "const id = new URL(location.href).searchParams.get('categoryid');\nif (!id) throw new Error('Identifiant de la catégorie introuvable dans ' + location.href);\nreturn id;",
+          "targets": [],
+          "value": "catid"
+        },
+        {
+          "id": "e626655a-3ce0-497a-b138-1f1dfc7601a8",
+          "comment": "",
+          "command": "screenshot",
+          "target": "categorie creee",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "9846ce50-b3b6-4eb3-ab04-43060d15540c",
+      "name": "Créer le cours dans la catégorie",
+      "commands": [
+        {
+          "id": "50009890-970a-458e-9eb4-676fa14c012d",
+          "comment": "",
+          "command": "open",
+          "target": "/course/edit.php?category=${catid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b97bc093-a9de-42d3-9f01-2431019d628e",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_fullname",
+          "targets": [],
+          "value": "testeric_createcours_${id}_1"
+        },
+        {
+          "id": "5ed2ffe5-b062-41fd-a98b-34215d851fb9",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_shortname",
+          "targets": [],
+          "value": "testeric_createcours_${id}_1"
+        },
+        {
+          "id": "c0e91edf-06fd-49d9-a0d5-a11d88eff433",
+          "comment": "remplit l'éditeur id_summary_editor",
+          "command": "executeScript",
+          "target": "const fid = 'id_summary_editor';\nconst html = '<p>Cours de test testeric ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0b6fd4c0-ccb7-4d28-ab21-03633d9f8cee",
+          "comment": "« Enregistrer et afficher »",
+          "command": "click",
+          "target": "id=id_saveanddisplay",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ef96a9f5-f26b-4407-9a80-af3ee4a066b9",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/course/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "71df698a-24a6-4585-bd52-c89c324791f8",
+          "comment": "",
+          "command": "executeScript",
+          "target": "const id = new URL(location.href).searchParams.get('id');\nif (!location.pathname.endsWith('/course/view.php') || !id) throw new Error('Page du cours attendue : ' + location.href);\nreturn id;",
+          "targets": [],
+          "value": "courseid"
+        },
+        {
+          "id": "1074fb77-83c2-4815-baae-1960a2b1427e",
+          "comment": "",
+          "command": "screenshot",
+          "target": "cours cree",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "beeb23e2-fa95-499f-afa3-3afed4d3cf1b",
+          "comment": "",
+          "command": "open",
+          "target": "/course/index.php?categoryid=${catid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "2a29a2c6-569f-49f7-8a23-733690c81bf2",
+          "comment": "le cours est bien dans la catégorie",
+          "command": "assertTextPresent",
+          "target": "testeric_createcours_${id}_1",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "e8a6e115-f997-4dde-9753-252fe597ad60",
+      "name": "Tous les tests",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "73fd1447-e920-4602-b688-52891d9951f7",
+        "9846ce50-b3b6-4eb3-ab04-43060d15540c"
+      ]
+    }
+  ],
+  "urls": [
+    "https://moodle.exemple.fr"
+  ],
+  "plugins": []
+}

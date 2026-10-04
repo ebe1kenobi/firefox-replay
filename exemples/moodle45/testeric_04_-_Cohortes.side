@@ -1,0 +1,577 @@
+{
+  "id": "d299429b-3532-4995-a627-b86110961982",
+  "version": "2.0",
+  "name": "testeric 04 - Cohortes",
+  "url": "https://moodle.exemple.fr",
+  "tests": [
+    {
+      "id": "94a1f592-d1f6-42a9-b9d5-bbe3edb31dfc",
+      "name": "Créer deux cohortes par l'interface",
+      "commands": [
+        {
+          "id": "59718f35-c9dd-4ce7-aa3f-25ffad9c18c7",
+          "comment": "",
+          "command": "storeJson",
+          "target": "[1, 2]",
+          "targets": [],
+          "value": "numeros"
+        },
+        {
+          "id": "c9ba269e-7a92-4d80-987a-beb204618b05",
+          "comment": "",
+          "command": "forEach",
+          "target": "numeros",
+          "targets": [],
+          "value": "n"
+        },
+        {
+          "id": "4979d2f6-7f6c-4151-8865-97050952dac1",
+          "comment": "",
+          "command": "open",
+          "target": "/cohort/edit.php?contextid=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "99afb4f1-be62-4e94-8803-98bcd6b13a2e",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_createcohorte_${id}_${n}"
+        },
+        {
+          "id": "5b54e864-b9ec-41c6-a44b-8bb1d1092980",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_idnumber",
+          "targets": [],
+          "value": "testeric_createcohorte_${id}_${n}"
+        },
+        {
+          "id": "053f5981-b52d-4c50-b519-27607ed9c04b",
+          "comment": "remplit l'éditeur id_description_editor",
+          "command": "executeScript",
+          "target": "const fid = 'id_description_editor';\nconst html = '<p>Cohorte testeric ' + ${id} + ' n° ' + ${n} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "900c7f88-277b-404e-bed1-592639195e05",
+          "comment": "",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7f5e34da-db98-4b68-8ce6-8cb1c60fad1f",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/cohort/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "24fe913c-2d31-41d0-9021-66309ad8b113",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "69ab5be5-e36c-4350-bb61-aca3d2fc4c06",
+          "comment": "",
+          "command": "executeScript",
+          "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst res = await call('core_cohort_search_cohorts', {\n  query: 'testeric_createcohorte', context: { contextid: 1 }, includes: 'all', limitfrom: 0, limitnum: 100 });\nconst find = name => {\n  const c = res.cohorts.find(x => x.name === name);\n  if (!c) throw new Error('Cohorte introuvable : ' + name);\n  return c.id;\n};\nvars.cohortIhm1 = find('testeric_createcohorte_' + ${id} + '_1');\nvars.cohortIhm2 = find('testeric_createcohorte_' + ${id} + '_2');\nreturn [vars.cohortIhm1, vars.cohortIhm2].join(', ');",
+          "targets": [],
+          "value": "cohortesIhm"
+        },
+        {
+          "id": "19505235-7514-42b1-8372-15b6ddb6b151",
+          "comment": "",
+          "command": "open",
+          "target": "/cohort/index.php?contextid=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ff93b84e-cd29-48c6-a194-e2e95095d30d",
+          "comment": "",
+          "command": "screenshot",
+          "target": "cohortes interface",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "d76cb1ce-fb24-473d-ac47-8fb0f91ebaec",
+      "name": "Ajouter les 2 utilisateurs interface à la cohorte 1 (interface)",
+      "commands": [
+        {
+          "id": "f237b29c-a66d-40c3-a735-26057c136f7b",
+          "comment": "",
+          "command": "open",
+          "target": "/cohort/assign.php?id=${cohortIhm1}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "93074975-2556-4354-a8ce-14d2f86250ad",
+          "comment": "recherche des utilisateurs",
+          "command": "type",
+          "target": "id=addselect_searchtext",
+          "targets": [],
+          "value": "testericlastnameihm${id}"
+        },
+        {
+          "id": "d54aa3fc-c42a-45d2-99b4-5f808e834b63",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "xpath=//select[@id='addselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c8d5706f-def4-4e90-9dce-6ff9cd34d0cf",
+          "comment": "",
+          "command": "addSelection",
+          "target": "id=addselect",
+          "targets": [],
+          "value": "label=contains:testericlastnameihm${id}_1"
+        },
+        {
+          "id": "1ad1554a-7f3e-49e5-b5e5-e15f1391cb7a",
+          "comment": "",
+          "command": "addSelection",
+          "target": "id=addselect",
+          "targets": [],
+          "value": "label=contains:testericlastnameihm${id}_2"
+        },
+        {
+          "id": "9a4d8a97-0b7d-4206-961c-361746967488",
+          "comment": "◄ Ajouter",
+          "command": "click",
+          "target": "id=add",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d4bea10c-a5b2-4a91-b226-286e8280d0d2",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_1')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "18597d52-4d8f-4970-b95c-e4acc6df61b0",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "2172af18-041e-4e12-81eb-ef71873ce1ce",
+          "comment": "",
+          "command": "screenshot",
+          "target": "membres cohorte 1",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "dd923c11-d93a-4213-bb23-091b2dd16e62",
+      "name": "Ajouter les 2 utilisateurs interface à la cohorte 2 (interface)",
+      "commands": [
+        {
+          "id": "d44adea3-63b5-4d14-a5ad-2eefdc0a5bc9",
+          "comment": "",
+          "command": "open",
+          "target": "/cohort/assign.php?id=${cohortIhm2}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "19163223-7f82-4e91-9350-c0838985a49d",
+          "comment": "recherche des utilisateurs",
+          "command": "type",
+          "target": "id=addselect_searchtext",
+          "targets": [],
+          "value": "testericlastnameihm${id}"
+        },
+        {
+          "id": "73fc5e97-558b-4beb-998c-0c252af617a7",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "xpath=//select[@id='addselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b78ecb09-a14e-4244-bbef-21ddf4a85284",
+          "comment": "",
+          "command": "addSelection",
+          "target": "id=addselect",
+          "targets": [],
+          "value": "label=contains:testericlastnameihm${id}_1"
+        },
+        {
+          "id": "943ab07e-2bfb-41d5-9693-0c21fa0aa8ac",
+          "comment": "",
+          "command": "addSelection",
+          "target": "id=addselect",
+          "targets": [],
+          "value": "label=contains:testericlastnameihm${id}_2"
+        },
+        {
+          "id": "76279929-6582-49ee-90a0-6e1cb25beb95",
+          "comment": "◄ Ajouter",
+          "command": "click",
+          "target": "id=add",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f12a3f5c-1e97-4f19-a4a8-c2e09c207236",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_1')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "481c08cd-8aeb-4745-9d0e-314e27869f8c",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "5f5ff314-e72e-4d36-aedb-b540cd23f027",
+          "comment": "",
+          "command": "screenshot",
+          "target": "membres cohorte 2",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "24f0e7cb-2d82-4f55-afcd-c34fa9c80bda",
+      "name": "Créer deux cohortes par dépôt CSV",
+      "commands": [
+        {
+          "id": "5c05ae4a-59af-4582-a2c2-99d0b34f3481",
+          "comment": "",
+          "command": "createFile",
+          "target": "name,idnumber,description\ntesteric_createcohortecsv_${id}_1,testeric_createcohortecsv_${id}_1,Cohorte CSV testeric 1\ntesteric_createcohortecsv_${id}_2,testeric_createcohortecsv_${id}_2,Cohorte CSV testeric 2",
+          "targets": [],
+          "value": "testeric_cohortes_${id}.csv"
+        },
+        {
+          "id": "477ad38d-a2dc-4f5a-a2a1-e9fe84a51f01",
+          "comment": "",
+          "command": "open",
+          "target": "/cohort/upload.php?contextid=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8736da92-d71e-4016-b99b-fff8e5d9a682",
+          "comment": "bouton « Choisir un fichier… »",
+          "command": "click",
+          "target": "css=#fitem_id_cohortfile .fp-btn-choose",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9978797d-a795-4e6c-bb8f-2cc2b5edd5eb",
+          "comment": "dépôt « Déposer un fichier » du sélecteur",
+          "command": "click",
+          "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "2ab786b9-d5ba-4d0e-b677-c7b87090ea45",
+          "comment": "",
+          "command": "uploadFile",
+          "target": "css=input[name=repo_upload_file]",
+          "targets": [],
+          "value": "testeric_cohortes_${id}.csv"
+        },
+        {
+          "id": "7b3d2fd4-b2ed-4af6-a96b-18e3f347368a",
+          "comment": "bouton « Déposer ce fichier »",
+          "command": "click",
+          "target": "css=.fp-upload-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8db8ed15-2c61-46f2-812a-f7d8d3e6df33",
+          "comment": "le fichier apparaît dans le formulaire",
+          "command": "waitForTextPresent",
+          "target": "testeric_cohortes_${id}.csv",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "869fb2a2-523f-4d5b-ab3c-19f8e15f2772",
+          "comment": "« Aperçu » : active le bouton de dépôt",
+          "command": "click",
+          "target": "id=id_previewbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "bd3c22c8-dba3-4be5-9d86-408652fa13a0",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "xpath=//input[@id='id_submitbutton' and not(@disabled)]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0cdc26fe-1f26-4778-892f-0d6353e79d88",
+          "comment": "",
+          "command": "screenshot",
+          "target": "apercu cohortes csv",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7e84c519-0e35-4576-87f0-2dc4ae690f65",
+          "comment": "« Déposer les cohortes »",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "62a9b502-8067-4e9f-8d99-6512b7396cb1",
+          "comment": "",
+          "command": "executeScript",
+          "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst res = await call('core_cohort_search_cohorts', {\n  query: 'testeric_createcohorte', context: { contextid: 1 }, includes: 'all', limitfrom: 0, limitnum: 100 });\nconst find = name => {\n  const c = res.cohorts.find(x => x.name === name);\n  if (!c) throw new Error('Cohorte introuvable : ' + name);\n  return c.id;\n};\nvars.cohortCsv1 = find('testeric_createcohortecsv_' + ${id} + '_1');\nvars.cohortCsv2 = find('testeric_createcohortecsv_' + ${id} + '_2');\nreturn [vars.cohortCsv1, vars.cohortCsv2].join(', ');",
+          "targets": [],
+          "value": "cohortesCsv"
+        },
+        {
+          "id": "1460be78-bc8f-419e-b0a2-0bfc10386fa2",
+          "comment": "",
+          "command": "screenshot",
+          "target": "cohortes csv",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "2d581a0b-a040-4d4a-a463-4aab8cbc786f",
+      "name": "Importer les utilisateurs CSV dans les 4 cohortes",
+      "commands": [
+        {
+          "id": "eb014adf-6af2-46da-8512-c38ae193e0f9",
+          "comment": "les colonnes cohortN désignent les cohortes par leur numéro d'identification",
+          "command": "createFile",
+          "target": "username,cohort1,cohort2,cohort3,cohort4\ntestericcsv${id}_1,testeric_createcohorte_${id}_1,testeric_createcohorte_${id}_2,testeric_createcohortecsv_${id}_1,testeric_createcohortecsv_${id}_2\ntestericcsv${id}_2,testeric_createcohorte_${id}_1,testeric_createcohorte_${id}_2,testeric_createcohortecsv_${id}_1,testeric_createcohortecsv_${id}_2",
+          "targets": [],
+          "value": "testeric_import_cohortes_${id}.csv"
+        },
+        {
+          "id": "9e309a6f-c55a-4078-b765-3d436c93ac2b",
+          "comment": "",
+          "command": "open",
+          "target": "/admin/tool/uploaduser/index.php",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f112fba4-142d-46fa-bbb0-f9bc460135b5",
+          "comment": "bouton « Choisir un fichier… »",
+          "command": "click",
+          "target": "css=#fitem_id_userfile .fp-btn-choose",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f03c4e85-9def-4e9a-afdd-9359b1f89458",
+          "comment": "dépôt « Déposer un fichier » du sélecteur",
+          "command": "click",
+          "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7f370058-1048-45e5-b48b-01976e347d8d",
+          "comment": "",
+          "command": "uploadFile",
+          "target": "css=input[name=repo_upload_file]",
+          "targets": [],
+          "value": "testeric_import_cohortes_${id}.csv"
+        },
+        {
+          "id": "8d079439-0023-49ba-8210-ff5e2a80eb7e",
+          "comment": "bouton « Déposer ce fichier »",
+          "command": "click",
+          "target": "css=.fp-upload-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ff31a4d7-d564-4162-8bbd-96a497a0bfe3",
+          "comment": "le fichier apparaît dans le formulaire",
+          "command": "waitForTextPresent",
+          "target": "testeric_import_cohortes_${id}.csv",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0ce30df2-5254-4d7a-bf1a-d14fb43c4523",
+          "comment": "aperçu",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "736851e8-75f0-463e-bd54-5b655167af32",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "id=id_uutype",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "53a3e86a-1c76-4f22-9e0c-7c60d1ceea3d",
+          "comment": "type de dépôt : mettre à jour les utilisateurs existants seulement",
+          "command": "select",
+          "target": "id=id_uutype",
+          "targets": [],
+          "value": "value=3"
+        },
+        {
+          "id": "4ecd1ec0-ab69-4fad-be29-599ea4fbedce",
+          "comment": "sans modifier leur profil",
+          "command": "select",
+          "target": "id=id_uuupdatetype",
+          "targets": [],
+          "value": "value=0"
+        },
+        {
+          "id": "b089e288-dd7c-4306-bd15-cf79fd904fa2",
+          "comment": "",
+          "command": "screenshot",
+          "target": "apercu import cohortes",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4dcff157-4091-428d-a210-c5e82f918d7b",
+          "comment": "",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ea2e179b-ca49-4c5a-81c6-be5af34b8ad8",
+          "comment": "",
+          "command": "screenshot",
+          "target": "resultat import cohortes",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "4b67a6b4-9909-44be-9be6-1abdf05e48a6",
+      "name": "Vérifier le nombre de membres des 4 cohortes",
+      "commands": [
+        {
+          "id": "107df5cb-9a72-46c4-bff2-ef2206026f01",
+          "comment": "cohortes interface : 2 utilisateurs interface + 2 CSV ; cohortes CSV : 2 utilisateurs CSV",
+          "command": "storeJson",
+          "target": "[[\"cohortIhm1\", 4], [\"cohortIhm2\", 4], [\"cohortCsv1\", 2], [\"cohortCsv2\", 2]]",
+          "targets": [],
+          "value": "attendus"
+        },
+        {
+          "id": "f0e2d6cf-8b09-4052-a059-c2320f2bbd5d",
+          "comment": "",
+          "command": "forEach",
+          "target": "attendus",
+          "targets": [],
+          "value": "attendu"
+        },
+        {
+          "id": "866b3217-5d30-4a0d-8860-b2f26c876c7a",
+          "comment": "",
+          "command": "executeScript",
+          "target": "vars.cohorteCourante = vars[${attendu}[0]];",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "425c2220-8ea8-4eda-9d36-8035ffef4aa5",
+          "comment": "",
+          "command": "open",
+          "target": "/cohort/assign.php?id=${cohorteCourante}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1bcfdf2c-5b0a-4573-8608-fcda949f37b2",
+          "comment": "",
+          "command": "executeScript",
+          "target": "const n = document.querySelectorAll('#removeselect option').length;\nif (n !== ${attendu}[1]) throw new Error(${attendu}[0] + ' : ' + n + ' membre(s), attendu ' + ${attendu}[1]);\nreturn n;",
+          "targets": [],
+          "value": "membres"
+        },
+        {
+          "id": "040587da-304a-4c9b-ac7f-fdc452fbecd1",
+          "comment": "",
+          "command": "screenshot",
+          "target": "membres ${cohorteCourante}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6fc19f8a-57c8-4a81-a018-1efd7fdaa2d4",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "8899a179-75cd-455a-a0d3-eb45a9455a22",
+      "name": "Tous les tests",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "94a1f592-d1f6-42a9-b9d5-bbe3edb31dfc",
+        "d76cb1ce-fb24-473d-ac47-8fb0f91ebaec",
+        "dd923c11-d93a-4213-bb23-091b2dd16e62",
+        "24f0e7cb-2d82-4f55-afcd-c34fa9c80bda",
+        "2d581a0b-a040-4d4a-a463-4aab8cbc786f",
+        "4b67a6b4-9909-44be-9be6-1abdf05e48a6"
+      ]
+    }
+  ],
+  "urls": [
+    "https://moodle.exemple.fr"
+  ],
+  "plugins": []
+}

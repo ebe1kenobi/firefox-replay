@@ -1,0 +1,49 @@
+{
+  "manifest_version": 2,
+  "name": "Firefox Test IDE",
+  "version": "0.1.0",
+  "description": "Enregistre et rejoue des actions dans une page (tests fonctionnels, Moodle), format compatible Selenium IDE (.side).",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "firefox-test-ide@local",
+      "strict_min_version": "115.0"
+    }
+  },
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "webRequest",
+    "webNavigation",
+    "menus",
+    "downloads"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Ouvrir Test IDE",
+    "default_icon": "icons/icon.svg"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": { "default": "Ctrl+Shift+Y" },
+      "description": "Ouvrir la fenêtre Test IDE"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/locators.js", "content/content.js"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start"
+    }
+  ]
+}

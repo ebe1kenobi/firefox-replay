@@ -1,0 +1,275 @@
+{
+  "id": "28b8987f-ca92-46c7-b573-c16cb78f1e7a",
+  "version": "2.0",
+  "name": "testeric 01 - Utilisateurs",
+  "url": "https://moodle.exemple.fr",
+  "tests": [
+    {
+      "id": "a471b478-1f44-41fc-92ed-e0dc14848f41",
+      "name": "Créer deux utilisateurs par l'interface",
+      "commands": [
+        {
+          "id": "62e07da1-28ea-492b-a6f7-8136cbb77e14",
+          "comment": "",
+          "command": "storeJson",
+          "target": "[1, 2]",
+          "targets": [],
+          "value": "numeros"
+        },
+        {
+          "id": "f9f59c2e-c8a8-4d66-8f9c-0befcf324fff",
+          "comment": "",
+          "command": "forEach",
+          "target": "numeros",
+          "targets": [],
+          "value": "n"
+        },
+        {
+          "id": "a7d2222c-fa6a-45aa-a666-da40f3ddc3ce",
+          "comment": "",
+          "command": "open",
+          "target": "/user/editadvanced.php?id=-1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0198082f-9d47-4872-9f7d-2f82aaebdceb",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_username",
+          "targets": [],
+          "value": "testericihm${id}_${n}"
+        },
+        {
+          "id": "36b3a48c-c3f6-4381-b6c8-b21a54f4848a",
+          "comment": "ouvre la saisie du mot de passe",
+          "command": "click",
+          "target": "css=#fitem_id_newpassword [data-passwordunmask=edit]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8ff475ef-9efe-4c3e-b8a5-d1fd73adfccb",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_newpassword",
+          "targets": [],
+          "value": "${motdepasseTest}"
+        },
+        {
+          "id": "4c727968-9ef6-46f1-b093-12a788af6221",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_firstname",
+          "targets": [],
+          "value": "testericfirstnameihm${id}_${n}"
+        },
+        {
+          "id": "ce649df4-9065-46dd-864f-e9ed2d7fb2cb",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_lastname",
+          "targets": [],
+          "value": "testericlastnameihm${id}_${n}"
+        },
+        {
+          "id": "c2bdb9c2-f692-41f7-97e7-f1e482abf663",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_email",
+          "targets": [],
+          "value": "testericmailihm${id}_${n}@testeric.fr"
+        },
+        {
+          "id": "2a849276-7aa5-46e0-bd55-0c7eb3b099d3",
+          "comment": "",
+          "command": "screenshot",
+          "target": "formulaire utilisateur ${n}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "66e91add-9f14-4a99-98fa-9fcc5120a9be",
+          "comment": "« Créer l'utilisateur »",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f1bdcba8-e978-4d73-9510-84edd667d6f1",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/user/editadvanced.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c73a40c3-bf98-4c9a-8681-0af745061088",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "815e6603-df3d-48ba-afdf-5ea8fecdc0e5",
+      "name": "Vérifier les utilisateurs créés par l'interface",
+      "commands": [
+        {
+          "id": "1619bf4a-fc15-4d67-a5b2-f3ba462e48a4",
+          "comment": "contrôle par le service web core_user_get_users_by_field",
+          "command": "executeScript",
+          "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst noms = [1, 2].map(n => 'testericihm' + ${id} + '_' + n);\nconst users = await call('core_user_get_users_by_field', { field: 'username', values: noms });\nif (users.length !== 2) throw new Error('Attendu 2 utilisateurs, trouvé ' + users.length);\nconst byName = Object.fromEntries(users.map(u => [u.username, u]));\nvars.uidIhm1 = byName[noms[0]].id;\nvars.uidIhm2 = byName[noms[1]].id;\nreturn users.map(u => u.fullname + ' <' + u.email + '>').join(', ');",
+          "targets": [],
+          "value": "utilisateursIhm"
+        }
+      ]
+    },
+    {
+      "id": "40b43ceb-595a-45f8-ae92-b5671cff0660",
+      "name": "Créer deux utilisateurs par dépôt CSV",
+      "commands": [
+        {
+          "id": "f9b51dab-1db6-4dd7-be85-d37f03149698",
+          "comment": "",
+          "command": "createFile",
+          "target": "username,firstname,lastname,email,password\ntestericcsv${id}_1,testericfirstnamecsv${id}_1,testericlastnamecsv${id}_1,testericmailcsv${id}_1@testeric.fr,${motdepasseTest}\ntestericcsv${id}_2,testericfirstnamecsv${id}_2,testericlastnamecsv${id}_2,testericmailcsv${id}_2@testeric.fr,${motdepasseTest}",
+          "targets": [],
+          "value": "testeric_utilisateurs_${id}.csv"
+        },
+        {
+          "id": "8d15aa43-d77e-4134-8602-7c767c3bc1be",
+          "comment": "",
+          "command": "open",
+          "target": "/admin/tool/uploaduser/index.php",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "5b4f77d2-428f-44c5-b58f-bd49f62f7cf3",
+          "comment": "bouton « Choisir un fichier… »",
+          "command": "click",
+          "target": "css=#fitem_id_userfile .fp-btn-choose",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ba975d03-7c89-4d40-96bb-45c9bea7e500",
+          "comment": "dépôt « Déposer un fichier » du sélecteur",
+          "command": "click",
+          "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4883d582-c967-4346-a1f7-4f4446e62a03",
+          "comment": "",
+          "command": "uploadFile",
+          "target": "css=input[name=repo_upload_file]",
+          "targets": [],
+          "value": "testeric_utilisateurs_${id}.csv"
+        },
+        {
+          "id": "f3252952-67c4-4f9e-b275-d3a54e7eebb3",
+          "comment": "bouton « Déposer ce fichier »",
+          "command": "click",
+          "target": "css=.fp-upload-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "71144b24-2189-46b8-9446-1831bff7e7c0",
+          "comment": "le fichier apparaît dans le formulaire",
+          "command": "waitForTextPresent",
+          "target": "testeric_utilisateurs_${id}.csv",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ce0ca7d2-817a-4150-b987-45d2628dff60",
+          "comment": "« Déposer des utilisateurs » : aperçu",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "80996b1f-beb4-4672-b51c-cf166519c862",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "id=id_uutype",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7114f52c-b165-414d-a25e-4a59a7d7dfe3",
+          "comment": "type de dépôt : ajouter seulement les nouveaux",
+          "command": "select",
+          "target": "id=id_uutype",
+          "targets": [],
+          "value": "value=0"
+        },
+        {
+          "id": "73e8224d-805f-4987-994d-ebb5ca70c423",
+          "comment": "",
+          "command": "screenshot",
+          "target": "apercu depot utilisateurs",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "27c929c4-65ae-4773-91c0-eb66b02fad4f",
+          "comment": "lance le dépôt",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f78f617a-ef19-4163-848e-dc5fc5b34ad3",
+          "comment": "",
+          "command": "screenshot",
+          "target": "resultat depot utilisateurs",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "fa95a861-9e52-4a07-8351-a9ec64f98cbb",
+      "name": "Vérifier les utilisateurs créés par CSV",
+      "commands": [
+        {
+          "id": "32e2d75a-0d7e-45ea-95f8-4be61d14d058",
+          "comment": "",
+          "command": "executeScript",
+          "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst noms = [1, 2].map(n => 'testericcsv' + ${id} + '_' + n);\nconst users = await call('core_user_get_users_by_field', { field: 'username', values: noms });\nif (users.length !== 2) throw new Error('Attendu 2 utilisateurs CSV, trouvé ' + users.length);\nconst byName = Object.fromEntries(users.map(u => [u.username, u]));\nvars.uidCsv1 = byName[noms[0]].id;\nvars.uidCsv2 = byName[noms[1]].id;\nreturn users.map(u => u.fullname).join(', ');",
+          "targets": [],
+          "value": "utilisateursCsv"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "324d3298-b63a-4522-9fb9-6bb2b5715d05",
+      "name": "Tous les tests",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "a471b478-1f44-41fc-92ed-e0dc14848f41",
+        "815e6603-df3d-48ba-afdf-5ea8fecdc0e5",
+        "40b43ceb-595a-45f8-ae92-b5671cff0660",
+        "fa95a861-9e52-4a07-8351-a9ec64f98cbb"
+      ]
+    }
+  ],
+  "urls": [
+    "https://moodle.exemple.fr"
+  ],
+  "plugins": []
+}

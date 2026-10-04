@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Cours enregistré</title></head>
+<body>
+  <h1>Cours enregistré</h1>
+  <p id="summary"></p>
+  <script>
+    const p = new URLSearchParams(location.search);
+    document.getElementById('summary').textContent =
+      'Nom : ' + p.get('fullname') + ' | Catégorie : ' + p.get('category') + ' | Visible : ' + (p.get('visible') || '0');
+  </script>
+</body>
+</html>

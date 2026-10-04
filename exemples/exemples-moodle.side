@@ -1,0 +1,632 @@
+{
+  "id": "5d364c12-c64f-45d2-a055-37855246ac84",
+  "version": "2.0",
+  "name": "Exemples Moodle",
+  "url": "https://moodle.exemple.fr",
+  "tests": [
+    {
+      "id": "e86c44ed-2bdd-468d-bd57-0c2abb857bca",
+      "name": "01 - Variables : les bases",
+      "commands": [
+        {
+          "id": "743360eb-3a24-45f2-b507-fb24677f47f0",
+          "comment": "",
+          "command": "open",
+          "target": "/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "34a43b0b-15ba-4424-9430-251fc1f2d036",
+          "comment": "crée la variable « salutation »",
+          "command": "store",
+          "target": "Bonjour",
+          "targets": [],
+          "value": "salutation"
+        },
+        {
+          "id": "72bd2007-bea3-43a9-9b14-73ae0c2eb2d1",
+          "comment": "",
+          "command": "echo",
+          "target": "${salutation} tout le monde",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d22e2111-7a34-4b56-932c-0d044c0e3063",
+          "comment": "lit le titre de la page",
+          "command": "storeTitle",
+          "target": "",
+          "targets": [],
+          "value": "titre"
+        },
+        {
+          "id": "8e3d480f-cce5-4ea7-abc7-542d10ec46ee",
+          "comment": "",
+          "command": "echo",
+          "target": "Le titre de la page est : ${titre}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "59cc01d6-33b5-4db6-86d0-02c95587d9e9",
+          "comment": "",
+          "command": "storeLocation",
+          "target": "",
+          "targets": [],
+          "value": "adresse"
+        },
+        {
+          "id": "1900a575-5546-4eb6-8e05-68632ea0b1eb",
+          "comment": "",
+          "command": "echo",
+          "target": "Nous sommes sur ${adresse}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "10be61e5-1ee8-4d3e-a542-5ce97885c73a",
+          "comment": "",
+          "command": "store",
+          "target": "3",
+          "targets": [],
+          "value": "nombre"
+        },
+        {
+          "id": "c219d82e-239c-4bc4-a8fd-e3613d321761",
+          "comment": "arrête le test si nombre ne vaut pas 3",
+          "command": "assert",
+          "target": "nombre",
+          "targets": [],
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "id": "412e6469-931b-49fa-a894-09b61d814f2c",
+      "name": "02 - Connexion",
+      "commands": [
+        {
+          "id": "20bf051f-d72c-4b88-b4d8-1ea2f23075aa",
+          "comment": "à remplacer",
+          "command": "store",
+          "target": "admin",
+          "targets": [],
+          "value": "identifiant"
+        },
+        {
+          "id": "9bd739fa-f966-47b1-be29-ff54fb3dc396",
+          "comment": "à remplacer",
+          "command": "store",
+          "target": "MotDePasse!1",
+          "targets": [],
+          "value": "motdepasse"
+        },
+        {
+          "id": "945cf56f-f949-4a78-9e29-67413caf7c46",
+          "comment": "",
+          "command": "open",
+          "target": "/login/index.php",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "812f8678-ebf1-4396-a321-ce2348e21051",
+          "comment": "1 si le formulaire est affiché, 0 si déjà connecté",
+          "command": "storeElementCount",
+          "target": "id=username",
+          "targets": [],
+          "value": "champs"
+        },
+        {
+          "id": "4ed89d3a-1c62-40b2-8c6d-a318011a7ccb",
+          "comment": "",
+          "command": "if",
+          "target": "${champs} > 0",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "dfbda346-d568-4a11-a7ad-9fa6143a7efa",
+          "comment": "",
+          "command": "type",
+          "target": "id=username",
+          "targets": [],
+          "value": "${identifiant}"
+        },
+        {
+          "id": "a7c998ec-35a0-475e-bc35-a8ac112e03d7",
+          "comment": "",
+          "command": "type",
+          "target": "id=password",
+          "targets": [],
+          "value": "${motdepasse}"
+        },
+        {
+          "id": "de9ef1dc-cd4f-4c9d-9e84-fe9d67edf737",
+          "comment": "",
+          "command": "click",
+          "target": "id=loginbtn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "40c503f0-f0b0-4219-8d79-f9aa36394670",
+          "comment": "",
+          "command": "else",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ad23999e-f83d-4c0e-a13e-a3bdb31ea4a2",
+          "comment": "",
+          "command": "echo",
+          "target": "Déjà connecté : connexion ignorée",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6222e2ed-bddd-4ef5-9e60-f442429e2ff2",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "34c5a176-4cf7-49cb-b75d-727457c0e59f",
+          "comment": "le menu utilisateur prouve la connexion",
+          "command": "waitForElementPresent",
+          "target": "id=user-menu-toggle",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "097b9e05-568d-407c-a68e-076b44acc7fc",
+      "name": "03 - Créer un cours au nom unique",
+      "commands": [
+        {
+          "id": "ccc671dd-965e-4c7e-b478-f1501b0a4c54",
+          "comment": "ex. cours-20260925-221530-k3f9",
+          "command": "storeUniqueId",
+          "target": "cours",
+          "targets": [],
+          "value": "id"
+        },
+        {
+          "id": "6c48e6de-8516-4180-8d99-fd65ab9f518b",
+          "comment": "",
+          "command": "open",
+          "target": "/course/edit.php?category=1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "de212c48-390c-4672-bf44-a65b188673a4",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_fullname",
+          "targets": [],
+          "value": "Cours de test ${id}"
+        },
+        {
+          "id": "c99845bc-cbda-4c37-a170-b83d25c70d3c",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_shortname",
+          "targets": [],
+          "value": "${id}"
+        },
+        {
+          "id": "326886e3-000f-4a56-8198-fcd1e1413717",
+          "comment": "",
+          "command": "click",
+          "target": "id=id_saveanddisplay",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d415338e-f382-4c95-a819-87f9a6e51789",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "Cours de test ${id}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "846cad1d-8fae-42ca-a97f-2f4aad77a595",
+          "comment": "",
+          "command": "storeLocation",
+          "target": "",
+          "targets": [],
+          "value": "urlCours"
+        },
+        {
+          "id": "90d39ad3-2a29-44d1-b154-b20839a438fa",
+          "comment": "",
+          "command": "echo",
+          "target": "Cours créé : ${urlCours}",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "e160a2aa-1cfd-46e3-8be8-803cb2c30e92",
+      "name": "04 - JavaScript et variables",
+      "commands": [
+        {
+          "id": "19e1faef-84d2-4eaa-ba3a-ca5d98514c93",
+          "comment": "",
+          "command": "open",
+          "target": "/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3430ae87-edb5-43c1-8c49-3f08b1eaa2de",
+          "comment": "le résultat du return va dans « racine »",
+          "command": "executeScript",
+          "target": "return M.cfg.wwwroot;",
+          "targets": [],
+          "value": "racine"
+        },
+        {
+          "id": "f50f3f86-6e2a-4473-a2df-359ba76e754c",
+          "comment": "",
+          "command": "echo",
+          "target": "Adresse du Moodle : ${racine}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f8ce92cb-b89e-42b1-a125-1a1a7e238003",
+          "comment": "",
+          "command": "executeScript",
+          "target": "return document.querySelectorAll('a').length;",
+          "targets": [],
+          "value": "nbLiens"
+        },
+        {
+          "id": "a25fb7a9-e029-4fe8-ba03-34b2ebec7345",
+          "comment": "",
+          "command": "if",
+          "target": "${nbLiens} > 10",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b1d3ef9d-afe4-485e-98b1-4e699d7bdfe1",
+          "comment": "",
+          "command": "echo",
+          "target": "Page riche : ${nbLiens} liens",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4499aa97-3fa3-485e-9151-f18864ad318c",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "abe175c1-d3f2-4047-9463-dcd5e712b471",
+          "comment": "",
+          "command": "store",
+          "target": "5",
+          "targets": [],
+          "value": "a"
+        },
+        {
+          "id": "cef9b71e-1b1c-4d1a-9de3-24fdc1d41b7b",
+          "comment": "crée b et message",
+          "command": "executeScript",
+          "target": "vars.b = Number(${a}) * 2;\nvars.message = 'le double de ' + ${a} + ' est ' + vars.b;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c0ba108a-9e12-4ba0-9656-ce5572f197ff",
+          "comment": "",
+          "command": "echo",
+          "target": "${message}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "24fc8970-2fd0-4c62-8810-aaeb2c4c2c19",
+          "comment": "",
+          "command": "assert",
+          "target": "b",
+          "targets": [],
+          "value": "10"
+        }
+      ]
+    },
+    {
+      "id": "d8e6329f-744d-41e0-8971-c25f0da59f5f",
+      "name": "05 - Boucles",
+      "commands": [
+        {
+          "id": "c5240459-d8bf-429b-a9d9-4ca74fcc1179",
+          "comment": "les conditions s'évaluent dans la page : il en faut une",
+          "command": "open",
+          "target": "/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3631af31-79d6-4193-a43f-d81fd5cfa8f6",
+          "comment": "",
+          "command": "storeJson",
+          "target": "[\"Alice\", \"Bob\", \"Chloé\"]",
+          "targets": [],
+          "value": "prenoms"
+        },
+        {
+          "id": "ca8cc791-970b-401a-9074-61957bab5d9b",
+          "comment": "prenom prend chaque valeur de la liste",
+          "command": "forEach",
+          "target": "prenoms",
+          "targets": [],
+          "value": "prenom"
+        },
+        {
+          "id": "4e324bb3-e7da-4990-8dd0-0f98bab1932a",
+          "comment": "",
+          "command": "echo",
+          "target": "Bonjour ${prenom}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4fc5860f-d8b7-4046-8b93-fd24c7f9f732",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6ce8f700-2abe-4dbd-840a-734d341b0fc4",
+          "comment": "",
+          "command": "times",
+          "target": "3",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c91ec12c-c750-494c-9a33-b695244911f2",
+          "comment": "",
+          "command": "storeUniqueId",
+          "target": "u",
+          "targets": [],
+          "value": "id"
+        },
+        {
+          "id": "02b9043b-3b85-473d-93c3-decb7731bb51",
+          "comment": "",
+          "command": "echo",
+          "target": "Identifiant tiré : ${id}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "1e5cdbdc-b553-475f-9f37-b32609241b6d",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4d94af15-be2d-448b-8302-870211365831",
+          "comment": "",
+          "command": "store",
+          "target": "0",
+          "targets": [],
+          "value": "compteur"
+        },
+        {
+          "id": "a00a5d30-c910-4568-b29b-864eaa632147",
+          "comment": "",
+          "command": "while",
+          "target": "${compteur} < 3",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "275b6ac6-1cee-4937-8107-d53d7f09e69e",
+          "comment": "",
+          "command": "executeScript",
+          "target": "vars.compteur = Number(${compteur}) + 1;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "5d0f57d1-1d05-438c-b101-8fc49f9dd101",
+          "comment": "",
+          "command": "echo",
+          "target": "Tour numéro ${compteur}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6fbaa138-f617-437c-acbb-565c7a9a6bea",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "cb43a354-ea07-4dd9-b9e4-a0644c61140d",
+      "name": "06 - Déposer des utilisateurs générés",
+      "commands": [
+        {
+          "id": "844337b4-fda9-4c14-8a9c-a3897343c17e",
+          "comment": "",
+          "command": "storeUniqueId",
+          "target": "etu",
+          "targets": [],
+          "value": "id"
+        },
+        {
+          "id": "c78ed819-dd4d-4b2f-b7fe-2e87a318274b",
+          "comment": "fabrique le CSV en mémoire",
+          "command": "createFile",
+          "target": "username,firstname,lastname,email,password\n${id}-1,Alice,Test,${id}-1@exemple.fr,Test-1234!\n${id}-2,Bob,Test,${id}-2@exemple.fr,Test-1234!",
+          "targets": [],
+          "value": "utilisateurs-${id}.csv"
+        },
+        {
+          "id": "54df534b-6209-428b-8ad0-bf0efe3d13ab",
+          "comment": "",
+          "command": "open",
+          "target": "/admin/tool/uploaduser/index.php",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ae6d9b23-1add-4fbb-b5ac-97ca697de3cf",
+          "comment": "bouton « Choisir un fichier… »",
+          "command": "click",
+          "target": "css=.fp-btn-choose",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e4b6c46e-ace8-4640-a795-b12d6c6027b5",
+          "comment": "",
+          "command": "click",
+          "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier']",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "566fff13-5275-44ba-b788-3a7f5f419ea4",
+          "comment": "",
+          "command": "uploadFile",
+          "target": "name=repo_upload_file",
+          "targets": [],
+          "value": "utilisateurs-${id}.csv"
+        },
+        {
+          "id": "9b6d3a2a-6c9c-4b36-9ef4-2c096ba42416",
+          "comment": "bouton « Déposer ce fichier »",
+          "command": "click",
+          "target": "css=.fp-upload-btn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "23bd3859-c476-456f-a445-50fb0851e93e",
+          "comment": "le nom du fichier apparaît dans le formulaire",
+          "command": "waitForTextPresent",
+          "target": "utilisateurs-${id}.csv",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "dcc796d9-9bc7-4dd6-a3b2-7c45199f11ad",
+          "comment": "vers l'aperçu",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e2120bd1-2192-4947-80e1-edcd8621ce90",
+          "comment": "lance la création",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "17f73ab2-661a-4a63-881b-619da56b8a1f",
+          "comment": "",
+          "command": "waitForTextPresent",
+          "target": "Utilisateurs créés",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e8987ae1-c2c0-4174-bac9-f0111412861d",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "${id}-1",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "92ee1798-2ea2-4fbb-afe0-62b8e2f70190",
+      "name": "07 - Attendre les chargements",
+      "commands": [
+        {
+          "id": "ce254513-1cbf-4ca5-af6a-1715a5db92fd",
+          "comment": "",
+          "command": "open",
+          "target": "/my/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "42331a75-8ddc-45da-ac95-3b75afb71ecb",
+          "comment": "navigation, requêtes, jQuery et M.util.pending_js terminés",
+          "command": "waitForAjax",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "60dba01c-ee75-466c-9048-508276c8482a",
+          "comment": "la même chose, écrite en JavaScript",
+          "command": "waitForCondition",
+          "target": "M.util.pending_js.length === 0",
+          "targets": [],
+          "value": "20000"
+        },
+        {
+          "id": "665f8da8-cb9e-4c66-a8b2-4f04841d7000",
+          "comment": "",
+          "command": "echo",
+          "target": "Tableau de bord chargé",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "f3a95f85-a451-4c65-9e89-4da1d063fefe",
+      "name": "Tous les exemples",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "e86c44ed-2bdd-468d-bd57-0c2abb857bca",
+        "412e6469-931b-49fa-a894-09b61d814f2c",
+        "097b9e05-568d-407c-a68e-076b44acc7fc",
+        "e160a2aa-1cfd-46e3-8be8-803cb2c30e92",
+        "d8e6329f-744d-41e0-8971-c25f0da59f5f",
+        "cb43a354-ea07-4dd9-b9e4-a0644c61140d",
+        "92ee1798-2ea2-4fbb-afe0-62b8e2f70190"
+      ]
+    }
+  ],
+  "urls": [
+    "https://moodle.exemple.fr"
+  ],
+  "plugins": []
+}

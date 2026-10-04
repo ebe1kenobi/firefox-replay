@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Aperçu du journal</title></head>
+<body>
+<script>
+  fetch('../ide/log.html', { cache: 'no-store' }).then(r => r.text()).then(html => {
+    html = html.replace('<head>', '<head><base href="../ide/"><script src="../test/browser-shim.js"><\/script>');
+    document.open();
+    document.write(html);
+    document.close();
+  });
+</script>
+</body>
+</html>

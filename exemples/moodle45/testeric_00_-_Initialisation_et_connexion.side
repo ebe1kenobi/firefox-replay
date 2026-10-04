@@ -1,0 +1,229 @@
+{
+  "id": "96c33681-2e12-4637-a203-e201489e06d5",
+  "version": "2.0",
+  "name": "testeric 00 - Initialisation et connexion",
+  "url": "https://moodle.exemple.fr",
+  "tests": [
+    {
+      "id": "86e421e7-16be-457f-9b93-37126dcf9081",
+      "name": "Paramètres de la recette",
+      "commands": [
+        {
+          "id": "5342acb7-d2e5-4b4e-8061-a10541fbd68b",
+          "comment": "À ADAPTER : compte administrateur",
+          "command": "store",
+          "target": "admin",
+          "targets": [],
+          "value": "identifiant"
+        },
+        {
+          "id": "20e7fffc-beee-43c5-b148-92cbac146d82",
+          "comment": "À ADAPTER : son mot de passe",
+          "command": "store",
+          "target": "MotDePasse!1",
+          "targets": [],
+          "value": "motdepasse"
+        },
+        {
+          "id": "5e0df881-0541-40ec-8ded-09bf59eb8e5f",
+          "comment": "catégorie parente, telle qu'affichée dans la liste « Catégorie parente »",
+          "command": "store",
+          "target": "regexpi:^\\s*SAS\\s*/\\s*ERIC\\s*$",
+          "targets": [],
+          "value": "categorieParente"
+        },
+        {
+          "id": "7fd580f1-4ad7-4be3-940b-5ec958d2cdb2",
+          "comment": "rôle « apprenant » (libellé de la liste des rôles)",
+          "command": "store",
+          "target": "regexpi:^(apprenant|étudiant|student)",
+          "targets": [],
+          "value": "roleApprenant"
+        },
+        {
+          "id": "7feb3f4a-e314-42b3-869a-b6056826b1f3",
+          "comment": "rôle « tuteur »",
+          "command": "store",
+          "target": "regexpi:^(tuteur|enseignant non éditeur|non-editing teacher)",
+          "targets": [],
+          "value": "roleTuteur"
+        },
+        {
+          "id": "dd4f3580-9c9c-40c6-9591-2cc886b87dfc",
+          "comment": "mot de passe des comptes créés (respecte la politique par défaut)",
+          "command": "store",
+          "target": "Testeric-2026!",
+          "targets": [],
+          "value": "motdepasseTest"
+        },
+        {
+          "id": "e9ecba6f-e144-4c3b-b7b3-9d576fa885b8",
+          "comment": "identifiant unique de cette exécution, ex. 20260926-143012-k3f9",
+          "command": "storeUniqueId",
+          "target": "",
+          "targets": [],
+          "value": "id"
+        },
+        {
+          "id": "ac2c5528-9e53-403a-bdff-62eb6b842a7c",
+          "comment": "",
+          "command": "echo",
+          "target": "Recette testeric : identifiant ${id}",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "c4da16b3-f0c4-4bb9-90dd-ef94dc037af7",
+      "name": "Accueil et connexion",
+      "commands": [
+        {
+          "id": "f7761ff9-2863-4662-a655-547a12214bd0",
+          "comment": "",
+          "command": "open",
+          "target": "/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d6d1d04c-5a43-494b-8891-b24b2011c8b1",
+          "comment": "",
+          "command": "screenshot",
+          "target": "accueil",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f3e5e55a-5398-4da3-9a34-747100d6632d",
+          "comment": "",
+          "command": "open",
+          "target": "/login/index.php",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "07b8ec64-0246-477a-9603-b160a5db838c",
+          "comment": "0 si l'on est déjà connecté",
+          "command": "storeElementCount",
+          "target": "id=username",
+          "targets": [],
+          "value": "champsConnexion"
+        },
+        {
+          "id": "bad13cec-5049-4f51-8f5d-547844713a06",
+          "comment": "",
+          "command": "if",
+          "target": "${champsConnexion} > 0",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "bc147488-df9a-4a97-8803-9da017e2b26f",
+          "comment": "",
+          "command": "type",
+          "target": "id=username",
+          "targets": [],
+          "value": "${identifiant}"
+        },
+        {
+          "id": "c8107b16-8074-43b6-9614-01ffee25e578",
+          "comment": "",
+          "command": "type",
+          "target": "id=password",
+          "targets": [],
+          "value": "${motdepasse}"
+        },
+        {
+          "id": "8f08f610-89f8-4dc4-ac95-ff538fd24bd6",
+          "comment": "",
+          "command": "click",
+          "target": "id=loginbtn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "10c5e278-0118-4cbb-aff4-f30a76f78366",
+          "comment": "",
+          "command": "else",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "84e78981-2df8-46b9-bd34-1bfb03832497",
+          "comment": "",
+          "command": "echo",
+          "target": "Déjà connecté",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "96ed44af-11a8-4c61-828d-3fa8802f0105",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8c7efb5f-0100-4e19-a808-877811e110c3",
+          "comment": "connecté (indépendant du thème, Academi compris)",
+          "command": "waitForCondition",
+          "target": "!document.body.classList.contains('notloggedin') && !location.pathname.endsWith('/login/index.php')",
+          "targets": [],
+          "value": "30000"
+        },
+        {
+          "id": "ca2940f5-7586-43b9-b51b-2ff8f07a74ce",
+          "comment": "",
+          "command": "executeScript",
+          "target": "return M.cfg.wwwroot;",
+          "targets": [],
+          "value": "racine"
+        },
+        {
+          "id": "c9b79317-2cac-4c89-8e4c-4467cf6cdff5",
+          "comment": "",
+          "command": "echo",
+          "target": "Moodle : ${racine}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a5082286-2c6f-4d54-8244-a5412155cfa6",
+          "comment": "",
+          "command": "open",
+          "target": "/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c0a32ab9-e0d5-444f-8b22-152e56f42ba9",
+          "comment": "",
+          "command": "screenshot",
+          "target": "connecte",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "6345b02b-bb25-454a-8f7c-2dc95a642ffd",
+      "name": "Tous les tests",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "86e421e7-16be-457f-9b93-37126dcf9081",
+        "c4da16b3-f0c4-4bb9-90dd-ef94dc037af7"
+      ]
+    }
+  ],
+  "urls": [
+    "https://moodle.exemple.fr"
+  ],
+  "plugins": []
+}

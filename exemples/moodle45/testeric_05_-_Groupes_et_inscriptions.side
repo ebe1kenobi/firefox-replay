@@ -1,0 +1,380 @@
+{
+  "id": "7fbb476e-6e84-43ea-b24f-79eaa0228550",
+  "version": "2.0",
+  "name": "testeric 05 - Groupes et inscriptions",
+  "url": "https://moodle.exemple.fr",
+  "tests": [
+    {
+      "id": "7ed1e7d9-f7b1-4756-9913-a678a4560259",
+      "name": "Créer 4 groupes dans le cours",
+      "commands": [
+        {
+          "id": "ca0e071e-0148-4dc2-ab94-17e5fde21e55",
+          "comment": "",
+          "command": "storeJson",
+          "target": "[1, 2, 3, 4]",
+          "targets": [],
+          "value": "numeros"
+        },
+        {
+          "id": "2987cefb-800e-4edc-be93-fa885ab37c0f",
+          "comment": "",
+          "command": "forEach",
+          "target": "numeros",
+          "targets": [],
+          "value": "n"
+        },
+        {
+          "id": "efb904a8-2c7f-4517-8b8f-9e06ba9c4ef3",
+          "comment": "",
+          "command": "open",
+          "target": "/group/group.php?courseid=${courseid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "aa2bbc29-cd9a-426a-9e96-1d483785d263",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_name",
+          "targets": [],
+          "value": "testeric_creategroupe_${id}_${n}"
+        },
+        {
+          "id": "fd766d7b-ec76-45a5-a016-c7603e1613ef",
+          "comment": "",
+          "command": "type",
+          "target": "id=id_idnumber",
+          "targets": [],
+          "value": "testeric_creategroupe_${id}_${n}"
+        },
+        {
+          "id": "4026f711-4e6b-4467-a0bd-bac8993ba7af",
+          "comment": "remplit l'éditeur id_description_editor",
+          "command": "executeScript",
+          "target": "const fid = 'id_description_editor';\nconst html = '<p>Groupe testeric ' + ${n} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "dd0a48c0-1e7d-4121-8bdf-c72203f493c2",
+          "comment": "",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b049ec37-aa11-48f6-a12f-9e6c1ea11666",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/group/group.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "20f4922c-6a1f-4448-8bfb-05b724c4f19b",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "281a8c6e-7676-4dd8-a56a-951fa4c7983f",
+          "comment": "",
+          "command": "executeScript",
+          "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst groups = await call('core_group_get_course_groups', { courseid: Number(${courseid}) });\nconst find = name => {\n  const g = groups.find(x => x.name === name);\n  if (!g) throw new Error('Groupe introuvable : ' + name);\n  return g.id;\n};\nfor (const n of [1, 2, 3, 4]) vars['groupe' + n] = find('testeric_creategroupe_' + ${id} + '_' + n);\nreturn [1, 2, 3, 4].map(n => vars['groupe' + n]).join(', ');",
+          "targets": [],
+          "value": "groupes"
+        },
+        {
+          "id": "9f17129c-9fe8-4199-86e8-92a15ecd83a3",
+          "comment": "",
+          "command": "open",
+          "target": "/group/index.php?id=${courseid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3b49c56e-9e68-40f0-a5d6-963dc8d78cec",
+          "comment": "",
+          "command": "screenshot",
+          "target": "groupes crees",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "6274941e-47c8-4020-9e2d-ab382efa573b",
+      "name": "Synchroniser les 4 cohortes avec rôle et groupe",
+      "commands": [
+        {
+          "id": "4bef3a37-aca1-4453-941e-5aee844c0075",
+          "comment": "[cohorte, rôle, groupe]",
+          "command": "storeJson",
+          "target": "[[\"testeric_createcohorte_${id}_1\",\"roleApprenant\",1],[\"testeric_createcohorte_${id}_2\",\"roleTuteur\",2],[\"testeric_createcohortecsv_${id}_1\",\"roleApprenant\",3],[\"testeric_createcohortecsv_${id}_2\",\"roleTuteur\",4]]",
+          "targets": [],
+          "value": "syncs"
+        },
+        {
+          "id": "a610bd0a-8f34-48ac-97a1-76673dff7d39",
+          "comment": "",
+          "command": "forEach",
+          "target": "syncs",
+          "targets": [],
+          "value": "sync"
+        },
+        {
+          "id": "120faeed-31b1-4246-b62b-bd2f50e3e16c",
+          "comment": "",
+          "command": "executeScript",
+          "target": "vars.cohorteNom = ${sync}[0];\nvars.roleCible = vars[${sync}[1]];\nvars.groupeNom = 'testeric_creategroupe_' + ${id} + '_' + ${sync}[2];",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6f169c3d-ab62-4bbf-a5c4-cc520e1b4cd6",
+          "comment": "",
+          "command": "open",
+          "target": "/enrol/editinstance.php?type=cohort&courseid=${courseid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "36db3bf1-8eb0-4e87-aef3-8c8e7fa756cb",
+          "comment": "recherche de la cohorte",
+          "command": "type",
+          "target": "css=#fitem_id_customint1 input[type=text]",
+          "targets": [],
+          "value": "${cohorteNom}"
+        },
+        {
+          "id": "dfed262a-15ed-48e0-99b1-2e228184ef3e",
+          "comment": "",
+          "command": "waitForElementVisible",
+          "target": "xpath=//div[@id='fitem_id_customint1']//li[@role='option'][contains(normalize-space(.), '${cohorteNom}')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "fa7c21c0-a8bc-4795-ba6f-b1a3bfd28967",
+          "comment": "",
+          "command": "click",
+          "target": "xpath=//div[@id='fitem_id_customint1']//li[@role='option'][contains(normalize-space(.), '${cohorteNom}')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c7598a8a-375c-4a96-b916-f60b8ef89fae",
+          "comment": "la cohorte est sélectionnée",
+          "command": "waitForElementPresent",
+          "target": "xpath=//div[@id='fitem_id_customint1']//*[contains(@class,'form-autocomplete-selection')]//*[contains(normalize-space(.), '${cohorteNom}')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "daa07eda-dbda-4e9f-9af0-6807886e678a",
+          "comment": "",
+          "command": "select",
+          "target": "id=id_roleid",
+          "targets": [],
+          "value": "label=${roleCible}"
+        },
+        {
+          "id": "7a46d6a9-a19d-473b-84d1-efa3fee7a496",
+          "comment": "ajouter au groupe",
+          "command": "select",
+          "target": "id=id_customint2",
+          "targets": [],
+          "value": "label=${groupeNom}"
+        },
+        {
+          "id": "0f26db57-93aa-43c3-9a24-d9ab6b6af224",
+          "comment": "",
+          "command": "screenshot",
+          "target": "synchro ${cohorteNom}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "8591b78c-428e-4794-a4d0-d12cd1d0548d",
+          "comment": "",
+          "command": "click",
+          "target": "id=id_submitbutton",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "db43411c-a4cf-4a12-adb1-e8e78fb95068",
+          "comment": "vérifie que Moodle a accepté le formulaire",
+          "command": "executeScript",
+          "target": "if (location.pathname.endsWith('/enrol/editinstance.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "cb36a9a1-cf09-4a96-97b0-1153ecba167f",
+          "comment": "la méthode apparaît dans la liste",
+          "command": "assertTextPresent",
+          "target": "${cohorteNom}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "024258b9-fd38-4427-8440-4cd515d4d341",
+          "comment": "",
+          "command": "end",
+          "target": "",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "34c33095-56f9-4ac7-bbde-cee391539c88",
+          "comment": "",
+          "command": "screenshot",
+          "target": "methodes d inscription",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "05da516b-749e-4b6d-a1d5-7f3c574b341d",
+      "name": "Vérifier les inscrits et les groupes",
+      "commands": [
+        {
+          "id": "10787b1e-1581-47d8-a444-cc39ca4ff10b",
+          "comment": "",
+          "command": "open",
+          "target": "/user/index.php?id=${courseid}&perpage=5000",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f71fdb90-46e8-4c83-8697-377c4f9f408d",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testericlastnameihm${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3c3715db-9051-48c2-8f4f-3a6a93ada70a",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testericlastnameihm${id}_2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a8314c44-3d96-4607-a8ab-47c8a3bd636e",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testericlastnamecsv${id}_1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "dd6ce77e-39f6-40a0-a4ac-09a8c135e770",
+          "comment": "",
+          "command": "assertTextPresent",
+          "target": "testericlastnamecsv${id}_2",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b046e74f-97d5-44b2-ac57-798a8f16d783",
+          "comment": "",
+          "command": "screenshot",
+          "target": "participants",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ead1c39f-ec39-497a-9ccc-e551f69e384d",
+          "comment": "contrôle par core_enrol_search_users",
+          "command": "executeScript",
+          "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst users = await call('core_enrol_search_users', {\n  courseid: Number(${courseid}), search: 'testeric', searchanywhere: true, page: 0, perpage: 100 });\nconst ids = users.map(u => u.id);\nconst manquants = [${uidIhm1}, ${uidIhm2}, ${uidCsv1}, ${uidCsv2}].filter(id => !ids.includes(Number(id)));\nif (manquants.length) throw new Error('Utilisateurs non inscrits : ' + manquants.join(', '));\nreturn users.length;",
+          "targets": [],
+          "value": "inscrits"
+        },
+        {
+          "id": "624ff0c1-ca89-49e7-97e0-dfe9d98b8971",
+          "comment": "",
+          "command": "open",
+          "target": "/group/index.php?id=${courseid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3eb1c562-9659-45b4-bde8-98d87f851ee6",
+          "comment": "4 membre(s) attendu(s)",
+          "command": "assertElementPresent",
+          "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_1 (4)')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ac9826ff-04c3-4d9e-8eb3-f913c891dec7",
+          "comment": "4 membre(s) attendu(s)",
+          "command": "assertElementPresent",
+          "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_2 (4)')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9fbc17cb-94df-4feb-a058-6529f829db6f",
+          "comment": "2 membre(s) attendu(s)",
+          "command": "assertElementPresent",
+          "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_3 (2)')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7d24bd5c-acbd-4546-bd11-79ce4f6ea2f4",
+          "comment": "2 membre(s) attendu(s)",
+          "command": "assertElementPresent",
+          "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_4 (2)')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "795b6f82-8d28-43e2-aa02-2f7d76c8c31c",
+          "comment": "",
+          "command": "open",
+          "target": "/group/overview.php?id=${courseid}",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "572c98a8-ac36-4226-a8f9-1f8f4156a4ff",
+          "comment": "",
+          "command": "screenshot",
+          "target": "vue d ensemble des groupes",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "ebc07a65-b774-4160-a70c-02c518c40eb3",
+      "name": "Tous les tests",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "7ed1e7d9-f7b1-4756-9913-a678a4560259",
+        "6274941e-47c8-4020-9e2d-ab382efa573b",
+        "05da516b-749e-4b6d-a1d5-7f3c574b341d"
+      ]
+    }
+  ],
+  "urls": [
+    "https://moodle.exemple.fr"
+  ],
+  "plugins": []
+}

@@ -1,0 +1,4177 @@
+{
+  "format": "ftide-scenario",
+  "version": 1,
+  "scenario": {
+    "id": "680b5896-b921-43a0-9f8e-f31e7f96a438",
+    "name": "testeric - recette Moodle 4.5",
+    "url": "https://moodle.exemple.fr",
+    "stopOnFailure": true,
+    "items": [
+      "96c33681-2e12-4637-a203-e201489e06d5",
+      "28b8987f-ca92-46c7-b573-c16cb78f1e7a",
+      "efc0cb50-1ed5-4f55-a33c-1fb437b094fa",
+      "32bcf6ce-0b5c-4c62-be7d-a76300b02907",
+      "d299429b-3532-4995-a627-b86110961982",
+      "7fbb476e-6e84-43ea-b24f-79eaa0228550",
+      "8b8cb313-fd83-4456-9461-ba314d0fe044"
+    ]
+  },
+  "projects": [
+    {
+      "id": "96c33681-2e12-4637-a203-e201489e06d5",
+      "version": "2.0",
+      "name": "testeric 00 - Initialisation et connexion",
+      "url": "https://moodle.exemple.fr",
+      "tests": [
+        {
+          "id": "86e421e7-16be-457f-9b93-37126dcf9081",
+          "name": "Paramètres de la recette",
+          "commands": [
+            {
+              "id": "5342acb7-d2e5-4b4e-8061-a10541fbd68b",
+              "comment": "À ADAPTER : compte administrateur",
+              "command": "store",
+              "target": "admin",
+              "targets": [],
+              "value": "identifiant"
+            },
+            {
+              "id": "20e7fffc-beee-43c5-b148-92cbac146d82",
+              "comment": "À ADAPTER : son mot de passe",
+              "command": "store",
+              "target": "MotDePasse!1",
+              "targets": [],
+              "value": "motdepasse"
+            },
+            {
+              "id": "5e0df881-0541-40ec-8ded-09bf59eb8e5f",
+              "comment": "catégorie parente, telle qu'affichée dans la liste « Catégorie parente »",
+              "command": "store",
+              "target": "regexpi:^\\s*SAS\\s*/\\s*ERIC\\s*$",
+              "targets": [],
+              "value": "categorieParente"
+            },
+            {
+              "id": "7fd580f1-4ad7-4be3-940b-5ec958d2cdb2",
+              "comment": "rôle « apprenant » (libellé de la liste des rôles)",
+              "command": "store",
+              "target": "regexpi:^(apprenant|étudiant|student)",
+              "targets": [],
+              "value": "roleApprenant"
+            },
+            {
+              "id": "7feb3f4a-e314-42b3-869a-b6056826b1f3",
+              "comment": "rôle « tuteur »",
+              "command": "store",
+              "target": "regexpi:^(tuteur|enseignant non éditeur|non-editing teacher)",
+              "targets": [],
+              "value": "roleTuteur"
+            },
+            {
+              "id": "dd4f3580-9c9c-40c6-9591-2cc886b87dfc",
+              "comment": "mot de passe des comptes créés (respecte la politique par défaut)",
+              "command": "store",
+              "target": "Testeric-2026!",
+              "targets": [],
+              "value": "motdepasseTest"
+            },
+            {
+              "id": "e9ecba6f-e144-4c3b-b7b3-9d576fa885b8",
+              "comment": "identifiant unique de cette exécution, ex. 20260926-143012-k3f9",
+              "command": "storeUniqueId",
+              "target": "",
+              "targets": [],
+              "value": "id"
+            },
+            {
+              "id": "ac2c5528-9e53-403a-bdff-62eb6b842a7c",
+              "comment": "",
+              "command": "echo",
+              "target": "Recette testeric : identifiant ${id}",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "c4da16b3-f0c4-4bb9-90dd-ef94dc037af7",
+          "name": "Accueil et connexion",
+          "commands": [
+            {
+              "id": "f7761ff9-2863-4662-a655-547a12214bd0",
+              "comment": "",
+              "command": "open",
+              "target": "/",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d6d1d04c-5a43-494b-8891-b24b2011c8b1",
+              "comment": "",
+              "command": "screenshot",
+              "target": "accueil",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f3e5e55a-5398-4da3-9a34-747100d6632d",
+              "comment": "",
+              "command": "open",
+              "target": "/login/index.php",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "07b8ec64-0246-477a-9603-b160a5db838c",
+              "comment": "0 si l'on est déjà connecté",
+              "command": "storeElementCount",
+              "target": "id=username",
+              "targets": [],
+              "value": "champsConnexion"
+            },
+            {
+              "id": "bad13cec-5049-4f51-8f5d-547844713a06",
+              "comment": "",
+              "command": "if",
+              "target": "${champsConnexion} > 0",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "bc147488-df9a-4a97-8803-9da017e2b26f",
+              "comment": "",
+              "command": "type",
+              "target": "id=username",
+              "targets": [],
+              "value": "${identifiant}"
+            },
+            {
+              "id": "c8107b16-8074-43b6-9614-01ffee25e578",
+              "comment": "",
+              "command": "type",
+              "target": "id=password",
+              "targets": [],
+              "value": "${motdepasse}"
+            },
+            {
+              "id": "8f08f610-89f8-4dc4-ac95-ff538fd24bd6",
+              "comment": "",
+              "command": "click",
+              "target": "id=loginbtn",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "10c5e278-0118-4cbb-aff4-f30a76f78366",
+              "comment": "",
+              "command": "else",
+              "target": "",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "84e78981-2df8-46b9-bd34-1bfb03832497",
+              "comment": "",
+              "command": "echo",
+              "target": "Déjà connecté",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "96ed44af-11a8-4c61-828d-3fa8802f0105",
+              "comment": "",
+              "command": "end",
+              "target": "",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8c7efb5f-0100-4e19-a808-877811e110c3",
+              "comment": "connecté (indépendant du thème, Academi compris)",
+              "command": "waitForCondition",
+              "target": "!document.body.classList.contains('notloggedin') && !location.pathname.endsWith('/login/index.php')",
+              "targets": [],
+              "value": "30000"
+            },
+            {
+              "id": "ca2940f5-7586-43b9-b51b-2ff8f07a74ce",
+              "comment": "",
+              "command": "executeScript",
+              "target": "return M.cfg.wwwroot;",
+              "targets": [],
+              "value": "racine"
+            },
+            {
+              "id": "c9b79317-2cac-4c89-8e4c-4467cf6cdff5",
+              "comment": "",
+              "command": "echo",
+              "target": "Moodle : ${racine}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a5082286-2c6f-4d54-8244-a5412155cfa6",
+              "comment": "",
+              "command": "open",
+              "target": "/",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c0a32ab9-e0d5-444f-8b22-152e56f42ba9",
+              "comment": "",
+              "command": "screenshot",
+              "target": "connecte",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "id": "6345b02b-bb25-454a-8f7c-2dc95a642ffd",
+          "name": "Tous les tests",
+          "persistSession": false,
+          "parallel": false,
+          "timeout": 300,
+          "tests": [
+            "86e421e7-16be-457f-9b93-37126dcf9081",
+            "c4da16b3-f0c4-4bb9-90dd-ef94dc037af7"
+          ]
+        }
+      ],
+      "urls": [],
+      "plugins": []
+    },
+    {
+      "id": "28b8987f-ca92-46c7-b573-c16cb78f1e7a",
+      "version": "2.0",
+      "name": "testeric 01 - Utilisateurs",
+      "url": "https://moodle.exemple.fr",
+      "tests": [
+        {
+          "id": "a471b478-1f44-41fc-92ed-e0dc14848f41",
+          "name": "Créer deux utilisateurs par l'interface",
+          "commands": [
+            {
+              "id": "62e07da1-28ea-492b-a6f7-8136cbb77e14",
+              "comment": "",
+              "command": "storeJson",
+              "target": "[1, 2]",
+              "targets": [],
+              "value": "numeros"
+            },
+            {
+              "id": "f9f59c2e-c8a8-4d66-8f9c-0befcf324fff",
+              "comment": "",
+              "command": "forEach",
+              "target": "numeros",
+              "targets": [],
+              "value": "n"
+            },
+            {
+              "id": "a7d2222c-fa6a-45aa-a666-da40f3ddc3ce",
+              "comment": "",
+              "command": "open",
+              "target": "/user/editadvanced.php?id=-1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0198082f-9d47-4872-9f7d-2f82aaebdceb",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_username",
+              "targets": [],
+              "value": "testericihm${id}_${n}"
+            },
+            {
+              "id": "36b3a48c-c3f6-4381-b6c8-b21a54f4848a",
+              "comment": "ouvre la saisie du mot de passe",
+              "command": "click",
+              "target": "css=#fitem_id_newpassword [data-passwordunmask=edit]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8ff475ef-9efe-4c3e-b8a5-d1fd73adfccb",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_newpassword",
+              "targets": [],
+              "value": "${motdepasseTest}"
+            },
+            {
+              "id": "4c727968-9ef6-46f1-b093-12a788af6221",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_firstname",
+              "targets": [],
+              "value": "testericfirstnameihm${id}_${n}"
+            },
+            {
+              "id": "ce649df4-9065-46dd-864f-e9ed2d7fb2cb",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_lastname",
+              "targets": [],
+              "value": "testericlastnameihm${id}_${n}"
+            },
+            {
+              "id": "c2bdb9c2-f692-41f7-97e7-f1e482abf663",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_email",
+              "targets": [],
+              "value": "testericmailihm${id}_${n}@testeric.fr"
+            },
+            {
+              "id": "2a849276-7aa5-46e0-bd55-0c7eb3b099d3",
+              "comment": "",
+              "command": "screenshot",
+              "target": "formulaire utilisateur ${n}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "66e91add-9f14-4a99-98fa-9fcc5120a9be",
+              "comment": "« Créer l'utilisateur »",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f1bdcba8-e978-4d73-9510-84edd667d6f1",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/user/editadvanced.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c73a40c3-bf98-4c9a-8681-0af745061088",
+              "comment": "",
+              "command": "end",
+              "target": "",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "815e6603-df3d-48ba-afdf-5ea8fecdc0e5",
+          "name": "Vérifier les utilisateurs créés par l'interface",
+          "commands": [
+            {
+              "id": "1619bf4a-fc15-4d67-a5b2-f3ba462e48a4",
+              "comment": "contrôle par le service web core_user_get_users_by_field",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst noms = [1, 2].map(n => 'testericihm' + ${id} + '_' + n);\nconst users = await call('core_user_get_users_by_field', { field: 'username', values: noms });\nif (users.length !== 2) throw new Error('Attendu 2 utilisateurs, trouvé ' + users.length);\nconst byName = Object.fromEntries(users.map(u => [u.username, u]));\nvars.uidIhm1 = byName[noms[0]].id;\nvars.uidIhm2 = byName[noms[1]].id;\nreturn users.map(u => u.fullname + ' <' + u.email + '>').join(', ');",
+              "targets": [],
+              "value": "utilisateursIhm"
+            }
+          ]
+        },
+        {
+          "id": "40b43ceb-595a-45f8-ae92-b5671cff0660",
+          "name": "Créer deux utilisateurs par dépôt CSV",
+          "commands": [
+            {
+              "id": "f9b51dab-1db6-4dd7-be85-d37f03149698",
+              "comment": "",
+              "command": "createFile",
+              "target": "username,firstname,lastname,email,password\ntestericcsv${id}_1,testericfirstnamecsv${id}_1,testericlastnamecsv${id}_1,testericmailcsv${id}_1@testeric.fr,${motdepasseTest}\ntestericcsv${id}_2,testericfirstnamecsv${id}_2,testericlastnamecsv${id}_2,testericmailcsv${id}_2@testeric.fr,${motdepasseTest}",
+              "targets": [],
+              "value": "testeric_utilisateurs_${id}.csv"
+            },
+            {
+              "id": "8d15aa43-d77e-4134-8602-7c767c3bc1be",
+              "comment": "",
+              "command": "open",
+              "target": "/admin/tool/uploaduser/index.php",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "5b4f77d2-428f-44c5-b58f-bd49f62f7cf3",
+              "comment": "bouton « Choisir un fichier… »",
+              "command": "click",
+              "target": "css=#fitem_id_userfile .fp-btn-choose",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ba975d03-7c89-4d40-96bb-45c9bea7e500",
+              "comment": "dépôt « Déposer un fichier » du sélecteur",
+              "command": "click",
+              "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "4883d582-c967-4346-a1f7-4f4446e62a03",
+              "comment": "",
+              "command": "uploadFile",
+              "target": "css=input[name=repo_upload_file]",
+              "targets": [],
+              "value": "testeric_utilisateurs_${id}.csv"
+            },
+            {
+              "id": "f3252952-67c4-4f9e-b275-d3a54e7eebb3",
+              "comment": "bouton « Déposer ce fichier »",
+              "command": "click",
+              "target": "css=.fp-upload-btn",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "71144b24-2189-46b8-9446-1831bff7e7c0",
+              "comment": "le fichier apparaît dans le formulaire",
+              "command": "waitForTextPresent",
+              "target": "testeric_utilisateurs_${id}.csv",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ce0ca7d2-817a-4150-b987-45d2628dff60",
+              "comment": "« Déposer des utilisateurs » : aperçu",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "80996b1f-beb4-4672-b51c-cf166519c862",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "id=id_uutype",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7114f52c-b165-414d-a25e-4a59a7d7dfe3",
+              "comment": "type de dépôt : ajouter seulement les nouveaux",
+              "command": "select",
+              "target": "id=id_uutype",
+              "targets": [],
+              "value": "value=0"
+            },
+            {
+              "id": "73e8224d-805f-4987-994d-ebb5ca70c423",
+              "comment": "",
+              "command": "screenshot",
+              "target": "apercu depot utilisateurs",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "27c929c4-65ae-4773-91c0-eb66b02fad4f",
+              "comment": "lance le dépôt",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f78f617a-ef19-4163-848e-dc5fc5b34ad3",
+              "comment": "",
+              "command": "screenshot",
+              "target": "resultat depot utilisateurs",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "fa95a861-9e52-4a07-8351-a9ec64f98cbb",
+          "name": "Vérifier les utilisateurs créés par CSV",
+          "commands": [
+            {
+              "id": "32e2d75a-0d7e-45ea-95f8-4be61d14d058",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst noms = [1, 2].map(n => 'testericcsv' + ${id} + '_' + n);\nconst users = await call('core_user_get_users_by_field', { field: 'username', values: noms });\nif (users.length !== 2) throw new Error('Attendu 2 utilisateurs CSV, trouvé ' + users.length);\nconst byName = Object.fromEntries(users.map(u => [u.username, u]));\nvars.uidCsv1 = byName[noms[0]].id;\nvars.uidCsv2 = byName[noms[1]].id;\nreturn users.map(u => u.fullname).join(', ');",
+              "targets": [],
+              "value": "utilisateursCsv"
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "id": "324d3298-b63a-4522-9fb9-6bb2b5715d05",
+          "name": "Tous les tests",
+          "persistSession": false,
+          "parallel": false,
+          "timeout": 300,
+          "tests": [
+            "a471b478-1f44-41fc-92ed-e0dc14848f41",
+            "815e6603-df3d-48ba-afdf-5ea8fecdc0e5",
+            "40b43ceb-595a-45f8-ae92-b5671cff0660",
+            "fa95a861-9e52-4a07-8351-a9ec64f98cbb"
+          ]
+        }
+      ],
+      "urls": [],
+      "plugins": []
+    },
+    {
+      "id": "efc0cb50-1ed5-4f55-a33c-1fb437b094fa",
+      "version": "2.0",
+      "name": "testeric 02 - Catégorie et cours",
+      "url": "https://moodle.exemple.fr",
+      "tests": [
+        {
+          "id": "73fd1447-e920-4602-b688-52891d9951f7",
+          "name": "Créer la catégorie dans SAS / ERIC",
+          "commands": [
+            {
+              "id": "c4639741-baa2-4ee8-a473-a51d7c059d61",
+              "comment": "",
+              "command": "open",
+              "target": "/course/editcategory.php?parent=0",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "22c6652c-f8f2-4ca6-a3b1-b3bd44943b21",
+              "comment": "catégorie parente",
+              "command": "select",
+              "target": "id=id_parent",
+              "targets": [],
+              "value": "label=${categorieParente}"
+            },
+            {
+              "id": "643fb588-39f7-4f14-9b76-d9dc8f7a7374",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createcategorie_${id}_1"
+            },
+            {
+              "id": "2cb8c4c2-4958-485b-8ca6-74820c77aa48",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_idnumber",
+              "targets": [],
+              "value": "testeric_createcategorie_${id}_1"
+            },
+            {
+              "id": "4f329f70-3c72-49a2-9184-53e93f34dc21",
+              "comment": "remplit l'éditeur id_description_editor",
+              "command": "executeScript",
+              "target": "const fid = 'id_description_editor';\nconst html = '<p>Catégorie de test testeric ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a69527c9-1d01-43f3-9d08-97a4052ce562",
+              "comment": "« Créer la catégorie »",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "fc8db9a0-8eeb-43c1-b75c-62880fbb39a6",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/editcategory.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "05aec796-6d4b-4c5d-a0b7-dd869256b458",
+              "comment": "la page de gestion affiche la nouvelle catégorie",
+              "command": "executeScript",
+              "target": "const id = new URL(location.href).searchParams.get('categoryid');\nif (!id) throw new Error('Identifiant de la catégorie introuvable dans ' + location.href);\nreturn id;",
+              "targets": [],
+              "value": "catid"
+            },
+            {
+              "id": "e626655a-3ce0-497a-b138-1f1dfc7601a8",
+              "comment": "",
+              "command": "screenshot",
+              "target": "categorie creee",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "9846ce50-b3b6-4eb3-ab04-43060d15540c",
+          "name": "Créer le cours dans la catégorie",
+          "commands": [
+            {
+              "id": "50009890-970a-458e-9eb4-676fa14c012d",
+              "comment": "",
+              "command": "open",
+              "target": "/course/edit.php?category=${catid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b97bc093-a9de-42d3-9f01-2431019d628e",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_fullname",
+              "targets": [],
+              "value": "testeric_createcours_${id}_1"
+            },
+            {
+              "id": "5ed2ffe5-b062-41fd-a98b-34215d851fb9",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_shortname",
+              "targets": [],
+              "value": "testeric_createcours_${id}_1"
+            },
+            {
+              "id": "c0e91edf-06fd-49d9-a0d5-a11d88eff433",
+              "comment": "remplit l'éditeur id_summary_editor",
+              "command": "executeScript",
+              "target": "const fid = 'id_summary_editor';\nconst html = '<p>Cours de test testeric ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0b6fd4c0-ccb7-4d28-ab21-03633d9f8cee",
+              "comment": "« Enregistrer et afficher »",
+              "command": "click",
+              "target": "id=id_saveanddisplay",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ef96a9f5-f26b-4407-9a80-af3ee4a066b9",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "71df698a-24a6-4585-bd52-c89c324791f8",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const id = new URL(location.href).searchParams.get('id');\nif (!location.pathname.endsWith('/course/view.php') || !id) throw new Error('Page du cours attendue : ' + location.href);\nreturn id;",
+              "targets": [],
+              "value": "courseid"
+            },
+            {
+              "id": "1074fb77-83c2-4815-baae-1960a2b1427e",
+              "comment": "",
+              "command": "screenshot",
+              "target": "cours cree",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "beeb23e2-fa95-499f-afa3-3afed4d3cf1b",
+              "comment": "",
+              "command": "open",
+              "target": "/course/index.php?categoryid=${catid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "2a29a2c6-569f-49f7-8a23-733690c81bf2",
+              "comment": "le cours est bien dans la catégorie",
+              "command": "assertTextPresent",
+              "target": "testeric_createcours_${id}_1",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "id": "e8a6e115-f997-4dde-9753-252fe597ad60",
+          "name": "Tous les tests",
+          "persistSession": false,
+          "parallel": false,
+          "timeout": 300,
+          "tests": [
+            "73fd1447-e920-4602-b688-52891d9951f7",
+            "9846ce50-b3b6-4eb3-ab04-43060d15540c"
+          ]
+        }
+      ],
+      "urls": [],
+      "plugins": []
+    },
+    {
+      "id": "32bcf6ce-0b5c-4c62-be7d-a76300b02907",
+      "version": "2.0",
+      "name": "testeric 03 - Activités",
+      "url": "https://moodle.exemple.fr",
+      "tests": [
+        {
+          "id": "db29b85e-c6b9-46fd-a32c-60779674b0fd",
+          "name": "Devoir (assign)",
+          "commands": [
+            {
+              "id": "f95210a8-e95a-4737-b3f0-a874312f2dc9",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=assign&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "05a2f9bb-5dd7-4763-934f-799bc367c9ad",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createassign_${id}_1"
+            },
+            {
+              "id": "442c41c8-8a8f-476e-bc0f-2dc8cc1c641a",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createassign_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8a933d92-6291-4e5a-a753-9bd94ee005fb",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "14973574-ccc1-44f7-bea4-264a1107b7e3",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ce494f25-4993-4997-bb12-26589d08b2ad",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createassign_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f2570bd6-7247-452a-9f82-fba6d4e18704",
+              "comment": "",
+              "command": "screenshot",
+              "target": "assign",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "a1740935-0ac1-4d9a-a7c5-54c219bfff6a",
+          "name": "Livre (book)",
+          "commands": [
+            {
+              "id": "396be6ba-6e8b-474f-891c-007facd2357f",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=book&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f62de89f-0cc9-40e6-a55d-64102537702b",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createbook_${id}_1"
+            },
+            {
+              "id": "4824971c-2e97-4b04-9cf8-b3ccb7e2d75b",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createbook_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ce40593a-b668-480b-9d1b-a781824a049a",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6f3ebd82-5c16-4968-b7c6-5e4772904a2d",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a650854d-783e-403a-9e1b-95280d07b1fd",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createbook_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "535c91c1-654b-4872-b107-6a35797f6561",
+              "comment": "",
+              "command": "screenshot",
+              "target": "book",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "7d8f7f26-ace0-4973-95f3-0bf4f13a03a2",
+          "name": "Sondage (choix) (choice)",
+          "commands": [
+            {
+              "id": "5adb81b6-8a5c-4f5c-a356-5c88488b770a",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=choice&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "755fe22b-6fcb-43b5-afd0-80012c5b195d",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createchoice_${id}_1"
+            },
+            {
+              "id": "a957d302-1e45-47f0-a803-ebe94378fccb",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createchoice_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "606daeee-f74d-4f29-8dd3-a72a03482e09",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_option_0",
+              "targets": [],
+              "value": "Option A"
+            },
+            {
+              "id": "6131a419-975b-458f-9b30-38d128015620",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_option_1",
+              "targets": [],
+              "value": "Option B"
+            },
+            {
+              "id": "bf4a1a74-cf50-465e-8a6b-c5de52a7f262",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c3ca4c7e-fff4-4330-8ec5-7cf0cd9660f5",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b99b7d21-4f4b-4827-b260-7c816e0480e2",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createchoice_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d809181b-fdb8-47ec-83ae-e332589f199f",
+              "comment": "",
+              "command": "screenshot",
+              "target": "choice",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "928582e1-d6dc-4d32-bd77-66e8a49cc69f",
+          "name": "Base de données (data)",
+          "commands": [
+            {
+              "id": "d0681aef-526f-41ca-8e48-080e829368d2",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=data&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8be01b19-706d-437d-8b7e-06b0a05b5906",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createdata_${id}_1"
+            },
+            {
+              "id": "4c032b6a-e0ac-4df9-8079-1209f01fb2c0",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createdata_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ed3eae08-c7bb-49ed-aeb6-424bd780d3c5",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "68ea591b-3d19-4f99-9855-8b1d26ac0e3c",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "66789e00-e2f7-4d3e-ab27-0e6dac74f412",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createdata_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c3890051-9bf2-4e13-ab80-97bdca25f572",
+              "comment": "",
+              "command": "screenshot",
+              "target": "data",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "02238a41-2691-4c02-a1eb-1ab6e0cd4399",
+          "name": "Feedback (feedback)",
+          "commands": [
+            {
+              "id": "63677fb9-4b97-4b52-82b4-087951f4283d",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=feedback&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "026817fe-1aeb-48fe-9dbb-099588a0e0e3",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createfeedback_${id}_1"
+            },
+            {
+              "id": "c92affc0-1295-4854-9b97-ae217d336a1a",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createfeedback_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "07b6e6ab-837d-4945-9ebc-3179d00d2d64",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6725c87b-c851-4c9b-baa7-b3344cdbdec3",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d575dae2-5d50-491c-95ea-b9860201d41f",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createfeedback_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e8374a5e-c801-412f-b383-08b0db548988",
+              "comment": "",
+              "command": "screenshot",
+              "target": "feedback",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "7ae3e7a5-9037-4aef-96fc-61c24ad42517",
+          "name": "Dossier (folder)",
+          "commands": [
+            {
+              "id": "468f880c-b55d-4144-bc2f-5dbf2dee058b",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=folder&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "5f022563-ae8c-485e-9e9f-f05ba3305e78",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createfolder_${id}_1"
+            },
+            {
+              "id": "2610cafa-63e5-4fc4-92f1-03bfeff7ab55",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createfolder_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "02f5bc88-dde4-40ec-a0e3-ab34a00028fa",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ac7b7a03-800f-4cbe-8906-13263e57ec11",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "00976fbd-e8dc-4b62-b520-7747b4a7ff84",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createfolder_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c5e399ec-a312-4d8a-a0fe-ccfbc083498c",
+              "comment": "",
+              "command": "screenshot",
+              "target": "folder",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "70ec36f9-8134-4b0a-a3cf-be79c70b72cf",
+          "name": "Forum (forum)",
+          "commands": [
+            {
+              "id": "d9484493-be79-4247-9ebe-9cb52e67a484",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=forum&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c5e8847a-9ab3-4815-95ce-e1b06402aad8",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createforum_${id}_1"
+            },
+            {
+              "id": "64f051b3-002e-4664-a68c-1e2bae71921f",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createforum_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d04c00be-f833-4c81-8731-3cc4b3eb5844",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "905cff90-71dc-43bc-b249-ddf8f97914cb",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "07d54828-0054-433c-9bb6-c4b21dd1f76e",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createforum_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e0be3efa-38d6-4c70-b169-667d8e90b94c",
+              "comment": "",
+              "command": "screenshot",
+              "target": "forum",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "1fb5a464-c78a-404a-a50b-ef26666f6b42",
+          "name": "Glossaire (glossary)",
+          "commands": [
+            {
+              "id": "92621d80-9490-4c20-b3ce-90719414255a",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=glossary&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "77f1497c-ded3-4eab-928d-1034bf00ca3d",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createglossary_${id}_1"
+            },
+            {
+              "id": "83708c04-d2a0-4701-8a4d-6b9ac0d7fd5b",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createglossary_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "9a94ef6c-c273-4718-8445-cdc330153210",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e5740628-2aa4-4022-90d8-22a85c415634",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "788b390d-b466-43c3-b75f-5e4bc59a903a",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createglossary_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8bf44401-27ca-4c83-9f0f-ca04417d2409",
+              "comment": "",
+              "command": "screenshot",
+              "target": "glossary",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "7982e8f5-d001-441a-8aba-af6759701c6b",
+          "name": "Paquetage IMS (imscp)",
+          "commands": [
+            {
+              "id": "1a8f8563-6791-4e41-8086-82c5c2725d72",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=imscp&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "08219aac-dd9a-471b-a16e-06ded117584e",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createimscp_${id}_1"
+            },
+            {
+              "id": "33d36bea-bc00-4d35-9dc5-fbdc5b549fcf",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createimscp_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "875a4630-24ae-41e4-816f-80c7027673e3",
+              "comment": "paquet IMS minimal",
+              "command": "createFile",
+              "target": "base64:UEsDBBQAAAAIAMJ1Ol13IUsLIwEAABwCAAAPAAAAaW1zbWFuaWZlc3QueG1sZZFBb8IwDIXv/Ioodxq6XSbUlBObkIY2AZN2QyF1W0tpWiWBdvv18zo6KJySPNvfe1aSRVcZdgLnsbaSx9GMM7C6ztAWkn/snqdPfJFOkkpZzMEHhhnYgDmCkzyQAA71HiuvG36DIbD1kpchNHMh2raNqK0w9UGZqHaF6Hwm+sH9KW7ic/+88ziaaR/75ofZLBaf69etLqFSU7Q+KKuBpxPGEmqgeN8qkLlnGeTqaILkb5uXmKej6ij+uR4wGEiHXdhqvU3En0ZsomOAajS32i3XlPciOcgl3yy3F9q7KoANyAGXiF8UHdeJbp6+X8iBr49Og0//r6MEvRcLXw1I3sJB1zZQkbOyT4I2gy4qQ2UoT44G7nVBtgP56kruiRi+Ov0BUEsDBBQAAAAIAMJ1Ol1FlL+WZQAAAIQAAAAKAAAAaW5kZXguaHRtbLNRdPF3DokMcFXIKMnNsbOBkqmJKXY2uakliQrJGYlFxakltkqlJWm6Fkp2NiWZJTmpdiWpxSWpRZnJNvoQvo0+RE9SfkolUL+hnXN+XklqXqlCSqoCSK0CQgNQ0kYfok4fbB0AUEsBAhQAFAAAAAgAwnU6XXchSwsjAQAAHAIAAA8AAAAAAAAAAAAAAIABAAAAAGltc21hbmlmZXN0LnhtbFBLAQIUABQAAAAIAMJ1Ol1FlL+WZQAAAIQAAAAKAAAAAAAAAAAAAACAAVABAABpbmRleC5odG1sUEsFBgAAAAACAAIAdQAAAN0BAAAAAA==",
+              "targets": [],
+              "value": "testeric_imscp_${id}.zip"
+            },
+            {
+              "id": "41e2ab42-0c0f-4eab-8138-f616f5960a64",
+              "comment": "bouton « Choisir un fichier… »",
+              "command": "click",
+              "target": "css=#fitem_id_package .fp-btn-choose",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d88ad8a1-d2c4-462e-8119-49cfc2e1c301",
+              "comment": "dépôt « Déposer un fichier » du sélecteur",
+              "command": "click",
+              "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "45d44d44-f932-47f8-8b64-9db72e546c82",
+              "comment": "",
+              "command": "uploadFile",
+              "target": "css=input[name=repo_upload_file]",
+              "targets": [],
+              "value": "testeric_imscp_${id}.zip"
+            },
+            {
+              "id": "1e130adc-c468-4177-92ae-5c3da91ffca4",
+              "comment": "bouton « Déposer ce fichier »",
+              "command": "click",
+              "target": "css=.fp-upload-btn",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "9f93d77b-1bd9-4d72-93a5-6f2583142f0c",
+              "comment": "le fichier apparaît dans le formulaire",
+              "command": "waitForTextPresent",
+              "target": "testeric_imscp_${id}.zip",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "5973a20a-92a0-4e55-ade8-7f90298f8d03",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7ab8104d-c269-4821-9dda-efbfa29a851c",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "fd8d72f0-a236-40be-8562-d90d48cbc8fd",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createimscp_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1f3a60e3-70af-4c60-b42d-4e4f881260b7",
+              "comment": "",
+              "command": "screenshot",
+              "target": "imscp",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "fffd4b16-0b7a-4d20-9330-76cd6026da46",
+          "name": "Zone texte et média (label)",
+          "commands": [
+            {
+              "id": "23ef2a53-29b6-4644-b735-cbdfb07ff87c",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=label&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "4996c508-f048-43a2-994a-182eb5a6a78f",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createlabel_${id}_1"
+            },
+            {
+              "id": "ca7c3ab4-4141-4a75-88ce-819b5cfb2a46",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createlabel_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8d1bb185-a8fa-4658-b01f-3ede3fc919c2",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "89ad03da-fb52-4561-a6ac-5301af754b3c",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1367cf76-f420-4a8e-aa40-6064b4db71db",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createlabel_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a5b6cf1f-b494-4158-97e8-20800fb4cf60",
+              "comment": "",
+              "command": "screenshot",
+              "target": "label",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "c21a25d1-884b-4b1c-a13c-d26df8f5135b",
+          "name": "Leçon (lesson)",
+          "commands": [
+            {
+              "id": "a2555f10-5c48-4ce6-8f66-0eeceffaa44a",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=lesson&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c962c61b-27b3-4b2e-9878-a165769d3b13",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createlesson_${id}_1"
+            },
+            {
+              "id": "c87a50db-cc06-41ab-9634-81091aa41f85",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createlesson_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f68acd6c-fb5b-457d-b51f-e4e0fc066e63",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "aedd1de5-5b23-435b-b7ed-52e72bffcf3e",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e5fff6a9-a71a-4792-ab30-1c5b3f231cf3",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createlesson_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "4f24ec3e-661b-4606-8cfb-5ca5b01a578a",
+              "comment": "",
+              "command": "screenshot",
+              "target": "lesson",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "3ff18586-1223-4bfd-ae2a-6102be0e97fe",
+          "name": "Page (page)",
+          "commands": [
+            {
+              "id": "ecbde550-0881-403c-b999-346f0ad4c119",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=page&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a3ea1114-6d71-48d3-92f0-c31c750939a4",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createpage_${id}_1"
+            },
+            {
+              "id": "3c1b9d48-0482-4302-a908-1b6286bc4cfa",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createpage_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a3e449c1-7fa2-43bb-bf5b-01ee2a255017",
+              "comment": "contenu de la page (obligatoire)",
+              "command": "executeScript",
+              "target": "const fid = 'id_page';\nconst html = '<p>Contenu de la page ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "decdb8fa-b9b9-42be-9d65-bfba43a6a8c4",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1afdb542-f87f-4d19-b441-6513ec8c3052",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "9e3a356b-34f7-4922-9c15-8d059e15ce40",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createpage_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0ff7f33e-f08d-43c3-8a70-8b6781c7aa57",
+              "comment": "",
+              "command": "screenshot",
+              "target": "page",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "371d4912-96d0-418f-b2d4-280b1a12a4cd",
+          "name": "Test (quiz)",
+          "commands": [
+            {
+              "id": "42db9166-4f3c-4cbc-af20-4c646114246f",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=quiz&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "3de6fd58-8a4f-4099-b3c3-322f851e90d9",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createquiz_${id}_1"
+            },
+            {
+              "id": "1a8dd2db-ace1-43ac-b604-8a3bc18ef4d1",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createquiz_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "dbe312e4-e1ec-4449-816f-f0a405e11a63",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ac4d25ab-ba89-4a05-b0e1-d5cb3cd2d5e4",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ae2f1b02-0503-43b6-bef1-e1a7127e80cc",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createquiz_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "41b96313-7c31-4d89-b3c7-a654f32a0c48",
+              "comment": "",
+              "command": "screenshot",
+              "target": "quiz",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "cc3f9e7e-6eca-465b-a9a8-840ff17efe87",
+          "name": "Fichier (resource)",
+          "commands": [
+            {
+              "id": "62c418cf-4143-4001-82f6-d8f4b6c1cbfb",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=resource&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e166467c-c655-4515-8ca7-7f38c32b20f0",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createresource_${id}_1"
+            },
+            {
+              "id": "e40518f1-5912-4519-92e9-5965e513d7df",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createresource_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "55bfbd23-8107-464a-ba6c-33bfd387b4c6",
+              "comment": "",
+              "command": "createFile",
+              "target": "Fichier de test testeric ${id}",
+              "targets": [],
+              "value": "testeric_fichier_${id}.txt"
+            },
+            {
+              "id": "ce835891-208b-445c-bffc-70a356ef4226",
+              "comment": "bouton « Ajouter… » du gestionnaire de fichiers",
+              "command": "click",
+              "target": "css=#fitem_id_files .fp-btn-add a",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "81cf7f75-9a99-48e6-84d0-bfe39ddd3b1b",
+              "comment": "dépôt « Déposer un fichier » du sélecteur",
+              "command": "click",
+              "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "24061f30-371a-4297-b66c-307ce3c0e596",
+              "comment": "",
+              "command": "uploadFile",
+              "target": "css=input[name=repo_upload_file]",
+              "targets": [],
+              "value": "testeric_fichier_${id}.txt"
+            },
+            {
+              "id": "134e9e18-56bb-4fd8-a493-c4a55c0531a5",
+              "comment": "bouton « Déposer ce fichier »",
+              "command": "click",
+              "target": "css=.fp-upload-btn",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6c1dcc9a-f1ad-4028-8521-4a7ada211de2",
+              "comment": "le fichier apparaît dans le formulaire",
+              "command": "waitForTextPresent",
+              "target": "testeric_fichier_${id}.txt",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "07c520f1-d79c-471b-90af-2ea049247369",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a24b6292-3626-4762-9dcc-2caaa730f7f0",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "759638f6-cdfa-49be-b9a9-812249885ade",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createresource_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a2134916-dad3-4653-af32-f8a8e3041f80",
+              "comment": "",
+              "command": "screenshot",
+              "target": "resource",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "4e6899cc-efee-429c-817b-165da9c58308",
+          "name": "Paquetage SCORM (scorm)",
+          "commands": [
+            {
+              "id": "f0d1e435-8bfc-43fa-a664-aac19855ac8e",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=scorm&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7807dad8-97f4-4294-be81-e8cc861ee171",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createscorm_${id}_1"
+            },
+            {
+              "id": "57a4f052-b112-4d59-84fc-644c382690f2",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createscorm_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f360e400-85f9-4b09-9b11-1ea3b95d6c2b",
+              "comment": "paquet SCORM 1.2 minimal",
+              "command": "createFile",
+              "target": "base64:UEsDBBQAAAAIAMJ1Ol1Vg3btYwEAAMYCAAAPAAAAaW1zbWFuaWZlc3QueG1sZVLRbsIgFH33KwjvFuteFtNils0tSzQu6pK9GUZvLUsLDVyt29cPu6LWPXE5h3Pu4UIyPVYlOYB1yuiUxtGIEtDSZErvUvq+eR7e0ykfJJXQKgeHRGWgUeUKbErRA2CV3DppbEVvbLyxdiktEOsJY03TRKpytTVfIDEydseOLmMekvXWGoOHuI7rcSebiKyUdU/sEQ0XYXsgCM+yo1M9UXPXCsajUcw+FvO1LKASQ6UdCi2B8gEhSQUoMoGCJ66l+cPTnKwfl6tFwjqkY7r78TgaBypACTvbnDx9Uz+wH4GecySDXOxLTOly9RJT3mN7A+14VFgCD9MNWf5Q7+79FULVU75uZouYXkEW8pSuZuuL35vYAQmmwS5hJyu/XGe62br2Shac2VsJjp/LXoK2F8HvGlLawKc0Gj1JSftQk/aH/JG+pKRo8ymdwTEqsCp9ylyV8B9nPkzod1X6TH7k3afkv1BLAwQUAAAACADCdTpdRZS/lmUAAACEAAAACgAAAGluZGV4Lmh0bWyzUXTxdw6JDHBVyCjJzbGzgZKpiSl2NrmpJYkKyRmJRcWpJbZKpSVpuhZKdjYlmSU5qXYlqcUlqUWZyTb6EL6NPkRPUn5KJVC/oZ1zfl5Jal6pQkqqAkitAkIDUNJGH6JOH2wdAFBLAQIUABQAAAAIAMJ1Ol1Vg3btYwEAAMYCAAAPAAAAAAAAAAAAAACAAQAAAABpbXNtYW5pZmVzdC54bWxQSwECFAAUAAAACADCdTpdRZS/lmUAAACEAAAACgAAAAAAAAAAAAAAgAGQAQAAaW5kZXguaHRtbFBLBQYAAAAAAgACAHUAAAAdAgAAAAA=",
+              "targets": [],
+              "value": "testeric_scorm_${id}.zip"
+            },
+            {
+              "id": "ff34efe7-6a8d-453b-8bf6-4cc7b70d3537",
+              "comment": "bouton « Ajouter… »",
+              "command": "click",
+              "target": "css=#fitem_id_packagefile .fp-btn-add a",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "500afe43-e41b-4b61-8047-03e511aa10b7",
+              "comment": "dépôt « Déposer un fichier » du sélecteur",
+              "command": "click",
+              "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e1f788ad-79af-4e58-aa22-35e63a6794dc",
+              "comment": "",
+              "command": "uploadFile",
+              "target": "css=input[name=repo_upload_file]",
+              "targets": [],
+              "value": "testeric_scorm_${id}.zip"
+            },
+            {
+              "id": "28759f54-828d-4ae1-85a1-e5ef31445931",
+              "comment": "bouton « Déposer ce fichier »",
+              "command": "click",
+              "target": "css=.fp-upload-btn",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1d38d15a-8089-402e-a89e-e94c3c4a066a",
+              "comment": "le fichier apparaît dans le formulaire",
+              "command": "waitForTextPresent",
+              "target": "testeric_scorm_${id}.zip",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e58c5898-a895-4094-968b-d4972644f064",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "3b100573-c5ae-4e3b-ab54-706661ca172d",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1e90642c-0919-4284-9bc2-25c8d80ff6e6",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createscorm_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6ef71c96-8e40-45d2-b0fe-b97d9859cb27",
+              "comment": "",
+              "command": "screenshot",
+              "target": "scorm",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "1e7a5c9b-e86c-41ab-82a0-275a525bfeb1",
+          "name": "URL (url)",
+          "commands": [
+            {
+              "id": "170c926a-18f5-4609-9f5b-82b3591a744e",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=url&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "820ff959-073f-450a-bc9e-afdc57adb7fa",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createurl_${id}_1"
+            },
+            {
+              "id": "a5899a57-7deb-4761-a164-d9a8b635191b",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createurl_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "46753185-59f7-4f3f-944e-9e549c76f5d1",
+              "comment": "adresse (obligatoire)",
+              "command": "type",
+              "target": "id=id_externalurl",
+              "targets": [],
+              "value": "https://moodle.org"
+            },
+            {
+              "id": "594de449-2ff6-4678-a5cd-e625999848ed",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d7622c1c-72d0-4853-b0bf-3a5af56fb036",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "2a976b4e-ffb7-443d-9286-4cf4705c7f0c",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createurl_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "80ed2d15-3a49-42af-be9c-3339ccdb42df",
+              "comment": "",
+              "command": "screenshot",
+              "target": "url",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "16128f53-8064-4146-9a9a-506bcf83cfd0",
+          "name": "Wiki (wiki)",
+          "commands": [
+            {
+              "id": "0d197c80-b4b6-4335-8d2e-569f41ab1f47",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=wiki&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a461fb0a-2334-4271-b90d-d025a014524d",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createwiki_${id}_1"
+            },
+            {
+              "id": "1d504865-1247-4c58-a406-5c22d6bb3039",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createwiki_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0ffccef1-fe11-45a0-b4a0-d5d4112388fd",
+              "comment": "titre de la première page (obligatoire)",
+              "command": "type",
+              "target": "id=id_firstpagetitle",
+              "targets": [],
+              "value": "Accueil testeric_createwiki_${id}_1"
+            },
+            {
+              "id": "3dda2e66-c96c-46e6-a85a-8316de9ea6fa",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "98ee2cde-0344-42b7-af94-35ad446eac0f",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "4972762b-bb4f-4b25-8136-e145cf39bdcc",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createwiki_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "27305a34-b660-496b-9066-d4c179cb5118",
+              "comment": "",
+              "command": "screenshot",
+              "target": "wiki",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "c0fcdd65-5bc2-411a-ad5e-b90d5e97a708",
+          "name": "Atelier (workshop)",
+          "commands": [
+            {
+              "id": "cb4698d8-e2c4-49c5-958a-b4c6605f64e3",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?add=workshop&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "966aae3f-59ba-492e-a6be-6acaa7ee4159",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createworkshop_${id}_1"
+            },
+            {
+              "id": "676ea583-83b5-4a44-ae81-1c26cb1770e0",
+              "comment": "remplit l'éditeur id_introeditor",
+              "command": "executeScript",
+              "target": "const fid = 'id_introeditor';\nconst html = '<p>Description de ' + 'testeric_createworkshop_' + ${id} + '_1' + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "38bf68f1-5826-40bc-94ed-19c74537d654",
+              "comment": "« Enregistrer et revenir au cours »",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "81e00cb8-4dd6-426a-b7ed-286a1c7969ad",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e7090aa9-6924-471a-9b5a-8c3c964bb0ef",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_createworkshop_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "538abbbd-5e44-4c32-b8d5-f7facbf7ebcc",
+              "comment": "",
+              "command": "screenshot",
+              "target": "workshop",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "9e6fd454-6fff-4e05-9fb2-da75bda840de",
+          "name": "Activités désactivées par défaut (à activer avant de décommenter)",
+          "commands": [
+            {
+              "id": "cfa10ff8-c07e-49c2-81e8-f5f53ca22373",
+              "comment": "",
+              "command": "echo",
+              "target": "Chat, Consultation, Sous-section et BigBlueButton sont désactivés à l'installation de Moodle 4.5 ; H5P et Outil externe demandent un fichier .h5p ou un outil configuré.",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e2dfc54d-f0e6-4dbd-a7b1-63ae8c620574",
+              "comment": "Chat",
+              "command": "//open",
+              "target": "/course/modedit.php?add=chat&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "130cd938-3d6d-4a8e-b05a-bba6645d57b8",
+              "comment": "",
+              "command": "//type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createchat_${id}_1"
+            },
+            {
+              "id": "e06c4080-cb75-4599-9aa7-1f6cdcdc9e77",
+              "comment": "",
+              "command": "//click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a2113f63-82d2-4f95-9a41-d76a721ec09c",
+              "comment": "",
+              "command": "//waitForTextPresent",
+              "target": "testeric_createchat_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c7e1be5e-f607-421c-942b-d2820fa134ae",
+              "comment": "Consultation",
+              "command": "//open",
+              "target": "/course/modedit.php?add=survey&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "5a296ee3-c8eb-4682-9034-91f001754208",
+              "comment": "",
+              "command": "//type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createsurvey_${id}_1"
+            },
+            {
+              "id": "1e3a591f-ff87-4615-9a36-23eff3bb0305",
+              "comment": "type de consultation (obligatoire)",
+              "command": "//select",
+              "target": "id=id_template",
+              "targets": [],
+              "value": "index=1"
+            },
+            {
+              "id": "6c0ebb36-11a0-4349-a5bd-5b2a52aff2ae",
+              "comment": "",
+              "command": "//click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b9978d89-2c9d-427f-a1bd-0b76d73fed04",
+              "comment": "",
+              "command": "//waitForTextPresent",
+              "target": "testeric_createsurvey_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7a69e329-6156-4cce-a46c-3ba72fa357ff",
+              "comment": "Sous-section",
+              "command": "//open",
+              "target": "/course/modedit.php?add=subsection&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "257b25b8-1a8d-41ce-ba38-0abf70224c4c",
+              "comment": "",
+              "command": "//type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createsubsection_${id}_1"
+            },
+            {
+              "id": "626f3316-158c-40a3-ab2a-420c7685e4b9",
+              "comment": "",
+              "command": "//click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d9b1c747-5b1c-4356-b61a-8429681a23cb",
+              "comment": "",
+              "command": "//waitForTextPresent",
+              "target": "testeric_createsubsection_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "733e43b6-9a80-45a8-89f5-ab6dd09c7bda",
+              "comment": "BigBlueButton",
+              "command": "//open",
+              "target": "/course/modedit.php?add=bigbluebuttonbn&type=&course=${courseid}&section=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1a67856f-b074-4772-b837-38c14658adfd",
+              "comment": "",
+              "command": "//type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createbigbluebuttonbn_${id}_1"
+            },
+            {
+              "id": "c605f1d5-f76d-4da6-8eab-718521c449a4",
+              "comment": "",
+              "command": "//click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "33372ca7-a82d-42ae-a0cf-efe46bbccd1e",
+              "comment": "",
+              "command": "//waitForTextPresent",
+              "target": "testeric_createbigbluebuttonbn_${id}_1",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "cd7048ba-2eac-446a-b9bf-de5f6b683530",
+          "name": "Vérifier toutes les activités du cours",
+          "commands": [
+            {
+              "id": "80985c23-11cd-47d6-b87f-aebc930c672c",
+              "comment": "",
+              "command": "open",
+              "target": "/course/view.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e1422f6b-eb89-4a4b-a8e8-da3341382ed8",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createassign_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "fd74bbce-657b-4394-9a15-c720325199f8",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createbook_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f75922ba-71d3-428a-9c50-0179a5251549",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createchoice_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "043d9cd1-8c67-4a1b-8dba-da5d755a5d4f",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createdata_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e41114a7-a2c6-46b8-b6d3-940831f70eef",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createfeedback_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "64d519b7-8223-4b77-a406-6f6733136665",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createfolder_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "cf0febc1-23ae-42eb-8437-cbe2414b6f43",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createforum_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6486b6ad-5377-4fe6-8b21-adb89ca9bd37",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createglossary_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "9d8641a7-3076-4aed-9413-acd2b40a6c9a",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createimscp_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d9c2a4fa-5c8b-41a3-95c5-2c90bd2207f5",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createlabel_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "2340e00e-ce9d-4bb8-ab3b-8d61ebf00ac8",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createlesson_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d828e7a0-b393-46c0-ab5a-87829629968b",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createpage_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "34cb17fa-b0a4-4960-ba78-ae22d2992e02",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createquiz_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "bf9a20f5-899c-4094-a57f-8ed2840d44ca",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createresource_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "5e7649fb-d398-4651-a59b-4595f31ce70f",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createscorm_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f35721d0-be9c-4d06-bcd2-f4d90aadefbc",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createurl_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e98d272d-f5c5-4ad3-a001-16e57913435f",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createwiki_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "705cd12c-d648-4498-923a-a92016fd8d78",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testeric_createworkshop_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "9e065759-b08e-4ec5-929c-60b7b3e90a01",
+              "comment": "",
+              "command": "screenshot",
+              "target": "toutes les activites",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "id": "792a3b91-f563-4b7b-9a34-7bc428357f3d",
+          "name": "Tous les tests",
+          "persistSession": false,
+          "parallel": false,
+          "timeout": 300,
+          "tests": [
+            "db29b85e-c6b9-46fd-a32c-60779674b0fd",
+            "a1740935-0ac1-4d9a-a7c5-54c219bfff6a",
+            "7d8f7f26-ace0-4973-95f3-0bf4f13a03a2",
+            "928582e1-d6dc-4d32-bd77-66e8a49cc69f",
+            "02238a41-2691-4c02-a1eb-1ab6e0cd4399",
+            "7ae3e7a5-9037-4aef-96fc-61c24ad42517",
+            "70ec36f9-8134-4b0a-a3cf-be79c70b72cf",
+            "1fb5a464-c78a-404a-a50b-ef26666f6b42",
+            "7982e8f5-d001-441a-8aba-af6759701c6b",
+            "fffd4b16-0b7a-4d20-9330-76cd6026da46",
+            "c21a25d1-884b-4b1c-a13c-d26df8f5135b",
+            "3ff18586-1223-4bfd-ae2a-6102be0e97fe",
+            "371d4912-96d0-418f-b2d4-280b1a12a4cd",
+            "cc3f9e7e-6eca-465b-a9a8-840ff17efe87",
+            "4e6899cc-efee-429c-817b-165da9c58308",
+            "1e7a5c9b-e86c-41ab-82a0-275a525bfeb1",
+            "16128f53-8064-4146-9a9a-506bcf83cfd0",
+            "c0fcdd65-5bc2-411a-ad5e-b90d5e97a708",
+            "9e6fd454-6fff-4e05-9fb2-da75bda840de",
+            "cd7048ba-2eac-446a-b9bf-de5f6b683530"
+          ]
+        }
+      ],
+      "urls": [],
+      "plugins": []
+    },
+    {
+      "id": "d299429b-3532-4995-a627-b86110961982",
+      "version": "2.0",
+      "name": "testeric 04 - Cohortes",
+      "url": "https://moodle.exemple.fr",
+      "tests": [
+        {
+          "id": "94a1f592-d1f6-42a9-b9d5-bbe3edb31dfc",
+          "name": "Créer deux cohortes par l'interface",
+          "commands": [
+            {
+              "id": "59718f35-c9dd-4ce7-aa3f-25ffad9c18c7",
+              "comment": "",
+              "command": "storeJson",
+              "target": "[1, 2]",
+              "targets": [],
+              "value": "numeros"
+            },
+            {
+              "id": "c9ba269e-7a92-4d80-987a-beb204618b05",
+              "comment": "",
+              "command": "forEach",
+              "target": "numeros",
+              "targets": [],
+              "value": "n"
+            },
+            {
+              "id": "4979d2f6-7f6c-4151-8865-97050952dac1",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/edit.php?contextid=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "99afb4f1-be62-4e94-8803-98bcd6b13a2e",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_createcohorte_${id}_${n}"
+            },
+            {
+              "id": "5b54e864-b9ec-41c6-a44b-8bb1d1092980",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_idnumber",
+              "targets": [],
+              "value": "testeric_createcohorte_${id}_${n}"
+            },
+            {
+              "id": "053f5981-b52d-4c50-b519-27607ed9c04b",
+              "comment": "remplit l'éditeur id_description_editor",
+              "command": "executeScript",
+              "target": "const fid = 'id_description_editor';\nconst html = '<p>Cohorte testeric ' + ${id} + ' n° ' + ${n} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "900c7f88-277b-404e-bed1-592639195e05",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7f5e34da-db98-4b68-8ce6-8cb1c60fad1f",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/cohort/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "24fe913c-2d31-41d0-9021-66309ad8b113",
+              "comment": "",
+              "command": "end",
+              "target": "",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "69ab5be5-e36c-4350-bb61-aca3d2fc4c06",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst res = await call('core_cohort_search_cohorts', {\n  query: 'testeric_createcohorte', context: { contextid: 1 }, includes: 'all', limitfrom: 0, limitnum: 100 });\nconst find = name => {\n  const c = res.cohorts.find(x => x.name === name);\n  if (!c) throw new Error('Cohorte introuvable : ' + name);\n  return c.id;\n};\nvars.cohortIhm1 = find('testeric_createcohorte_' + ${id} + '_1');\nvars.cohortIhm2 = find('testeric_createcohorte_' + ${id} + '_2');\nreturn [vars.cohortIhm1, vars.cohortIhm2].join(', ');",
+              "targets": [],
+              "value": "cohortesIhm"
+            },
+            {
+              "id": "19505235-7514-42b1-8372-15b6ddb6b151",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/index.php?contextid=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ff93b84e-cd29-48c6-a194-e2e95095d30d",
+              "comment": "",
+              "command": "screenshot",
+              "target": "cohortes interface",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "d76cb1ce-fb24-473d-ac47-8fb0f91ebaec",
+          "name": "Ajouter les 2 utilisateurs interface à la cohorte 1 (interface)",
+          "commands": [
+            {
+              "id": "f237b29c-a66d-40c3-a735-26057c136f7b",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/assign.php?id=${cohortIhm1}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "93074975-2556-4354-a8ce-14d2f86250ad",
+              "comment": "recherche des utilisateurs",
+              "command": "type",
+              "target": "id=addselect_searchtext",
+              "targets": [],
+              "value": "testericlastnameihm${id}"
+            },
+            {
+              "id": "d54aa3fc-c42a-45d2-99b4-5f808e834b63",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='addselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c8d5706f-def4-4e90-9dce-6ff9cd34d0cf",
+              "comment": "",
+              "command": "addSelection",
+              "target": "id=addselect",
+              "targets": [],
+              "value": "label=contains:testericlastnameihm${id}_1"
+            },
+            {
+              "id": "1ad1554a-7f3e-49e5-b5e5-e15f1391cb7a",
+              "comment": "",
+              "command": "addSelection",
+              "target": "id=addselect",
+              "targets": [],
+              "value": "label=contains:testericlastnameihm${id}_2"
+            },
+            {
+              "id": "9a4d8a97-0b7d-4206-961c-361746967488",
+              "comment": "◄ Ajouter",
+              "command": "click",
+              "target": "id=add",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d4bea10c-a5b2-4a91-b226-286e8280d0d2",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_1')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "18597d52-4d8f-4970-b95c-e4acc6df61b0",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "2172af18-041e-4e12-81eb-ef71873ce1ce",
+              "comment": "",
+              "command": "screenshot",
+              "target": "membres cohorte 1",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "dd923c11-d93a-4213-bb23-091b2dd16e62",
+          "name": "Ajouter les 2 utilisateurs interface à la cohorte 2 (interface)",
+          "commands": [
+            {
+              "id": "d44adea3-63b5-4d14-a5ad-2eefdc0a5bc9",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/assign.php?id=${cohortIhm2}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "19163223-7f82-4e91-9350-c0838985a49d",
+              "comment": "recherche des utilisateurs",
+              "command": "type",
+              "target": "id=addselect_searchtext",
+              "targets": [],
+              "value": "testericlastnameihm${id}"
+            },
+            {
+              "id": "73fc5e97-558b-4beb-998c-0c252af617a7",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='addselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b78ecb09-a14e-4244-bbef-21ddf4a85284",
+              "comment": "",
+              "command": "addSelection",
+              "target": "id=addselect",
+              "targets": [],
+              "value": "label=contains:testericlastnameihm${id}_1"
+            },
+            {
+              "id": "943ab07e-2bfb-41d5-9693-0c21fa0aa8ac",
+              "comment": "",
+              "command": "addSelection",
+              "target": "id=addselect",
+              "targets": [],
+              "value": "label=contains:testericlastnameihm${id}_2"
+            },
+            {
+              "id": "76279929-6582-49ee-90a0-6e1cb25beb95",
+              "comment": "◄ Ajouter",
+              "command": "click",
+              "target": "id=add",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f12a3f5c-1e97-4f19-a4a8-c2e09c207236",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_1')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "481c08cd-8aeb-4745-9d0e-314e27869f8c",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='removeselect']//option[contains(., 'testericlastnameihm${id}_2')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "5f5ff314-e72e-4d36-aedb-b540cd23f027",
+              "comment": "",
+              "command": "screenshot",
+              "target": "membres cohorte 2",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "24f0e7cb-2d82-4f55-afcd-c34fa9c80bda",
+          "name": "Créer deux cohortes par dépôt CSV",
+          "commands": [
+            {
+              "id": "5c05ae4a-59af-4582-a2c2-99d0b34f3481",
+              "comment": "",
+              "command": "createFile",
+              "target": "name,idnumber,description\ntesteric_createcohortecsv_${id}_1,testeric_createcohortecsv_${id}_1,Cohorte CSV testeric 1\ntesteric_createcohortecsv_${id}_2,testeric_createcohortecsv_${id}_2,Cohorte CSV testeric 2",
+              "targets": [],
+              "value": "testeric_cohortes_${id}.csv"
+            },
+            {
+              "id": "477ad38d-a2dc-4f5a-a2a1-e9fe84a51f01",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/upload.php?contextid=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8736da92-d71e-4016-b99b-fff8e5d9a682",
+              "comment": "bouton « Choisir un fichier… »",
+              "command": "click",
+              "target": "css=#fitem_id_cohortfile .fp-btn-choose",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "9978797d-a795-4e6c-bb8f-2cc2b5edd5eb",
+              "comment": "dépôt « Déposer un fichier » du sélecteur",
+              "command": "click",
+              "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "2ab786b9-d5ba-4d0e-b677-c7b87090ea45",
+              "comment": "",
+              "command": "uploadFile",
+              "target": "css=input[name=repo_upload_file]",
+              "targets": [],
+              "value": "testeric_cohortes_${id}.csv"
+            },
+            {
+              "id": "7b3d2fd4-b2ed-4af6-a96b-18e3f347368a",
+              "comment": "bouton « Déposer ce fichier »",
+              "command": "click",
+              "target": "css=.fp-upload-btn",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8db8ed15-2c61-46f2-812a-f7d8d3e6df33",
+              "comment": "le fichier apparaît dans le formulaire",
+              "command": "waitForTextPresent",
+              "target": "testeric_cohortes_${id}.csv",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "869fb2a2-523f-4d5b-ab3c-19f8e15f2772",
+              "comment": "« Aperçu » : active le bouton de dépôt",
+              "command": "click",
+              "target": "id=id_previewbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "bd3c22c8-dba3-4be5-9d86-408652fa13a0",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//input[@id='id_submitbutton' and not(@disabled)]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0cdc26fe-1f26-4778-892f-0d6353e79d88",
+              "comment": "",
+              "command": "screenshot",
+              "target": "apercu cohortes csv",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7e84c519-0e35-4576-87f0-2dc4ae690f65",
+              "comment": "« Déposer les cohortes »",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "62a9b502-8067-4e9f-8d99-6512b7396cb1",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst res = await call('core_cohort_search_cohorts', {\n  query: 'testeric_createcohorte', context: { contextid: 1 }, includes: 'all', limitfrom: 0, limitnum: 100 });\nconst find = name => {\n  const c = res.cohorts.find(x => x.name === name);\n  if (!c) throw new Error('Cohorte introuvable : ' + name);\n  return c.id;\n};\nvars.cohortCsv1 = find('testeric_createcohortecsv_' + ${id} + '_1');\nvars.cohortCsv2 = find('testeric_createcohortecsv_' + ${id} + '_2');\nreturn [vars.cohortCsv1, vars.cohortCsv2].join(', ');",
+              "targets": [],
+              "value": "cohortesCsv"
+            },
+            {
+              "id": "1460be78-bc8f-419e-b0a2-0bfc10386fa2",
+              "comment": "",
+              "command": "screenshot",
+              "target": "cohortes csv",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "2d581a0b-a040-4d4a-a463-4aab8cbc786f",
+          "name": "Importer les utilisateurs CSV dans les 4 cohortes",
+          "commands": [
+            {
+              "id": "eb014adf-6af2-46da-8512-c38ae193e0f9",
+              "comment": "les colonnes cohortN désignent les cohortes par leur numéro d'identification",
+              "command": "createFile",
+              "target": "username,cohort1,cohort2,cohort3,cohort4\ntestericcsv${id}_1,testeric_createcohorte_${id}_1,testeric_createcohorte_${id}_2,testeric_createcohortecsv_${id}_1,testeric_createcohortecsv_${id}_2\ntestericcsv${id}_2,testeric_createcohorte_${id}_1,testeric_createcohorte_${id}_2,testeric_createcohortecsv_${id}_1,testeric_createcohortecsv_${id}_2",
+              "targets": [],
+              "value": "testeric_import_cohortes_${id}.csv"
+            },
+            {
+              "id": "9e309a6f-c55a-4078-b765-3d436c93ac2b",
+              "comment": "",
+              "command": "open",
+              "target": "/admin/tool/uploaduser/index.php",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f112fba4-142d-46fa-bbb0-f9bc460135b5",
+              "comment": "bouton « Choisir un fichier… »",
+              "command": "click",
+              "target": "css=#fitem_id_userfile .fp-btn-choose",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f03c4e85-9def-4e9a-afdd-9359b1f89458",
+              "comment": "dépôt « Déposer un fichier » du sélecteur",
+              "command": "click",
+              "target": "xpath=//span[contains(@class,'fp-repo-name')][normalize-space()='Déposer un fichier' or normalize-space()='Upload a file']",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7f370058-1048-45e5-b48b-01976e347d8d",
+              "comment": "",
+              "command": "uploadFile",
+              "target": "css=input[name=repo_upload_file]",
+              "targets": [],
+              "value": "testeric_import_cohortes_${id}.csv"
+            },
+            {
+              "id": "8d079439-0023-49ba-8210-ff5e2a80eb7e",
+              "comment": "bouton « Déposer ce fichier »",
+              "command": "click",
+              "target": "css=.fp-upload-btn",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ff31a4d7-d564-4162-8bbd-96a497a0bfe3",
+              "comment": "le fichier apparaît dans le formulaire",
+              "command": "waitForTextPresent",
+              "target": "testeric_import_cohortes_${id}.csv",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0ce30df2-5254-4d7a-bf1a-d14fb43c4523",
+              "comment": "aperçu",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "736851e8-75f0-463e-bd54-5b655167af32",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "id=id_uutype",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "53a3e86a-1c76-4f22-9e0c-7c60d1ceea3d",
+              "comment": "type de dépôt : mettre à jour les utilisateurs existants seulement",
+              "command": "select",
+              "target": "id=id_uutype",
+              "targets": [],
+              "value": "value=3"
+            },
+            {
+              "id": "4ecd1ec0-ab69-4fad-be29-599ea4fbedce",
+              "comment": "sans modifier leur profil",
+              "command": "select",
+              "target": "id=id_uuupdatetype",
+              "targets": [],
+              "value": "value=0"
+            },
+            {
+              "id": "b089e288-dd7c-4306-bd15-cf79fd904fa2",
+              "comment": "",
+              "command": "screenshot",
+              "target": "apercu import cohortes",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "4dcff157-4091-428d-a210-c5e82f918d7b",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ea2e179b-ca49-4c5a-81c6-be5af34b8ad8",
+              "comment": "",
+              "command": "screenshot",
+              "target": "resultat import cohortes",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "4b67a6b4-9909-44be-9be6-1abdf05e48a6",
+          "name": "Vérifier le nombre de membres des 4 cohortes",
+          "commands": [
+            {
+              "id": "107df5cb-9a72-46c4-bff2-ef2206026f01",
+              "comment": "cohortes interface : 2 utilisateurs interface + 2 CSV ; cohortes CSV : 2 utilisateurs CSV",
+              "command": "storeJson",
+              "target": "[[\"cohortIhm1\", 4], [\"cohortIhm2\", 4], [\"cohortCsv1\", 2], [\"cohortCsv2\", 2]]",
+              "targets": [],
+              "value": "attendus"
+            },
+            {
+              "id": "f0e2d6cf-8b09-4052-a059-c2320f2bbd5d",
+              "comment": "",
+              "command": "forEach",
+              "target": "attendus",
+              "targets": [],
+              "value": "attendu"
+            },
+            {
+              "id": "866b3217-5d30-4a0d-8860-b2f26c876c7a",
+              "comment": "",
+              "command": "executeScript",
+              "target": "vars.cohorteCourante = vars[${attendu}[0]];",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "425c2220-8ea8-4eda-9d36-8035ffef4aa5",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/assign.php?id=${cohorteCourante}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1bcfdf2c-5b0a-4573-8608-fcda949f37b2",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const n = document.querySelectorAll('#removeselect option').length;\nif (n !== ${attendu}[1]) throw new Error(${attendu}[0] + ' : ' + n + ' membre(s), attendu ' + ${attendu}[1]);\nreturn n;",
+              "targets": [],
+              "value": "membres"
+            },
+            {
+              "id": "040587da-304a-4c9b-ac7f-fdc452fbecd1",
+              "comment": "",
+              "command": "screenshot",
+              "target": "membres ${cohorteCourante}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6fc19f8a-57c8-4a81-a018-1efd7fdaa2d4",
+              "comment": "",
+              "command": "end",
+              "target": "",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "id": "8899a179-75cd-455a-a0d3-eb45a9455a22",
+          "name": "Tous les tests",
+          "persistSession": false,
+          "parallel": false,
+          "timeout": 300,
+          "tests": [
+            "94a1f592-d1f6-42a9-b9d5-bbe3edb31dfc",
+            "d76cb1ce-fb24-473d-ac47-8fb0f91ebaec",
+            "dd923c11-d93a-4213-bb23-091b2dd16e62",
+            "24f0e7cb-2d82-4f55-afcd-c34fa9c80bda",
+            "2d581a0b-a040-4d4a-a463-4aab8cbc786f",
+            "4b67a6b4-9909-44be-9be6-1abdf05e48a6"
+          ]
+        }
+      ],
+      "urls": [],
+      "plugins": []
+    },
+    {
+      "id": "7fbb476e-6e84-43ea-b24f-79eaa0228550",
+      "version": "2.0",
+      "name": "testeric 05 - Groupes et inscriptions",
+      "url": "https://moodle.exemple.fr",
+      "tests": [
+        {
+          "id": "7ed1e7d9-f7b1-4756-9913-a678a4560259",
+          "name": "Créer 4 groupes dans le cours",
+          "commands": [
+            {
+              "id": "ca0e071e-0148-4dc2-ab94-17e5fde21e55",
+              "comment": "",
+              "command": "storeJson",
+              "target": "[1, 2, 3, 4]",
+              "targets": [],
+              "value": "numeros"
+            },
+            {
+              "id": "2987cefb-800e-4edc-be93-fa885ab37c0f",
+              "comment": "",
+              "command": "forEach",
+              "target": "numeros",
+              "targets": [],
+              "value": "n"
+            },
+            {
+              "id": "efb904a8-2c7f-4517-8b8f-9e06ba9c4ef3",
+              "comment": "",
+              "command": "open",
+              "target": "/group/group.php?courseid=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "aa2bbc29-cd9a-426a-9e96-1d483785d263",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_creategroupe_${id}_${n}"
+            },
+            {
+              "id": "fd766d7b-ec76-45a5-a016-c7603e1613ef",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_idnumber",
+              "targets": [],
+              "value": "testeric_creategroupe_${id}_${n}"
+            },
+            {
+              "id": "4026f711-4e6b-4467-a0bd-bac8993ba7af",
+              "comment": "remplit l'éditeur id_description_editor",
+              "command": "executeScript",
+              "target": "const fid = 'id_description_editor';\nconst html = '<p>Groupe testeric ' + ${n} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "dd0a48c0-1e7d-4121-8bdf-c72203f493c2",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b049ec37-aa11-48f6-a12f-9e6c1ea11666",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/group/group.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "20f4922c-6a1f-4448-8bfb-05b724c4f19b",
+              "comment": "",
+              "command": "end",
+              "target": "",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "281a8c6e-7676-4dd8-a56a-951fa4c7983f",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst groups = await call('core_group_get_course_groups', { courseid: Number(${courseid}) });\nconst find = name => {\n  const g = groups.find(x => x.name === name);\n  if (!g) throw new Error('Groupe introuvable : ' + name);\n  return g.id;\n};\nfor (const n of [1, 2, 3, 4]) vars['groupe' + n] = find('testeric_creategroupe_' + ${id} + '_' + n);\nreturn [1, 2, 3, 4].map(n => vars['groupe' + n]).join(', ');",
+              "targets": [],
+              "value": "groupes"
+            },
+            {
+              "id": "9f17129c-9fe8-4199-86e8-92a15ecd83a3",
+              "comment": "",
+              "command": "open",
+              "target": "/group/index.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "3b49c56e-9e68-40f0-a5d6-963dc8d78cec",
+              "comment": "",
+              "command": "screenshot",
+              "target": "groupes crees",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "6274941e-47c8-4020-9e2d-ab382efa573b",
+          "name": "Synchroniser les 4 cohortes avec rôle et groupe",
+          "commands": [
+            {
+              "id": "4bef3a37-aca1-4453-941e-5aee844c0075",
+              "comment": "[cohorte, rôle, groupe]",
+              "command": "storeJson",
+              "target": "[[\"testeric_createcohorte_${id}_1\",\"roleApprenant\",1],[\"testeric_createcohorte_${id}_2\",\"roleTuteur\",2],[\"testeric_createcohortecsv_${id}_1\",\"roleApprenant\",3],[\"testeric_createcohortecsv_${id}_2\",\"roleTuteur\",4]]",
+              "targets": [],
+              "value": "syncs"
+            },
+            {
+              "id": "a610bd0a-8f34-48ac-97a1-76673dff7d39",
+              "comment": "",
+              "command": "forEach",
+              "target": "syncs",
+              "targets": [],
+              "value": "sync"
+            },
+            {
+              "id": "120faeed-31b1-4246-b62b-bd2f50e3e16c",
+              "comment": "",
+              "command": "executeScript",
+              "target": "vars.cohorteNom = ${sync}[0];\nvars.roleCible = vars[${sync}[1]];\nvars.groupeNom = 'testeric_creategroupe_' + ${id} + '_' + ${sync}[2];",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6f169c3d-ab62-4bbf-a5c4-cc520e1b4cd6",
+              "comment": "",
+              "command": "open",
+              "target": "/enrol/editinstance.php?type=cohort&courseid=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "36db3bf1-8eb0-4e87-aef3-8c8e7fa756cb",
+              "comment": "recherche de la cohorte",
+              "command": "type",
+              "target": "css=#fitem_id_customint1 input[type=text]",
+              "targets": [],
+              "value": "${cohorteNom}"
+            },
+            {
+              "id": "dfed262a-15ed-48e0-99b1-2e228184ef3e",
+              "comment": "",
+              "command": "waitForElementVisible",
+              "target": "xpath=//div[@id='fitem_id_customint1']//li[@role='option'][contains(normalize-space(.), '${cohorteNom}')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "fa7c21c0-a8bc-4795-ba6f-b1a3bfd28967",
+              "comment": "",
+              "command": "click",
+              "target": "xpath=//div[@id='fitem_id_customint1']//li[@role='option'][contains(normalize-space(.), '${cohorteNom}')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c7598a8a-375c-4a96-b916-f60b8ef89fae",
+              "comment": "la cohorte est sélectionnée",
+              "command": "waitForElementPresent",
+              "target": "xpath=//div[@id='fitem_id_customint1']//*[contains(@class,'form-autocomplete-selection')]//*[contains(normalize-space(.), '${cohorteNom}')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "daa07eda-dbda-4e9f-9af0-6807886e678a",
+              "comment": "",
+              "command": "select",
+              "target": "id=id_roleid",
+              "targets": [],
+              "value": "label=${roleCible}"
+            },
+            {
+              "id": "7a46d6a9-a19d-473b-84d1-efa3fee7a496",
+              "comment": "ajouter au groupe",
+              "command": "select",
+              "target": "id=id_customint2",
+              "targets": [],
+              "value": "label=${groupeNom}"
+            },
+            {
+              "id": "0f26db57-93aa-43c3-9a24-d9ab6b6af224",
+              "comment": "",
+              "command": "screenshot",
+              "target": "synchro ${cohorteNom}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "8591b78c-428e-4794-a4d0-d12cd1d0548d",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "db43411c-a4cf-4a12-adb1-e8e78fb95068",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/enrol/editinstance.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "cb36a9a1-cf09-4a96-97b0-1153ecba167f",
+              "comment": "la méthode apparaît dans la liste",
+              "command": "assertTextPresent",
+              "target": "${cohorteNom}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "024258b9-fd38-4427-8440-4cd515d4d341",
+              "comment": "",
+              "command": "end",
+              "target": "",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "34c33095-56f9-4ac7-bbde-cee391539c88",
+              "comment": "",
+              "command": "screenshot",
+              "target": "methodes d inscription",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "05da516b-749e-4b6d-a1d5-7f3c574b341d",
+          "name": "Vérifier les inscrits et les groupes",
+          "commands": [
+            {
+              "id": "10787b1e-1581-47d8-a444-cc39ca4ff10b",
+              "comment": "",
+              "command": "open",
+              "target": "/user/index.php?id=${courseid}&perpage=5000",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f71fdb90-46e8-4c83-8697-377c4f9f408d",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testericlastnameihm${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "3c3715db-9051-48c2-8f4f-3a6a93ada70a",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testericlastnameihm${id}_2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a8314c44-3d96-4607-a8ab-47c8a3bd636e",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testericlastnamecsv${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "dd6ce77e-39f6-40a0-a4ac-09a8c135e770",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "testericlastnamecsv${id}_2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b046e74f-97d5-44b2-ac57-798a8f16d783",
+              "comment": "",
+              "command": "screenshot",
+              "target": "participants",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ead1c39f-ec39-497a-9ccc-e551f69e384d",
+              "comment": "contrôle par core_enrol_search_users",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst users = await call('core_enrol_search_users', {\n  courseid: Number(${courseid}), search: 'testeric', searchanywhere: true, page: 0, perpage: 100 });\nconst ids = users.map(u => u.id);\nconst manquants = [${uidIhm1}, ${uidIhm2}, ${uidCsv1}, ${uidCsv2}].filter(id => !ids.includes(Number(id)));\nif (manquants.length) throw new Error('Utilisateurs non inscrits : ' + manquants.join(', '));\nreturn users.length;",
+              "targets": [],
+              "value": "inscrits"
+            },
+            {
+              "id": "624ff0c1-ca89-49e7-97e0-dfe9d98b8971",
+              "comment": "",
+              "command": "open",
+              "target": "/group/index.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "3eb1c562-9659-45b4-bde8-98d87f851ee6",
+              "comment": "4 membre(s) attendu(s)",
+              "command": "assertElementPresent",
+              "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_1 (4)')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ac9826ff-04c3-4d9e-8eb3-f913c891dec7",
+              "comment": "4 membre(s) attendu(s)",
+              "command": "assertElementPresent",
+              "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_2 (4)')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "9fbc17cb-94df-4feb-a058-6529f829db6f",
+              "comment": "2 membre(s) attendu(s)",
+              "command": "assertElementPresent",
+              "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_3 (2)')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7d24bd5c-acbd-4546-bd11-79ce4f6ea2f4",
+              "comment": "2 membre(s) attendu(s)",
+              "command": "assertElementPresent",
+              "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_creategroupe_${id}_4 (2)')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "795b6f82-8d28-43e2-aa02-2f7d76c8c31c",
+              "comment": "",
+              "command": "open",
+              "target": "/group/overview.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "572c98a8-ac36-4226-a8f9-1f8f4156a4ff",
+              "comment": "",
+              "command": "screenshot",
+              "target": "vue d ensemble des groupes",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "id": "ebc07a65-b774-4160-a70c-02c518c40eb3",
+          "name": "Tous les tests",
+          "persistSession": false,
+          "parallel": false,
+          "timeout": 300,
+          "tests": [
+            "7ed1e7d9-f7b1-4756-9913-a678a4560259",
+            "6274941e-47c8-4020-9e2d-ab382efa573b",
+            "05da516b-749e-4b6d-a1d5-7f3c574b341d"
+          ]
+        }
+      ],
+      "urls": [],
+      "plugins": []
+    },
+    {
+      "id": "8b8cb313-fd83-4456-9461-ba314d0fe044",
+      "version": "2.0",
+      "name": "testeric 06 - Modifications et contrôles",
+      "url": "https://moodle.exemple.fr",
+      "tests": [
+        {
+          "id": "5ce9c2b2-d655-46d9-a7d8-610be18d66f0",
+          "name": "Désactiver puis réactiver une synchronisation de cohorte",
+          "commands": [
+            {
+              "id": "ed5099b0-175b-4211-88e5-1cf064f42ab8",
+              "comment": "",
+              "command": "open",
+              "target": "/enrol/instances.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "79d24455-4dfa-416e-9715-0315222b125b",
+              "comment": "icône « Désactiver » de la méthode",
+              "command": "click",
+              "target": "xpath=//tr[contains(normalize-space(.), 'testeric_createcohortecsv_${id}_2')]//a[contains(@href,'action=disable')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "333139c9-5b9f-49dd-8826-e7e3f6d09ece",
+              "comment": "la méthode est désactivée",
+              "command": "waitForElementPresent",
+              "target": "xpath=//tr[contains(normalize-space(.), 'testeric_createcohortecsv_${id}_2')]//a[contains(@href,'action=enable')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "951d7040-e71b-4ad0-a01a-4ccdb3c62386",
+              "comment": "",
+              "command": "screenshot",
+              "target": "synchro desactivee",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "45dc3eb5-c279-4913-b53e-0fa0d5cf23eb",
+              "comment": "icône « Activer »",
+              "command": "click",
+              "target": "xpath=//tr[contains(normalize-space(.), 'testeric_createcohortecsv_${id}_2')]//a[contains(@href,'action=enable')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "254c132a-4fee-4b96-892e-cef4e37fb998",
+              "comment": "la méthode est réactivée",
+              "command": "waitForElementPresent",
+              "target": "xpath=//tr[contains(normalize-space(.), 'testeric_createcohortecsv_${id}_2')]//a[contains(@href,'action=disable')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "857d31de-d48c-4855-a9e6-946783e86b94",
+              "comment": "",
+              "command": "screenshot",
+              "target": "synchro reactivee",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "89d385d6-7179-43fc-8ec8-e6d7197622ae",
+          "name": "Masquer puis réafficher une cohorte",
+          "commands": [
+            {
+              "id": "625c4e9a-7550-43c7-a4d9-c7fb1554cfc2",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/edit.php?id=${cohortCsv1}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e6f56e5e-4346-49b9-9356-f6dfe5f8d968",
+              "comment": "",
+              "command": "uncheck",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "58921a4d-a6bb-40db-8ba9-750aa0e77755",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b9872751-cd7d-4668-ba80-4dbc32be912f",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/cohort/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "71fb5a6a-bb69-49c2-bbd9-b77f440cdfb7",
+              "comment": "contrôle de la visibilité par le service web",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst res = await call('core_cohort_search_cohorts', {\n  query: 'testeric_createcohortecsv_' + ${id} + '_1', context: { contextid: 1 }, includes: 'all', limitfrom: 0, limitnum: 10 });\nconst c = res.cohorts.find(x => Number(x.id) === Number(${cohortCsv1}));\nif (!c) throw new Error('Cohorte introuvable');\nif (!!c.visible !== false) throw new Error('Visibilité de la cohorte : ' + c.visible + ', attendu false');\nreturn c.visible;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0d905427-0b11-491d-ac10-0eb8ae63ca6e",
+              "comment": "",
+              "command": "screenshot",
+              "target": "cohorte masquee",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b5d6cd21-f1d5-4b23-b9bf-affae894cf5b",
+              "comment": "",
+              "command": "open",
+              "target": "/cohort/edit.php?id=${cohortCsv1}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f5f9d5f6-7bfb-463d-b6ff-94600b8a0c5b",
+              "comment": "",
+              "command": "check",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a73e8ac7-7079-479b-aae5-df788093fc26",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "00068a02-e5e5-4ed2-a507-7cb82d2ffd6a",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/cohort/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1253693b-55ce-4f2c-b9a5-1cc3c2ad1fd2",
+              "comment": "contrôle de la visibilité par le service web",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst res = await call('core_cohort_search_cohorts', {\n  query: 'testeric_createcohortecsv_' + ${id} + '_1', context: { contextid: 1 }, includes: 'all', limitfrom: 0, limitnum: 10 });\nconst c = res.cohorts.find(x => Number(x.id) === Number(${cohortCsv1}));\nif (!c) throw new Error('Cohorte introuvable');\nif (!!c.visible !== true) throw new Error('Visibilité de la cohorte : ' + c.visible + ', attendu true');\nreturn c.visible;",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "4aeee6ff-a88a-4c05-b440-3d3273c0d445",
+          "name": "Suspendre puis réactiver un utilisateur",
+          "commands": [
+            {
+              "id": "d35ebb85-ff21-41bf-b60c-41e054aa12fd",
+              "comment": "",
+              "command": "open",
+              "target": "/user/editadvanced.php?id=${uidIhm2}&course=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "de850828-45af-402c-b997-9445067b2acd",
+              "comment": "",
+              "command": "check",
+              "target": "id=id_suspended",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "87d33a92-b7e4-4957-91b1-0b0676205e80",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ba55fe62-3a5f-4066-bd5d-250b17b39720",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/user/editadvanced.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "62fe4d85-878b-45e0-b7de-565521cdc4b7",
+              "comment": "contrôle par le service web",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst [u] = await call('core_user_get_users_by_field', { field: 'id', values: [String(${uidIhm2})] });\nif (!!u.suspended !== true) throw new Error('Suspendu : ' + u.suspended + ', attendu true');\nreturn u.suspended;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a65be80c-88f9-4bef-9a53-9a822b7589bf",
+              "comment": "",
+              "command": "open",
+              "target": "/user/editadvanced.php?id=${uidIhm2}&course=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7cfa9175-aacd-4618-b0f8-df703ae038ae",
+              "comment": "",
+              "command": "uncheck",
+              "target": "id=id_suspended",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "cdeb288a-a01f-4d72-bc45-50109c21710d",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "5d9e9d38-4e6a-4f45-ba16-c7b1fe822e27",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/user/editadvanced.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e3e6334d-83b9-494b-b3dc-0e56983d2126",
+              "comment": "contrôle par le service web",
+              "command": "executeScript",
+              "target": "const ajax = await new Promise((ok, ko) => require(['core/ajax'], ok, ko));\nconst call = (methodname, args) => ajax.call([{ methodname, args }])[0];\nconst [u] = await call('core_user_get_users_by_field', { field: 'id', values: [String(${uidIhm2})] });\nif (!!u.suspended !== false) throw new Error('Suspendu : ' + u.suspended + ', attendu false');\nreturn u.suspended;",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "42aeb30b-abd8-49ee-8074-4d97fff8a0fe",
+          "name": "Modifier le profil d'un utilisateur",
+          "commands": [
+            {
+              "id": "5b928c2c-7676-4d0c-b0f3-d0fc64bced83",
+              "comment": "",
+              "command": "open",
+              "target": "/user/editadvanced.php?id=${uidIhm1}&course=1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7273b564-e6eb-48d8-8df1-e4692b76ccb3",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_city",
+              "targets": [],
+              "value": "Ville testeric ${id}"
+            },
+            {
+              "id": "80d96133-a7b5-4859-8bf9-f853cf033c4b",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "24009667-daa6-40c7-9f23-d8830d2c725b",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/user/editadvanced.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "fcc9be43-6e8f-45c5-9b22-5a4c019a4a39",
+              "comment": "",
+              "command": "open",
+              "target": "/user/profile.php?id=${uidIhm1}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6b28b899-aed5-4a43-b2ad-2d7823ed45a8",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "Ville testeric ${id}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f91adad3-a312-4fa4-accb-bced310e6bbc",
+              "comment": "",
+              "command": "screenshot",
+              "target": "profil modifie",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "b3fc42d4-2486-4ff9-b217-1f5caba8072a",
+          "name": "Renommer un groupe",
+          "commands": [
+            {
+              "id": "72bcc2f1-d21f-4324-891a-4835d8c65fa3",
+              "comment": "",
+              "command": "open",
+              "target": "/group/group.php?courseid=${courseid}&id=${groupe4}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a34f7568-8905-4811-b096-9735118548c9",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_updategroupe_${id}_4"
+            },
+            {
+              "id": "ee20ab1e-68db-4703-87b6-587e6609ca9f",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1ae3f71d-9019-41fd-8bc8-982b339b3964",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/group/group.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "aac3f640-60be-4223-9eb5-456fb9f9905f",
+              "comment": "",
+              "command": "open",
+              "target": "/group/index.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0f68ce8d-906a-4cf3-a623-ef2ca8a58d49",
+              "comment": "2 membre(s) attendu(s)",
+              "command": "assertElementPresent",
+              "target": "xpath=//select[@id='groups' or @name='groups[]']/option[contains(normalize-space(.), 'testeric_updategroupe_${id}_4 (2)')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "147685a7-1827-4a4d-b6c0-7b788bf7d890",
+              "comment": "",
+              "command": "screenshot",
+              "target": "groupe renomme",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "05af73f9-0f01-45ba-be53-110519e52dc8",
+          "name": "Créer un groupement et y placer deux groupes",
+          "commands": [
+            {
+              "id": "7cf3ec68-dfe3-4b3a-a6ff-a31b52e26d0c",
+              "comment": "",
+              "command": "open",
+              "target": "/group/grouping.php?courseid=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "7a3cf8ea-d7c6-4213-b9cd-7cf5c2ddff3f",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_creategroupement_${id}_1"
+            },
+            {
+              "id": "f139f08a-7211-4f03-a676-7903fb5141f9",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_idnumber",
+              "targets": [],
+              "value": "testeric_creategroupement_${id}_1"
+            },
+            {
+              "id": "7aaf6e22-1aaf-4ac4-85c0-9f52f190088c",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1c9b1a3d-f6ea-4dc6-a256-e49b195a11ef",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/group/grouping.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "58679b59-e51a-4a68-87e1-b614d4fb314f",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const nom = 'testeric_creategroupement_' + ${id} + '_1';\nconst row = [...document.querySelectorAll('tr')].find(tr => tr.textContent.includes(nom));\nconst a = row && row.querySelector('a[href*=\"/group/assign.php\"]');\nif (!a) throw new Error('Groupement introuvable : ' + nom);\nreturn new URL(a.href).searchParams.get('id');",
+              "targets": [],
+              "value": "groupement1"
+            },
+            {
+              "id": "b015a34e-d053-4c7f-bad8-be415865ade0",
+              "comment": "",
+              "command": "open",
+              "target": "/group/assign.php?id=${groupement1}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "76196caf-ee6c-4cf8-8af1-936536729cb5",
+              "comment": "",
+              "command": "addSelection",
+              "target": "id=addselect",
+              "targets": [],
+              "value": "label=contains:testeric_creategroupe_${id}_1"
+            },
+            {
+              "id": "b53f78d8-167a-454b-b355-98e19a69c2d0",
+              "comment": "",
+              "command": "addSelection",
+              "target": "id=addselect",
+              "targets": [],
+              "value": "label=contains:testeric_creategroupe_${id}_3"
+            },
+            {
+              "id": "8839e0a4-2613-419b-998f-07ed368f84ac",
+              "comment": "",
+              "command": "click",
+              "target": "id=add",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "87c206c9-a452-4934-90e8-b1394c5f7f32",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='removeselect']//option[contains(., 'testeric_creategroupe_${id}_1')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a771c943-0903-4766-91e2-376af96cea5c",
+              "comment": "",
+              "command": "waitForElementPresent",
+              "target": "xpath=//select[@id='removeselect']//option[contains(., 'testeric_creategroupe_${id}_3')]",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "4606b7a1-d298-4b8b-8546-45e7f0431f41",
+              "comment": "",
+              "command": "screenshot",
+              "target": "groupement",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "965b3794-0ac0-44ea-be8b-c695b75584df",
+          "name": "Renommer, masquer puis réafficher une activité",
+          "commands": [
+            {
+              "id": "7672a6fc-9098-46d8-ab99-2587238f9393",
+              "comment": "",
+              "command": "open",
+              "target": "/course/view.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "bb47cdf0-0f16-4068-a7e8-5bc93e66beb0",
+              "comment": "",
+              "command": "executeScript",
+              "target": "const nom = 'testeric_createpage_' + ${id} + '_1';\nconst a = [...document.querySelectorAll('a[href*=\"/mod/page/view.php?id=\"]')].find(x => x.textContent.includes(nom));\nif (!a) throw new Error('Activité introuvable : ' + nom);\nreturn new URL(a.href).searchParams.get('id');",
+              "targets": [],
+              "value": "cmPage"
+            },
+            {
+              "id": "22489efa-fa13-493f-9aaa-06378341999f",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?update=${cmPage}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c179d732-e3fd-420c-8367-3d21e1b1c086",
+              "comment": "",
+              "command": "type",
+              "target": "id=id_name",
+              "targets": [],
+              "value": "testeric_updatepage_${id}_1"
+            },
+            {
+              "id": "d1cb44dd-9ec4-451b-9c96-0fc1ebe18555",
+              "comment": "masquée pour les étudiants",
+              "command": "select",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": "value=0"
+            },
+            {
+              "id": "7ac86461-d23d-4f16-8f87-44fa3d5029f2",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "0380d8e1-9774-4e3e-9cd6-cc35ee3671d1",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "905489e4-d376-42db-a939-9dd1e5c47696",
+              "comment": "",
+              "command": "waitForTextPresent",
+              "target": "testeric_updatepage_${id}_1",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "eda2fbde-0611-4c0f-8d53-4f0c6422135b",
+              "comment": "",
+              "command": "screenshot",
+              "target": "activite masquee",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "b3f9760e-6d5c-4a1c-8a5e-00dc7e068c77",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?update=${cmPage}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "810feab2-ef24-468b-be0c-4f8b873bf878",
+              "comment": "",
+              "command": "assertSelectedValue",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": "0"
+            },
+            {
+              "id": "81d94e01-568b-463b-8fe3-187e1e0fabf0",
+              "comment": "",
+              "command": "select",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": "value=1"
+            },
+            {
+              "id": "d3fedaff-9a3b-4b55-9522-c52f60f43cb2",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton2",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "c85b1c2d-fb3e-4a27-8174-59b55880bc15",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/modedit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "76e23d30-f3ca-4e48-b1d7-6cc322885b89",
+              "comment": "",
+              "command": "open",
+              "target": "/course/modedit.php?update=${cmPage}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "4e7a7433-3122-4882-bc21-e195c0d81fcf",
+              "comment": "",
+              "command": "assertSelectedValue",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "a6080fa0-bb7a-46d9-9e23-ae948d737c3c",
+          "name": "Modifier le résumé et la visibilité du cours",
+          "commands": [
+            {
+              "id": "91f96038-d62b-491f-b2da-4d035919d945",
+              "comment": "",
+              "command": "open",
+              "target": "/course/edit.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ae38c330-086e-4ad6-8406-ad906afbff08",
+              "comment": "remplit l'éditeur id_summary_editor",
+              "command": "executeScript",
+              "target": "const fid = 'id_summary_editor';\nconst html = '<p>Résumé modifié testeric ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "74bf2d51-d455-4730-9925-5d6b9b52c955",
+              "comment": "cours caché",
+              "command": "select",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": "value=0"
+            },
+            {
+              "id": "92b3ab53-884e-4df9-b5e2-8b460af28e07",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_saveanddisplay",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "1ec2ee2b-3e76-489d-807e-e4f55bbfa50e",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ace82e32-1734-44ed-9736-1b32405ff1d1",
+              "comment": "",
+              "command": "open",
+              "target": "/course/edit.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "f7a059c5-7215-4ad7-8521-63032dde1364",
+              "comment": "",
+              "command": "assertSelectedValue",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": "0"
+            },
+            {
+              "id": "fdb49c28-4c15-4b13-99a3-6fbb059276f5",
+              "comment": "cours de nouveau visible",
+              "command": "select",
+              "target": "id=id_visible",
+              "targets": [],
+              "value": "value=1"
+            },
+            {
+              "id": "9063c678-8714-446d-8255-ce3ee8588780",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_saveanddisplay",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a70bbe8f-95db-43d2-af85-60c6e357c202",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/edit.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "a569b812-516e-4d37-871a-a2fa3611d395",
+              "comment": "",
+              "command": "open",
+              "target": "/course/index.php?categoryid=${catid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e544c251-bbd3-4a45-8129-dbc64e98e9c1",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "Résumé modifié testeric ${id}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "407b0df1-1d21-403b-b63d-0aa08f0c1828",
+              "comment": "",
+              "command": "screenshot",
+              "target": "cours modifie",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "13dd9bc5-e22a-4f05-b507-b80e74320893",
+          "name": "Modifier la description de la catégorie",
+          "commands": [
+            {
+              "id": "8cd61d15-d1de-4eff-9995-06d821bb8ac7",
+              "comment": "",
+              "command": "open",
+              "target": "/course/editcategory.php?id=${catid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "d5591b0b-c9d7-4ed8-9773-c9eaab5e9ef7",
+              "comment": "remplit l'éditeur id_description_editor",
+              "command": "executeScript",
+              "target": "const fid = 'id_description_editor';\nconst html = '<p>Description modifiée testeric ' + ${id} + '</p>';\nconst ta = document.getElementById(fid);\nif (!ta) throw new Error('Éditeur introuvable : ' + fid);\nfor (let i = 0; i < 50; i++) {\n  let tiny = null;\n  try {\n    const mod = await new Promise((ok, ko) => require(['editor_tiny/editor'], ok, ko));\n    tiny = mod.getInstanceForElementId(fid);\n  } catch (e) { /* TinyMCE absent */ }\n  if (tiny) { tiny.setContent(html); tiny.save(); return 'TinyMCE'; }\n  const atto = document.getElementById(fid + 'editable');\n  if (atto) { atto.innerHTML = html; ta.value = html; return 'Atto'; }\n  await new Promise(r => setTimeout(r, 100));\n}\nta.value = html;\nreturn 'zone de texte';",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "385161e3-5fd1-4f5f-9358-179a42e5ac2b",
+              "comment": "",
+              "command": "click",
+              "target": "id=id_submitbutton",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "2987782b-d7fe-4688-beb6-e549060086bb",
+              "comment": "vérifie que Moodle a accepté le formulaire",
+              "command": "executeScript",
+              "target": "if (location.pathname.endsWith('/course/editcategory.php')) {\n  const errs = [...document.querySelectorAll('.invalid-feedback, .alert-danger, .error')]\n    .map(e => e.textContent.trim()).filter(Boolean);\n  throw new Error('Formulaire refusé' + (errs.length ? ' : ' + errs.join(' / ') : ''));\n}\nreturn true;",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "da0c829c-d1cf-4c1f-9648-c0551ba08ce8",
+              "comment": "",
+              "command": "open",
+              "target": "/course/index.php?categoryid=${catid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "3b332dc6-d82b-466d-b638-7fb20baccdbc",
+              "comment": "",
+              "command": "assertTextPresent",
+              "target": "Description modifiée testeric ${id}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "e2c9f0cd-afb3-4480-8aa0-33bf9f0b81b0",
+              "comment": "",
+              "command": "screenshot",
+              "target": "categorie modifiee",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        },
+        {
+          "id": "180b6d04-12fe-481e-accf-0a103c2c3021",
+          "name": "Bilan",
+          "commands": [
+            {
+              "id": "f773f907-cc9b-49e6-9f8d-3b6cd06b50de",
+              "comment": "",
+              "command": "open",
+              "target": "/user/index.php?id=${courseid}&perpage=5000",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "81c3a9df-cdc1-412e-8b74-c33e33e164e7",
+              "comment": "",
+              "command": "screenshot",
+              "target": "participants final",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "6c457cc7-1f61-445e-9cb0-0e6ef7505ff3",
+              "comment": "",
+              "command": "open",
+              "target": "/group/overview.php?id=${courseid}",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "cd1aac8f-bdec-4a47-aa47-97984ae30ba5",
+              "comment": "",
+              "command": "screenshot",
+              "target": "groupes final",
+              "targets": [],
+              "value": ""
+            },
+            {
+              "id": "ffc05022-f738-461a-a847-d41e50294861",
+              "comment": "",
+              "command": "echo",
+              "target": "Recette ${id} : catégorie ${catid}, cours ${courseid}, utilisateurs ${uidIhm1} ${uidIhm2} ${uidCsv1} ${uidCsv2}, cohortes ${cohortIhm1} ${cohortIhm2} ${cohortCsv1} ${cohortCsv2}, groupes ${groupe1} ${groupe2} ${groupe3} ${groupe4}, groupement ${groupement1}",
+              "targets": [],
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "id": "489fdd74-28ac-4ede-8d05-f07c4f0d59a5",
+          "name": "Tous les tests",
+          "persistSession": false,
+          "parallel": false,
+          "timeout": 300,
+          "tests": [
+            "5ce9c2b2-d655-46d9-a7d8-610be18d66f0",
+            "89d385d6-7179-43fc-8ec8-e6d7197622ae",
+            "4aeee6ff-a88a-4c05-b440-3d3273c0d445",
+            "42aeb30b-abd8-49ee-8074-4d97fff8a0fe",
+            "b3fc42d4-2486-4ff9-b217-1f5caba8072a",
+            "05af73f9-0f01-45ba-be53-110519e52dc8",
+            "965b3794-0ac0-44ea-be8b-c695b75584df",
+            "a6080fa0-bb7a-46d9-9e23-ae948d737c3c",
+            "13dd9bc5-e22a-4f05-b507-b80e74320893",
+            "180b6d04-12fe-481e-accf-0a103c2c3021"
+          ]
+        }
+      ],
+      "urls": [],
+      "plugins": []
+    }
+  ]
+}

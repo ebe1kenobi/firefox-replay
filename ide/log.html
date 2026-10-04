@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Journal — Test IDE</title>
+  <link rel="stylesheet" href="ide.css">
+</head>
+<body class="logwindow">
+  <div class="bar">
+    <strong id="title" class="grow">Journal</strong>
+    <label class="inline"><input type="checkbox" id="showVars" checked> Variables</label>
+    <label class="inline"><input type="checkbox" id="onlyErrors"> Erreurs seulement</label>
+    <button id="btnVars" title="Afficher les variables actuelles">Voir les variables</button>
+    <button id="btnCopy">Copier</button>
+    <button id="btnClear">Effacer</button>
+    <button id="btnAttach" title="Remettre le journal dans le panneau">Rattacher</button>
+  </div>
+  <div id="log" class="log"></div>
+  <script src="logview.js"></script>
+  <script src="log.js"></script>
+</body>
+</html>

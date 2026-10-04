@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Page de test Moodle</title>
+  <style>
+    body { font-family: sans-serif; margin: 16px; }
+    .hidden { display: none; }
+    #result { margin-top: 8px; color: green; }
+    iframe { width: 100%; height: 80px; border: 1px solid #999; }
+  </style>
+  <script>
+    // Imitation minimale de M.util.js_pending / js_complete de Moodle.
+    window.M = { cfg: { wwwroot: location.origin + '/test' }, util: { pending_js: [],
+      js_pending(k) { this.pending_js.push(k); },
+      js_complete(k) { const i = this.pending_js.indexOf(k); if (i >= 0) this.pending_js.splice(i, 1); } } };
+  </script>
+</head>
+<body>
+  <h1 id="page-title">Paramètres du cours</h1>
+  <form id="mform1" action="page2.html" method="get">
+    <div><label for="id_fullname">Nom complet du cours</label> <input id="id_fullname" name="fullname"></div>
+    <div><label for="id_category">Catégorie</label>
+      <select id="id_category" name="category">
+        <option value="1">Divers</option><option value="2">Sciences</option><option value="3">Lettres</option>
+      </select></div>
+    <div><label><input type="checkbox" id="id_visible" name="visible" value="1"> Visible</label></div>
+    <div><button type="button" id="yui_3_17_2_1_1695812345678_12" data-action="load-data">Charger les données</button></div>
+    <div id="result" data-region="result"></div>
+    <div>Résumé :</div>
+    <iframe id="id_summary_ifr" srcdoc="<body id='tinymce' contenteditable='true'><p>Texte initial</p></body>"></iframe>
+    <div class="menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions</a>
+      <ul id="actionmenu" class="hidden"><li><a href="#" id="action-edit">Modifier</a></li></ul></div>
+    <input type="submit" id="id_submitbutton" value="Enregistrer et afficher">
+  </form>
+  <div><input type="file" id="id_userfile" name="userfile"></div>
+  <div id="dropzone" class="filemanager" data-region="dropzone" style="border:2px dashed #999;padding:8px">Déposez des fichiers ici</div>
+  <div id="fileresult"></div>
+  <script>
+    function showFiles(prefix, files) {
+      return Promise.all([...files].map(f => f.text().then(t => f.name + ' [' + f.type + '] ' + t)))
+        .then(a => { document.getElementById('fileresult').textContent = prefix + ' ' + a.join(' ; '); });
+    }
+    document.getElementById('id_userfile').addEventListener('change', e => showFiles('input:', e.target.files));
+    const dz = document.getElementById('dropzone');
+    dz.addEventListener('dragover', e => e.preventDefault());
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      if (![...e.dataTransfer.types].includes('Files')) return;
+      const files = e.dataTransfer.files;
+      M.util.js_pending('upload');
+      setTimeout(() => showFiles('drop:', files).then(() => M.util.js_complete('upload')), 500);
+    });
+  </script>
+  <script>
+    document.querySelector('[data-action=load-data]').addEventListener('click', () => {
+      M.util.js_pending('load');
+      document.getElementById('result').textContent = 'Chargement…';
+      setTimeout(() => {
+        fetch('data.json').then(r => r.json()).then(d => {
+          document.getElementById('result').textContent = 'Données chargées : ' + d.value;
+          M.util.js_complete('load');
+        });
+      }, 1200);
+    });
+    document.querySelector('.dropdown-toggle').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('actionmenu').classList.toggle('hidden');
+    });
+    document.getElementById('action-edit').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('result').textContent = 'Mode édition';
+    });
+  </script>
+</body>
+</html>
