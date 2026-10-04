@@ -7,7 +7,7 @@ id dynamiques ignorés), mais marche sur n'importe quel site.
 Les projets s'enregistrent au format **.side** de Selenium IDE : on peut échanger les fichiers avec lui.
 
 **Pour apprendre par l'exemple : [GUIDE.md](GUIDE.md)** (variables, JavaScript, boucles, fichiers générés,
-attentes), avec les tests correspondants à importer : `exemples/exemples-moodle.side`
+attentes), avec les tests correspondants à ouvrir (« Ouvrir un fichier… ») : `exemples/exemples-moodle.side`
 (régénéré et vérifié par `node exemples/generer.js`).
 
 ## Installation
@@ -57,7 +57,7 @@ enregistrées (id, name, label, texte du lien, CSS, XPath).
 Le journal ne suit la fin que si on y est déjà : on peut remonter le lire pendant l'exécution.
 
 Raccourcis dans le tableau : flèches, Maj+clic (sélection multiple), Suppr, Inser, Ctrl+C / Ctrl+X / Ctrl+V,
-Alt+↑ / Alt+↓ (déplacer), Ctrl+Z (annuler), Entrée (éditer).
+Ctrl+A (tout sélectionner), Alt+↑ / Alt+↓ (déplacer), Ctrl+Z (annuler), Entrée (éditer).
 
 ### Projets et scénarios
 
@@ -74,7 +74,8 @@ Un **scénario** enchaîne plusieurs projets et les lance d'un coup. Dans la nav
 1. **+ Nouveau scénario**, puis, dans le scénario déplié, choisir un projet et **Ajouter**, dans l'ordre voulu
    (le même projet peut revenir plusieurs fois, par exemple un projet « Connexion » en tête). Les boutons ↑ ↓ ✕
    d'un projet du scénario le déplacent ou le retirent (le projet lui-même n'est pas supprimé).
-2. **▶** (sur la ligne du scénario) ou **▶ Lancer** : chaque projet joue tous ses tests, avec sa propre URL de base.
+2. **▶** (sur la ligne du scénario) ou **▶ Lancer** : chaque projet joue tous ses tests, avec sa propre URL de base
+   (ou celle du scénario si elle est remplie, voir plus bas).
    Une pastille indique l'état de chaque projet : jaune en cours, vert réussi, rouge en échec. Le journal indique le
    début de chaque projet, puis un bilan : projets réussis ou en échec, et quels tests ont échoué.
 3. Par défaut, un projet en échec n'empêche pas les suivants ; cocher « Arrêter dès qu'un projet échoue »
@@ -222,7 +223,7 @@ quand une commande échoue (libellé `ECHEC`). Les captures n'encombrent pas la 
 ## Empaqueter
 
 ```bash
-npx web-ext@7.12.0 build --source-dir . --ignore-files test
+npx web-ext@7.12.0 build --source-dir . --ignore-files test exemples
 ```
 
 (Avec Node 18.12, la dernière version de web-ext ne démarre pas ; la version 7 fonctionne.)
@@ -236,8 +237,8 @@ avec une API `browser` simulée, pour tester hors de Firefox :
 python -m http.server 8765 --bind 127.0.0.1
 ```
 
-- `http://localhost:8765/test/harness.html` : « Test automatique » rejoue 55 commandes (AJAX, iframe, boucles,
-  variables, envoi par Entrée) et doit afficher « CONFORME » ; « Enregistrer » permet d'essayer l'enregistreur.
+- `http://localhost:8765/test/harness.html` : « Test automatique » rejoue 62 commandes (AJAX, iframe, boucles,
+  variables, fichiers générés et envoyés, envoi par Entrée) et doit afficher « CONFORME » ; « Enregistrer » permet d'essayer l'enregistreur.
 - `http://localhost:8765/test/ide-preview.html` : aperçu de la fenêtre de l'outil.
 
 ## Organisation
